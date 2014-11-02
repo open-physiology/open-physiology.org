@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>LOLS Documentation</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>LOLS Documentation (Version 1.0)</h1>
+    <hr>
+  </div>
+
+  <div class='twelve columns' id='introdiv'>
+    <div id='about'>
+      <h2>About</h2>
+
+      <h4>&raquo; <a href='#api'>Quickjump to API section</a></h4>
+
+      <p>
+        LOLS stands for Local Ontology Lookup Service.  Its intended purpose:
+        for a given set of ontologies, let people look up rdfs:labels from IRIs
+        and IRIs from rdfs:labels.  LOLS is lean and minimalist, allowing easy
+        deployment on any machine, removing the need to refer to a centralized
+        label lookup service which might be located on the other side of the world.
+      </p>
+
+      <p>
+        Technically, LOLS has two components:
+        <ol>
+          <li>A converter which turns an OWL file into a LOLS file.  Written in Java to use the OWLAPI.</li>
+          <li>The main engine, which loads a LOLS file and serves API requests in HTTP.  Written in C.</li>
+        </ol>
+      </p>
+
+      <p>
+        LOLS was programmed by Sam Alexander for the RICORDO project, in response to
+        clients' complaints that centralized services were too slow and remote.  The engine uses
+        an original technique, which the author refers to as "cohabitating radix trees", to achieve
+        desired performance.
+      </p>
+
+    </div>
+
+    <div id='license'>
+      <h3>License</h3>
+      <pre>
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+      </pre>
+    </div>
+  </div>
+
+  <div class='four columns'>
+    <h3>Quick Nav</h3>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#ontoprep'>LOLSfile Prep</a></li>
+      <li>&raquo; <a href='#running'>Running LOLS</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#faq'>FAQ</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+  </div>
+
+  <div class='sixteen columns' id='maindiv'>
+    <div id='installation'>
+      <h2>Installation</h2>
+      <p>Installation on a Linux machine is as follows.
+        <ol>
+          <li>Ensure a java runtime and java compiler are installed.</li>
+          <li>Ensure a C compiler is installed.  We provide instructions assuming the C compiler "gcc".</li>
+          <li>Use "git clone", or any other means, to copy the repository from <a href='http://github.org/semitrivial/LOLS'>http://github.org/semitrivial/LOLS</a></li>
+          <li>Two subdirectories will be created: "converter" and "server"
+          <li>In the converter directory: expand dependencies with "jar -xf dep.jar"</li>
+          <li>In the converter directory: "make" (or "javac -g Convert.java").  This creates a "Convert.class" java executable for converting OWL files to LOLS files.</li>
+          <li>In the server directory: "make" (or "gcc lols.c srv.c trie.c util.c -o lols").  This creates an executable "lols" for running LOLS.</li>
+          <li>See the following two sections for how to actually get the server running.</li>
+        </ol>
+      </p>
+    </div>
+
+    <div id='ontoprep'>
+      <h2>LOLSfile prep</h2>
+      <p>
+        LOLS loads IRIs and rdfs:labels from a LOLS file, which is generated from an OWL ontology file by means of a
+        converter written in java.  Navigate to the LOLS converter directory (created in "Installation" above).
+        Run the following command:
+        <blockquote>
+          java Convert (OWLfile) >(outputfilename)
+        </blockquote>
+        For example, if your OWL file is located at "/home/ontologies/fma.OWL", and if you want the LOLS file to be called "fma.LOLS",
+        then you would run:
+        <blockquote>
+          # Example command to turn /home/ontologies/fma.OWL into a LOLSfile called fma.LOLS
+          <br>
+          java Convert /home/ontologies/fma.OWL >fma.LOLS
+        </blockquote>
+      </p>
+
+      <h3>Multiple OWL files</h3>
+      <p>
+        If you have multiple OWL files and you want a single LOLS file to cover all of them, what you should do
+        is create a shell ontology (see example below) file which imports all the desired ontologies.  Then run the converter on the
+        shell ontology.
+      </p>
+      <h4>Example</h4>
+      <p>
+        For example, suppose you want your LOLS file to cover /home/fma.owl, /home/chebi.owl, and /home/go.owl.  Then you can create
+        the following shell ontology and run the converter on it:
+        <pre>
+          &lt;?xml version="1.0"?&gt;
+          &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:owl="http://www.w3.org/2002/07/owl#"&gt;
+            &lt;owl:Ontology rdf:about="http://open-physiology.org/shell-ontology"&gt;
+              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/pato.owl"/&gt;
+              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/celltype.owl"/&gt;
+            &lt;/owl:Ontology&gt;
+          &lt;/rdf:RDF&gt;
+        </pre>
+      </p>
+      <p>
+        By modifying the above example in the obvious way, you can write a shell ontology to cover whatever set of ontologies you like.
+        Then run the converter on it to get the desired LOLS file.  (Note: the url "http://open-physiology.org/shell-ontology" in the example is just
+        a placeholder url, anything will work there and it won't effect the resulting LOLS file.)
+      </p>
+    </div>
+
+    <div id='running'>
+      <h2>Running the LOLS server</h2>
+      <p>
+        Once you've created a LOLS file, you can launch the LOLS server by going to the "server" directory (created in "Installation" above)
+        and running:
+        <blockquote>
+          ./lols (path to LOLSfile)
+        </blockquote>
+        For example, if you created the LOLSfile "/home/ontologies/mylols.LOLS", then you can run: "./lols /home/ontologies/mylols.LOLS"
+      </p>
+      <p>
+        By default, LOLS will open an HTTP server on port 5052.  (You can change that in srv.c and re-compile, if you prefer another port.)
+        See "API" (below) and "Built-in GUI" (below) for how to actually use that server.
+      </p>
+
+    </div>
+
+    <div id="simplegui">
+      <h2>Simple GUI</h2>
+
+      <p>
+        LOLS comes with a simple built-in GUI.  Assuming the LOLS server is running, you can access
+        the GUI at http://(yourdomain):5052/gui
+      </p>
+
+      <h3>Example</h3>
+      <p>
+        If your domain is "example.com" then you can access the LOLS GUI at
+        <blockquote>
+          http://example.com:5052/gui
+        </blockquote>
+        Of course, if you don't have a domain, an IP address or "localhost" can be used instead.
+      </p>
+
+    </div>
+
+    <div id='mailinglist'>
+      <h2>Mailing List</h2>
+
+      <p>
+        At present, there is not a LOLS-specific mailing list, but you can post questions to the OWLKB mailing list.
+        The list is located at <a href='http://groups.google.co.uk/d/forum/owlkb-questions'>http://groups.google.co.uk/d/forum/owlkb-questions</a>.
+      </p>
+
+    </div>
+
+    <div id='faq'>
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <h3>Q: "How come the installation notes didn't say anything about Apache, nginx, tomcat, ...?"</h3>
+      <p>
+        A: LOLS implements its own custom-written HTTP server from scratch.  Because the API is so simplistic, a hilariously
+        simplistic approach to HTTP is adequate, and a full HTTP server with all the bells and whistles would be catastrophically wasteful.
+      </p>
+
+      <h3>Q: "Ok, I can run the server, but how do I keep it running permanently?"</h3>
+      <p>
+        A: Set up a cron job to periodically perform the following command:
+        <blockquote>
+          cd (path to LOLS "server" directory); ./lols (path to LOLS file)
+        </blockquote>
+        If the server is already running, the above command will abort with a message about the port already being in use.
+        But if the server has crashed, the above command will re-start it.
+      </p>
+    </div>
+
+    <hr>
+
+  </div>
+
+  <div class='twelve columns' id='apidiv'>
+    <div id='api'>
+
+      <h1>The API</h1>
+      <p>
+        LOLS launches a server which listens for connections and responds to the following types of requests.
+      </p>
+      <p>
+        &raquo; In each case, the results are output in JSON format.
+      </p>
+
+      <div id='iri'>
+        <h3>iri</h3>
+        <blockquote>
+          Example (shortform): http://localhost:5052/iri/FMA_50801
+        </blockquote>
+        <blockquote>
+          Example (longform): http://localhost:5052/iri/http%3A%2F%2Fpurl.org%2Fobo%2Fowlapi%2Ffma%23FMA_50801
+          <br>
+          <br>
+          (Note: "http%3A%2F%2Fpurl.org%2Fobo%2Fowlapi%2Ffma%23FMA_50801" is the urlencoded result of "http://purl.org/obo/owlapi/fma#FMA_50801")
+        </blockquote>
+        <p>
+          Finds all rdfs:labels associated to the class with the specified IRI.  The IRI can either be specified in full, as in the second
+          example, or else abbreviated as in the first example.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class='four columns'>
+    <h3>API Quick Nav</h3>
+    <ul>
+      <li>&raquo; <a href='#iri'>iri</a></li>
+      <li>&raquo; <a href='#label'>label</a></li>
+      <li>&raquo; <a href='#label-case-insensitive'>label-case-insensitive</a></li>
+      <li>&raquo; <a href='#label-shortiri'>label-shortiri</a></li>
+      <li>&raquo; <a href='#label-shortiri-case-insensitive'>label-shortiri-case-insensitive</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <div class='sixteen columns'>
+      <div id='label'>
+        <h3>label</h3>
+        <blockquote>
+          Example: http://localhost:5052/label/Brain
+        </blockquote>
+        <p>
+          Finds all IRIs of classes with the indicated rdfs:label (case sensitive).  The IRIs are given in full.
+        </p>
+      </div>
+
+      <div id='label-case-insensitive'>
+        <h3>label-case-insensitive</h3>
+        <blockquote>
+          Example: http://localhost:5052/label/brain
+        </blockquote>
+        <p>
+          Finds all IRIs of classes with the indicated rdfs:label (case insensitive).  The IRIs are given in full.
+        </p>
+      </div>
+
+      <div id='label-shortiri'>
+        <h3>label-shortiri</h3>
+        <blockquote>
+          Example: http://localhost:5052/label-shortiri/Brain
+        </blockquote>
+        <p>
+          Finds all IRIs of classes with the indicated rdfs:label (case sensitive).  The IRIs are given in abbreviated form, if possible.
+        </p>
+      </div>
+
+      <div id='label-shortiri-case-insensitive'>
+        <h3>label-shortiri-case-insensitive</h3>
+        <blockquote>
+          Example: http://localhost:5052/label-shortiri-case-insensitive/brain
+        </blockquote>
+        <p>
+          Finds all IRIs of classes with the indicated rdfs:label (case insensitive).  The IRIs are given in abbreviated form, if possible.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class='twelve columns'>
+    <h2>Quick Nav</h2>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#ontoprep'>LOLSfile Prep</a></li>
+      <li>&raquo; <a href='#running'>Running LOLS</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#faq'>FAQ</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

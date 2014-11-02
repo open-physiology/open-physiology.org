@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>OWLKB 2.0 Documentation</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#manchesterlist
+{
+  list-style: circle inside none;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>OWLKB 2.0 Documentation</h1>
+    <hr>
+  </div>
+
+  <div class='twelve columns' id='introdiv'>
+    <div id='about'>
+      <h2>About</h2>
+
+      <h4>&raquo; <a href='#api'>Quickjump to API section</a></h4>
+
+      <p>OWLKB 2.0 is the Ricordo semantic reasoner server.  It provides an API for querying
+         semantic data which is loaded from an ontology.  OWLKB is smart enough to know
+         the semantic meanings of the terms in the ontology and to act accordingly.
+         <blockquote>
+           Simple example: Suppose the ontology says widget X was created at
+           factory Y, and that factory Y only creates blue widgets.  A query
+           for "show all blue widgets" will show X even if the ontology
+           does not <i>explicitly</i> say that X is blue: the reasoner is smart
+           enough to deduce the blueness of X from the other two facts.
+         </blockquote>
+         The original OWLKB 1.0 was programmed by Sarala Wimalaratne.  The current
+         version was programmed by Samuel Alexander.
+      </p>
+    </div>
+
+    <div id='license'>
+      <h3>License</h3>
+      <pre>
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+      </pre>
+    </div>
+  </div>
+
+  <div class='four columns'>
+    <h3>Quick Nav</h3>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#ontoprep'>Ontology Prep</a></li>
+      <li>&raquo; <a href='#ontology'>Ontology Load</a></li>
+      <li>&raquo; <a href='#commandline'>Commandline</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+    <img src='/owlkb/floralowl.png'>
+  </div>
+
+  <div class='sixteen columns' id='maindiv'>
+    <div id='installation'>
+      <h2>Installation</h2>
+      <p>Installation is as follows.
+        <ol>
+          <li>Ensure a java runtime and java compiler are installed.</li>
+          <li>Use "git clone", or any other means, to copy the repository from <a href='http://github.org/semitrivial/owlkb'>http://github.org/semitrivial/owlkb</a></li>
+          <li>Within the directory containing the copy of the repository, expand OWLKB's dependencies using "jar -xf dep.jar"</li>
+          <li>Within the directory containing the copy of the repository, compile OWLKB using "make" (or on Windows: "javac -g Owlkb.java")</li>
+          <li>If using ontologies other than the standard reference ontologies, you might need to prep them first, as described in <a href='#ontoprep'>Prepping Imported Ontologies</a>.</li>
+          <li>Within that directory, run "java Owlkb.java -help" to get help on the command line arguments, or see further below.</li>
+        </ol>
+      </p>
+    </div>
+
+    <div id='ontoprep'>
+      <h2>Prepping Imported Ontologies</h2>
+      <p>
+        If your main ontology imports some other ontologies, it is important to make sure the imported ontologies are really ontologies, and not just RDF fragments.
+        To do this, make sure each imported ontology has an <Ontology> tag, which should come after the <RDF> tag.
+        For an example, look at <a href='/owlkb/pato.owl' target='_blank'>this pato.owl file</a> and look for the line:
+        <pre>
+          &lt;Ontology rdf:about="http://purl.org/obo/owlapi/quality"/&gt;
+        </pre>
+        If that line were deleted, the file would become an RDF fragment instead of a real ontology.  The reason you don't want RDF fragments
+        is because due to the OWLAPI specifications, if you programmatically save changes to an ontology that imports an RDF fragment, the
+        entire RDF fragment will be copied into the importing ontology.
+        (Note: the IRI in that line is the IRI associated with the pato ontology.  When adding <Ontology> tags to ontologies,
+        use the appropriate IRIs.)
+      </p>
+    </div>
+
+    <div id='ontology'>
+      <h2>Loading an ontology</h2>
+      <p>OWLKB loads ontologies in .owl form; we assume the user has an owlfile on their system.
+         When running OWLKB, one should specify the location of the desired .owl file.
+         This is done using the -file commandline argument.
+         <blockquote>For example: java Owlkb -file /home/ontologies/ricordo.owl</blockquote>
+      </p>
+      <!-- <h3>&raquo; Useful trick</h3>
+      <p>Rather than directly load the ontology you care about, make a wrapper ontology which
+         imports the ontology/ontologies you care about, and load that instead.  This is the only
+         way (currently) to load multiple ontologies with OWLKB at the same time.  It is also
+         important because when you create new classes using OWLKB, you generally don't want to
+         save them into reference ontologies (like FMA or CHEBI) but into your own ontology file.
+      </p> -->
+    </div>
+
+    <div id='commandline'>
+      <h2>Commandline arguments</h2>
+      <p>OWLKB can be run with the following commandline arguments.
+        <ul>
+          <li>-file &lt;location of file&gt;: Specifies which ontology file OWLKB will load.</li>
+          <li>-port &lt;port number&gt;: Specifies which port OWLKB will listen on (default: 20080).</li>
+          <li>-reasoner &lt;elk or hermit&gt;: Specifies which reasoner OWLKB will use.  Currently supported: Elk, HermiT</li>
+          <li>-namespace &lt;base of iri&gt;: Specifies the namespace to be used for classes created with OWLKB.</li>
+          <li>-save &lt;true or false&gt;: Specifies whether or not OWLKB saves new classes to harddrive (default: true).</li>
+          <li>-help: Displays a help screen.</li>
+        </ul>
+      </p>
+    </div>
+
+    <div id="simplegui">
+      <h2>Simple GUI</h2>
+      <p>
+        OWLKB comes with a simple GUI.  When OWLKB is running, the GUI can be accessed at
+        http://localhost:20080/gui/ (replace "localhost" with whatever host you're running OWLKB
+        on, and replace "20080" with whatever port your OWLKB is running on, if necessary).
+        For example, the demonstration instance of OWLKB is running on host open-physiology.org
+        on port 20080, so the GUI is at http://open-physiology.org:20080/gui
+      </p>
+      <blockquote>
+        <h4>Please Note</h4>
+        <p>
+          The built-in GUI is mainly just for demonstration purposes.  We anticipate OWLKB will mainly
+          be used directly via the API.
+        </p>
+      </blockquote>
+    </div>
+
+    <div id='mailinglist'>
+      <h2>Mailing List</h2>
+      <p>
+        There is an OWLKB-Questions mailing list, where you can feel free to ask questions, general or technical.
+        The list is located at <a href='http://groups.google.co.uk/d/forum/owlkb-questions'>http://groups.google.co.uk/d/forum/owlkb-questions</a>.
+      </p>
+    </div>
+
+
+    <hr>
+
+  </div>
+
+  <div class='twelve columns' id='apidiv'>
+    <div id='api'>
+
+      <h1>The API</h1>
+      <p>OWLKB launches a server which listens for connections and responds to the following types of requests.</p>
+      <p>
+        Note: The "eqterms" type of request is special.  Unlike the other commands, "eqterms" will actually create a
+        new class and add it to the selected ontology, if no equivalent class already exists.  This is one of the
+        main features of OWLKB, creation of so-called composite terms.
+      </p>
+
+      <div id='subterms'>
+        <h3>subterms</h3>
+        <blockquote>Example: http://localhost:20080/subterms/CHEBI_33709</blockquote>
+        <p>Finds all subterms of the indicated term.  For example, "amino acid" is a subterm of "acid".</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class='four columns'>
+    <h3>API Quick Nav</h3>
+    <ul>
+      <li>&raquo; <a href='#subterms'>subterms</a></li>
+      <li>&raquo; <a href='#eqterms'>eqterms</a></li>
+      <li>&raquo; <a href='#terms'>terms</a></li>
+      <li>&raquo; <a href='#instances'>instances</a></li>
+      <li>&raquo; <a href='#labels'>labels</a></li>
+      <li>&raquo; <a href='#search'>search</a></li>
+      <li>&raquo; <a href='#addlabel'>addlabel</a></li>
+      <li>&raquo; <a href='#json'>JSON</a></li>
+      <li>&raquo; <a href='#manchester'>Manchester Syntax</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <div class='sixteen columns'>
+      <div id='eqterms'>
+        <h3>eqterms</h3>
+        <blockquote>Example:<br>http://localhost:20080/eqterms/CL_0000548+and+(capable_of+some+GO_0022414)</blockquote>
+        <p>
+          Finds all terms equivalent to the indicated term.  For example, the class of all "animal cells" (CL_0000548)
+          capable of some "reproductive process" (GO_0022414) is equivalent to the class of all "germ line stem cells" (CL_0000039).
+        </p>
+        <p>
+          &raquo; If there are no equivalent terms,
+           a new class is created, defined to be equivalent to the indicated term.  The new class is saved to the ontology (unless
+           saving to hard-drive was disabled by <a href='#commandline'>command-line argument</a>).
+        </p>
+      </div>
+
+      <div id='terms'>
+        <h3>terms</h3>
+        <blockquote>Example:<br>http://localhost:20080/terms/CL_0000548+and+(capable_of+some+GO_0022414)</blockquote>
+        <p>Finds all terms and all subterms of the indicated term.  Note that unlike "eqterms", this API command will not
+           create a new class if no equivalent classes are found.</p>
+      </div>
+
+      <div id='instances'>
+        <h3>instances</h3>
+        <blockquote>Example: http://localhost:20080/instances/TYPE-OF-CLINICAL-CONTEXT</blockquote>
+        <p>Finds all instances of the indicated class.  For example, "IN-VITRO-CCTYPE" might be an instance of
+           "TYPE-OF-CLINICAL-CONTEXT".
+           (This is, of course, only for ontologies that include named individuals; otherwise "instances" will
+           always return the empty result set.)</p>
+      </div>
+
+      <div id='labels'>
+        <h3>labels</h3>
+        <blockquote>Example: http://localhost:20080/labels/FMA_50801</blockquote>
+        <p>
+           Finds all labels annotated to the indicated term (specifically, all rdfs:label's).
+           For example, the label "Brain" is annotated to FMA_50801.
+        </p>
+      </div>
+
+      <div id='search'>
+        <h3>search</h3>
+        <blockquote>Example: http://localhost:20080/search/Brain</blockquote>
+        <p>Finds all classes in the ontology with the given label (specifically, the given rdfs:label).
+           Note that this is an exact, case-sensitive search--a search for "Brai" or "brain" will not return "Brain" for instance.</p>
+      </div>
+
+      <div id='addlabel'>
+        <h3>addlabel</h3>
+        <blockquote>Example: http://localhost:20080/addlabel/RICORDO12345=volume+of+blood+in+aorta</blockquote>
+        <p>
+          Adds a label to a class that was created with "<a href='#eqterms'>eqterms</a>".  For syntax, see the example
+          above.  To be more precise, the label which is added is an &lt;rdfs:label&gt;.  Multiple labels can be added for
+          a single class.  This command triggers OWLKB to save changes to the ontology to the hard drive (unless saving
+          has been disabled via <a href='#commandline'>command line</a>).
+        </p>
+      </div>
+
+      <div id='json'>
+        <h2>JSON</h2>
+        <p>To get results in JSON, send a request header "Accept: application/json".
+        <blockquote>Example: curl --header "Accept: application/json" "http://localhost:20080/subterms/CHEBI_33709"</blockquote>
+        </p>
+      </div>
+
+      <div id='manchester'>
+        <h2>Manchester Syntax</h2>
+        <p>The strength of OWLKB is that in all the API commands where a term is expected, a compound
+           term can be indicated using Manchester Syntax.  Of course, when passing Manchester Syntax in
+           an URL, it should be urlencoded.  Here are some examples of Manchester Syntax (we've replaced spaces with +'s
+           so these examples can be used in URLs):
+           <ul id='manchesterlist'>
+             <li>All subclasses of (GO_0000111 intersect GO_0000112):<br>"GO_0000111+and+GO_0000112"</li>
+             <li>All things that are GO_0000111 and part-of some GO_0000112:<br>"GO_0000111+and+part-of+some+GO_0000112"</li>
+             <li>All things that are (GO_0000111 intersect GO_0000112) and part-of some GO_0000113:<br>"(GO_0000111+and+GO_0000112)+and+part-of+some+GO_0000113"</li>
+             <li>All things that are GO_0000111 and part-of some (GO_0000112 intersect GO_0000113):<br>"GO_0000111+and+part-of+some+(GO_0000112+and+GO_0000113)"</li>
+             <li>etc.</li>
+           </ul>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class='twelve columns'>
+    <h2>Quick Nav</h2>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#ontology'>Ontology Load</a></li>
+      <li>&raquo; <a href='#commandline'>Commandline</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+  </div>
+
+  <div class='four columns'>
+    <img src='/owlkb/bookowl.png' style='width:100%'>
+  </div>
+
+</div>
+
+</body>
+</html>

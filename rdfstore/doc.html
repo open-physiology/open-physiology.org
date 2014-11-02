@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>Rdfstore 2.0 Documentation</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#manchesterlist
+{
+  list-style: circle inside none;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>Rdfstore 2.0 Documentation</h1>
+    <hr>
+  </div>
+
+  <div class='twelve columns' id='introdiv'>
+    <div id='about'>
+      <h2>About</h2>
+
+      <p>
+        Rdfstore 2.0 is the Ricordo metadata wrapper.  It serves as a messenger
+        between SPARQL endpoint and end-user, alleviating the need to learn complicated
+        SPARQL syntax just to deal with metadata.  This is done with a system of
+        templates, which are customized at the organizational level.  The end-user tells
+        the appropriate systems team:  ``I want a form that'll let me query the database
+        for X.''  The team creates a template for that query.  Now the end-user can
+        select that template and query the database for X by filling out a simple form,
+        no SPARQL required.
+      </p>
+
+      <p>
+        The original Rdfstore was programmed by Sarala Wimaralatne.  Version 2.0 was
+        programmed by Sam Alexander for the Farr Institute.
+      </p>
+
+    </div>
+
+    <div id='license'>
+      <h3>License</h3>
+      <pre>
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+      </pre>
+    </div>
+  </div>
+
+  <div class='four columns'>
+    <h3>Quick Nav</h3>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#commandline'>Commandline</a></li>
+      <li>&raquo; <a href='#templates'>Templates</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+  </div>
+
+  <div class='sixteen columns' id='maindiv'>
+    <div id='installation'>
+      <h2>Installation</h2>
+      <p>Installation is as follows.
+        <ol>
+          <li>Assumption: You already have a triplestore running, with a SPARQL endpoint.</li>
+          <li>Ensure a java runtime and java compiler are installed.</li>
+          <li>Use "git clone", or any other means, to copy the repository from <a href='http://github.org/semitrivial/rdfstore'>http://github.org/semitrivial/rdfstore</a></li>
+          <li>Within the directory containing the copy of the repository, expand Rdfstore's dependencies using "jar -xf dep.jar"</li>
+          <li>Within the directory containing the copy of the repository, compile Rdfstore using "make" (or manually: "javac -g Rdfstore.java")</li>
+          <li>Within that directory, run "java Rdfstore -help" to get help on the command line arguments, or see further below.</li>
+          <li>In order for Rdfstore to be useful, you'll want to create some templates.  See <a href='#templates'>templates</a> below.</li>
+        </ol>
+      </p>
+    </div>
+
+    <div id='commandline'>
+      <h2>Commandline arguments</h2>
+      <p>Rdfstore can be run with the following commandline arguments.
+        <ul>
+          <li>-templates &lt;directory&gt;: Specifies the location of the directory containing Rdfstore templates.  Default: ./templates</li>
+
+          <li>-endpoint &lt;URL&gt;: Specifies the SPARQL query endpoint location for your triplestore.
+            <blockquote>
+              For example, if queries to your endpoint look like
+              <ul>
+                <li>http://localhost:3030/ddmore/query?force-accept=text%2Fplain&output=tsv&query=SELECT...</li>
+              </ul>
+              then you can use the following URL for the endpoint:
+              <ul>
+                <li>http://localhost:3030/ddmore/query?force-accept=text%2Fplain&output=tsv&query=</li>
+              </ul>
+              See the triplestore-specific documentation (coming soon) for more details.
+            </blockquote>
+          </li>
+
+          <li>-method &lt;GET or POST&gt;: Specifies which HTTP method your SPARQL endpoint uses.  Default: GET</li>
+          <li>-update &lt;URL&gt;: If your triplestore has a separate address for updates, specify that here.  Default: copies "endpoint"</li>
+          <li>-updatemethod &lt;GET or POST&gt;: If your triplestore has a separate address for updates, specify the HTTP method here.  Default: copies "method"</li>
+          <li>-format &lt;format&gt;: A string, containing "%s".  The %s will be replaced by the query itself, useful for things like triplestore-specific preambles, etc.  Default: %s</li>
+          <li>-port &lt;number&gt;: Specifies which port Rdfstore will listen for connections on.  Default: 20060</li>
+          <li>-help: Displays a help screen.</li>
+        </ul>
+      </p>
+    </div>
+
+    <div id="simplegui">
+      <h2>Simple GUI</h2>
+      <p>
+        Rdfstore comes with a simple GUI.  When Rdfstore is running, the GUI can be accessed at
+        http://localhost:20060/gui/ (replace "localhost" with whatever host you're running Rdfstore
+        on, and replace "20060" with whatever port your Rdfstore is running on, if necessary).
+        For example, the demonstration instance of Rdfstore is running on host open-physiology.org
+        on port 20060, so the GUI is at http://open-physiology.org:20060/gui
+      </p>
+      <blockquote>
+        <h4>Please Note</h4>
+        <p>
+          The built-in GUI is mainly just for demonstration purposes.  We anticipate Rdfstore will mainly
+          be used directly via the API.
+        </p>
+      </blockquote>
+    </div>
+
+    <div id='templates'>
+      <h2>Templates</h2>
+      <p>
+        A template is a SPARQL query, possibly with up to ten parameters.  Rdfstore reduces SPARQL to
+        a matter of filling-in-the-blanks, namely, one blank for each parameter.  Templates specific to
+        your organization should be created by someone who knows SPARQL.  The philosophy is: "construct
+        the SPARQL once, run the query many times" (with different parameters).
+        <blockquote>
+          Example: The SPARQL query to find all things which are "part-of" the class "acids" might look like so:
+          <pre>
+            SELECT DISTINCT ?part 
+            WHERE
+            {
+              ?part &lt;http://example.com/ontology#part-of&gt; &lt;http://example.com/ontology#acids&gt;
+            }
+          </pre>
+          Now suppose you want a generic form for "find all things 'part-of' the class 'X'", where the end-user
+          fills in X.  Create a template file with a name like "get_parts_of.txt" with contents:
+          <pre>
+            SELECT DISTINCT ?part
+            WHERE
+            {
+              ?part &lt;http://example.com/ontology#part-of&gt; &lt;[0]&gt;
+            }
+          </pre>
+          Here, [0] is a variable.  Other available variables are [1] through [9].
+        </blockquote>
+        Templates should be stored in a template directory.  When you run Rdfstore, use the command line to tell
+        Rdfstore which directory the templates are stored in (unless you use the default directory).
+        The template's name (minus ".txt") will become part of Rdfstore's GUI.  Assuming the template in the above
+        example has been loaded by Rdfstore, the template can be accessed at an address like
+        <ul>
+          <li>http://yoururl.org:20060/get_parts_of/?0=acids</li>
+        </ul>
+      </p>
+    </div>
+
+    <div id='mailinglist'>
+      <h2>Mailing List</h2>
+      <p>
+        Rdfstore does not currently have its own separate mailing list, but for the time being, questions (general or
+        technical) can be posted to the OWLKB-Questions mailing list:
+        <ul>
+          <li><a href='http://groups.google.co.uk/d/forum/owlkb-questions'>http://groups.google.co.uk/d/forum/owlkb-questions</a></li>
+        </ul>
+      </p>
+    </div>
+
+    <hr>
+
+  </div>
+
+  <div class='sixteen columns' id='apidiv'>
+    <div id='api'>
+
+      <h2>The API</h2>
+      <p>
+        Rdfstore has a dynamic API.  The API is defined by the templates your organization creates.
+        For each template, there is a corresponding API command.  If the template is named X.txt,
+        and depends on parameters [0], [1], and [2], then the API command looks like
+        <pre>
+          http://example.com:20060/X/?0=fill_this_in&1=also_fill_this&2=this_too
+        </pre>
+      </p>
+
+    </div>
+  </div>
+
+  <div class='sixteen columns'>
+    <h3>Quick Nav</h3>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>&raquo; <a href='#license'>License</a></li>
+      <li>&raquo; <a href='#installation'>Installation</a></li>
+      <li>&raquo; <a href='#commandline'>Commandline</a></li>
+      <li>&raquo; <a href='#templates'>Templates</a></li>
+      <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
+      <li>&raquo; <a href='#api'>The API</a></li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>
