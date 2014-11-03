@@ -9,6 +9,13 @@
 <link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
 <link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
 
+<style type='text/css'>
+  b
+  {
+    font-weight: bold;
+  }
+</style>
+
 </head>
 <body>
 
@@ -18,14 +25,21 @@
     <h1>Rdfstore 2.0 Docs -- Specific Triplestores</h1>
     <hr>
     <p>
-      Specific documentation for individual triplestores.
+      Specific documentation for using Rdfstore with individual triplestores.
+      <blockquote>
+        You only need one triplestore behind Rdfstore.
+        <br>
+        &raquo; If you want performance, you should use Virtuoso.
+        <br>
+        &raquo; If you want ease-of-use, you should use Fuseki.
+      </blockquote>
     </p>
     <hr>
 
     <h2>Table of Contents</h2>
     <ul>
-      <li><a href='#virtuoso'>Virtuoso</a></li>
-      <li><a href='#fuseki'>Fuseki</a></li>
+      <li>&raquo; <a href='#virtuoso'>Virtuoso</a></li>
+      <li>&raquo; <a href='#fuseki'>Fuseki</a></li>
     </ul>
     <hr>
 
@@ -51,7 +65,6 @@
       <pre>
         http://localhost:8890/sparql?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&query=
       </pre>
-      <br>
       &raquo; Minimum working example commandline:
       <pre>
         java Rdfstore -endpoint "http://localhost:8890/sparql?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&query="
@@ -65,7 +78,6 @@
       <pre>
       http://localhost:8890/sparql?default-graph-uri=&format=text%2Fhtml&timeout=0&debug=on&query=
       </pre>
-      <br>
       &raquo; Minimum working example commandline:
       <pre>
         java Rdfstore -endpoint "http://localhost:8890/sparql?default-graph-uri=&format=text%2Fhtml&timeout=0&debug=on&query="
@@ -175,7 +187,107 @@
     <hr>
 
     <p>
-      Coming soon.
+      By default, the Fuseki triple-store runs a SPARQL endpoint on port 3030.
+      If you're running Fuseki on some other port, change everything accordingly.
+    </p>
+
+    <p>
+      When using Fuseki, one gives one's dataset a name, and that name has to be inserted into
+      the SPARQL endpoint URL.  For the documentation below, we will assume your dataset is
+      named "<b>dataset</b>".  If you use a different name, change everything accordingly.
+    </p>
+
+    <h2>Queries</h2>
+
+    <p>
+      Depending on what format you like, you can run Rdfstore with the following endpoint strings.
+    </p>
+
+    <h3>JSON</h3>
+
+    <p>
+      &raquo Endpoint string:
+      <pre>
+        http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=json&query=
+      </pre>
+      &raquo Minimum working example commandline (query only, no update support):
+      <pre>
+        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=json&query="
+      </pre>
+      &raquo Remember to change "dataset" to the actual name of your Fuseki dataset!
+    </p>
+
+    <h3>Text</h3>
+
+    <p>
+      &raquo Endpoint string:
+      <pre>
+        http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=text&query=
+      </pre>
+      &raquo Minimum working example commandline (query only, no update support):
+      <pre>
+        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=text&query="
+      </pre>
+      &raquo Remember to change "dataset" to the actual name of your Fuseki dataset!
+    </p>
+
+    <h3>XML</h3>
+
+    <p>
+      &raquo Endpoint string:
+      <pre>
+        http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=xml&query=
+      </pre>
+      &raquo Minimum working example commandline (query only, no update support):
+      <pre>
+        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=xml&query="
+      </pre>
+      &raquo Remember to change "dataset" to the actual name of your Fuseki dataset!
+    </p>
+
+    <h3>TSV</h3>
+
+    <p>
+      &raquo Endpoint string:
+      <pre>
+        http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=tsv&query=
+      </pre>
+      &raquo Minimum working example commandline (query only, no update support):
+      <pre>
+        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=tsv&query="
+      </pre>
+      &raquo Remember to change "dataset" to the actual name of your Fuseki dataset!
+    </p>
+
+    <h2>Adding triples</h2>
+
+    <p>
+      The Fuseki SPARQL endpoint uses different URLs for SPARQL queries and SPARQL updates.
+      Furthermore, it only accepts SPARQL updates sent with an HTTP POST, it rejects updates
+      sent with HTTP GET.
+    </p>
+
+    <p>
+      Fortunately, Rdfstore allows you to specify a separate address/method for updates.
+      Run Rdfstore with commandline options
+      <pre>
+        -updatemethod POST
+      </pre>
+      and
+      <pre>
+        -update "http://localhost:3030/<b>dataset</b>/update"
+      </pre>
+      (replace "dataset" with the actual name of your dataset).
+    </p>
+
+    <h3>Minimal working example</h3>
+
+    <p>
+      If you want to run Rdfstore using Fuseki as the triplestore, returning query results in JSON format,
+      and with a dataset named "models", you can run it as follows:
+      <pre>
+        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=json&query=" -update "http://localhost:3030/models/update" -updatemethod POST
+      </pre>
     </p>
 
   </div>
