@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>Rdfstore 2.0 Docs -- Specific Triplestores</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>Rdfstore 2.0 Docs -- Specific Triplestores</h1>
+    <hr>
+    <p>
+      Specific documentation for individual triplestores.
+    </p>
+    <hr>
+
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href='#virtuoso'>Virtuoso</a></li>
+      <li><a href='#fuseki'>Fuseki</a></li>
+    </ul>
+    <hr>
+
+    <h1 id='virtuoso'>Virtuoso</h1>
+    <hr>
+
+    <p>
+      When your server is running Virtuoso, by default the SPARQL endpoint is on port 8890.
+      In the following documentation, we'll assume you keep that default; if you change it to
+      another port, then change everything accordingly.
+    </p>
+
+    <h2>Queries</h2>
+
+    <p>
+      Depending on what format you'd like the results in, you can use one of the following strings as the "endpoint" when running Rdfstore.
+    </p>
+
+    <h3>JSON format</h3>
+
+    <p>
+      &raquo; Endpoint string:
+      <pre>
+        http://localhost:8890/sparql?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&query=
+      </pre>
+      <br>
+      &raquo; Minimum working example commandline:
+      <pre>
+        java Rdfstore -endpoint "http://localhost:8890/sparql?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&query="
+      </pre>
+    </p>
+
+    <h3>HTML format</h3>
+
+    <p>
+      &raquo; Endpoint string:
+      <pre>
+      http://localhost:8890/sparql?default-graph-uri=&format=text%2Fhtml&timeout=0&debug=on&query=
+      </pre>
+      <br>
+      &raquo; Minimum working example commandline:
+      <pre>
+        java Rdfstore -endpoint "http://localhost:8890/sparql?default-graph-uri=&format=text%2Fhtml&timeout=0&debug=on&query="
+      </pre>
+    </p>
+
+    <h3>Other formats</h3>
+
+    <p>
+      Virtuoso makes a lot of other formats available.
+      To see the list, go to this
+      <a target='_blank' href='http://docs.openlinksw.com/virtuoso/rdfsparql.html'>Virtuoso SPARQL documentation page</a>
+      and scroll down to "16.2.3.3.3. Response Format".
+    </p>
+
+    <p>
+      For each listed content type, the general formula for the endpoint string is:
+      <pre>
+        http://localhost:8890/sparql?default-graph-uri=&format=<b>(content type)</b>&timeout=0&debug=on&query=
+      </pre>
+      where <b>(content type)</b> is replaced by the url-encoded mimetype from the above link.
+      <blockquote>
+        Example:
+        <br>
+        Suppose you want the format as "application/x-turtle".
+        <br>
+        Urlescape to get: "application%2Fx-turtle".
+        <br>
+        The endpoint string is:
+        <pre>
+          http://localhost:8890/sparql?default-graph-uri=&format=application%2Fx-turtle&timeout=0&debug=on&query=
+        </pre>
+      </blockquote>
+    </p>
+
+    <h2>Adding triples</h2>
+
+    <p>
+      There are <b>two things to know</b> to set up triple-authoring via Rdfstore via Virtuoso.
+    </p>
+
+    <h3>Must specify graph</h3>
+
+    <p>
+      When adding a triple in Virtuoso, it is necessary to specify which graph it goes in.
+      Here's an example "Insert_Triple.txt" template:
+      <pre>
+        # 0 = Graph IRI
+        # 1 = Subject IRI
+        # 2 = Predicate IRI
+        # 3 = Object IRI
+        INSERT INTO &lt;[0]&gt;
+        {
+          &lt;[1]&gt;
+          &lt;[2]&gt;
+          &lt;[3]&gt;
+        }
+      </pre>
+      (Note: The four comments at the beginning are just to tell the GUI what placeholder
+      text to put in the blank fields; they aren't strictly necessary.)
+    </p>
+
+    <h3>Must grant permission</h3>
+
+    <p>
+      By default, Virtuoso forbids triple-insertion via SPARQL endpoint.
+      If triple-insertion is forbidden, then your triple-insert Rdfstore templates will fail.
+    </p>
+
+    <p>
+      Here's how to enable triple-insertion via SPARQL endpoint:
+      <ol>
+        <li>
+          Connect to Virtuoso's ISQL console.  From the commandline on the machine where Virtuoso is running,
+          this is usually done with the "isql" command (or "isql-vt" on Ubuntu).
+        </li>
+
+        <li>
+          Issue the command:
+          <pre>
+            GRANT execute ON SPARQL_INSERT_DICT_CONTENT TO "SPARQL"
+          </pre>
+        </li>
+
+        <li>
+          You might be prompted for your Virtuoso credentials; if so, enter them.
+        </li>
+
+        <li>
+          Issue the command:
+          <pre>
+            GRANT execute ON SPARQL_INSERT_DICT_CONTENT TO SPARQL_UPDATE
+          </pre>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      Note: If you are worried about the security implications of allowing triple-insertion via
+      SPARQL endpoint, our recommendation is as follows.  You should configure your machine so that
+      only localhost is permitted to connect to port 8890 (or whichever port Virtuoso is running on).
+      Then, you can perform proper validation of user input in whatever program it is you're designing,
+      before invoking the Rdfstore API.
+    </p>
+
+    <h1 id='fuseki'>Fuseki</h1>
+    <hr>
+
+    <p>
+      Coming soon.
+    </p>
+
+  </div>
+</div>
+
+</body>
+</html>
