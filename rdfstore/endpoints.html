@@ -34,14 +34,12 @@
         &raquo; If you want ease-of-use, you should use Fuseki.
       </blockquote>
     </p>
-    <hr>
 
     <h2>Table of Contents</h2>
     <ul>
       <li>&raquo; <a href='#virtuoso'>Virtuoso</a></li>
       <li>&raquo; <a href='#fuseki'>Fuseki</a></li>
     </ul>
-    <hr>
 
     <h1 id='virtuoso'>Virtuoso</h1>
     <hr>
@@ -286,7 +284,7 @@
       If you want to run Rdfstore using Fuseki as the triplestore, returning query results in JSON format,
       and with a dataset named "models", you can run it as follows:
       <pre>
-        java Rdfstore -endpoint "http://localhost:3030/<b>dataset</b>/query?force-accept=text%2Fplain&output=json&query=" -update "http://localhost:3030/models/update" -updatemethod POST
+        java Rdfstore -endpoint "http://localhost:3030/models/query?force-accept=text%2Fplain&output=json&query=" -update "http://localhost:3030/models/update" -updatemethod POST
       </pre>
     </p>
 
