@@ -18,8 +18,8 @@ function divclicked(x)
       $(this).hide(250);
   });
 
-  document.getElementById("imagediv").className = "nine columns";
-  document.getElementById("rightdiv").className = "seven columns";
+  document.getElementById("imagediv").className = "seven columns";
+  document.getElementById("rightdiv").className = "nine columns";
 }
 
 function image_click()
