@@ -38,3 +38,8 @@ i
   margin: 0 auto;
   vertical-align: middle;
 }
+
+#publicationsdiv
+{
+  overflow: scroll;
+}

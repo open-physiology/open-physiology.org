@@ -1,4 +1,5 @@
 var animation_running = 0;
+var publications_shown = 0;
 
 function g(x)
 {
@@ -21,6 +22,32 @@ function divclicked(x)
       });
     else
       $(this).hide(250);
+  });
+
+  if ( publications_shown == 1 )
+  {
+    publications_shown = 0;
+    $("#publicationsdiv").hide(100,function()
+    {
+      $("#imagediv").show(150);
+    });
+  }
+}
+
+function publicationsclicked()
+{
+  if ( animation_running == 1 || publications_shown == 1 )
+    return;
+
+  animation_running = 1;
+  publications_shown = 1;
+
+  $("#imagediv").hide(150, function()
+  {
+    $("#publicationsdiv").show(150, function()
+    {
+      animation_running = 1;
+    });
   });
 }
 
