@@ -29,7 +29,7 @@ function divclicked(x)
     publications_shown = 0;
     $("#publicationsdiv").hide(100,function()
     {
-      $("#imagediv").show(150);
+      $("#imagediv_inner").show(150);
     });
   }
 }
@@ -39,10 +39,15 @@ function publicationsclicked()
   if ( animation_running == 1 || publications_shown == 1 )
     return;
 
+  $(".tabs").each(function()
+  {
+    $(this).hide(250);
+  });
+
   animation_running = 1;
   publications_shown = 1;
 
-  $("#imagediv").hide(150, function()
+  $("#imagediv_inner").hide(100, function()
   {
     $("#publicationsdiv").show(150, function()
     {
