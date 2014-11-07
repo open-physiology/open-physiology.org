@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="Skeleton/stylesheets/base.css">
     <link rel="stylesheet" href="Skeleton/stylesheets/skeleton.css">
+    <link rel="stylesheet" href="index.css">
 
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,42 +22,33 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="index.js"></script>
 
-    <style media='screen' type='text/css'>
-      ul
+    <script>
+      $( document ).ready(function()
       {
-        list-style: disc outside none;
-      }
-
-      b
-      {
-        font-weight: bold;
-      }
-
-      i
-      {
-        font-style: italic;
-      }
-
-      #overall_image
-      {
-        width: 100%;
-        display: block;
-        margin: 0 auto;
-        vertical-align: middle;
-      }
-    </style>
+        resize_divs();
+      });
+    </script>
 
   </head>
-  <body>
+  <body onresize="resize_divs();">
     <div class="container" id="maindiv">
-      <div class="twelve columns" id="imagediv">
-        <h1>Open Physiology</h1>
+      <div class="eleven columns">
+        <div class="floating-box" id="headerdiv">
+          <div class="floating-contents">
+            <h1 id='openphysiology'>Open Physiology</h1>
+          </div>
+        </div>
 
-        <img id='overall_image' src='images/overall_schematic_v2.png'>
+        <div class="floating-box" id="imagediv">
+          <div class="floating-contents">
+            <img id='overall_image' src='images/overall_schematic_v2.png'>
+          </div>
+        </div>
 
       </div>
 
-      <div class="four columns" id="rightdiv">
+      <div class="five columns floating-box" id="rightdiv" style="height:100%">
+       <div class="floating-content">
         <h3 id='home'><a href='javascript:void(0)' onclick='divclicked("homediv");'>Home</a></h3>
         <div id='homediv' class='tabs'>
           <p>
@@ -202,7 +194,7 @@
             </li>
           </ul>
         </div>
-
+       </div>
       </div>
 
     </div>

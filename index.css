@@ -1,0 +1,40 @@
+.floating-box
+{
+  margin-top: 15px;
+  box-sizing: border box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  border: solid 1px rgb(180, 180, 180) !important;
+  box-shadow: 10px 10px 10px #999999;
+  border-radius: 4px;
+}
+
+.floating-content
+{
+  padding: 10px;
+  color: rgb(51,51,51);
+  margin-top: 15px;
+}
+
+ul li ul
+{
+  list-style: disc outside none;
+}
+
+b
+{
+  font-weight: bold;
+}
+
+i
+{
+  font-style: italic;
+}
+
+#overall_image
+{
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  vertical-align: middle;
+}
