@@ -27,9 +27,9 @@ function divclicked(x)
   if ( publications_shown == 1 )
   {
     publications_shown = 0;
-    $("#publicationsdiv").hide(100,function()
+    $("#publicationsdiv").fadeOut(100,function()
     {
-      $("#imagediv_inner").show(150);
+      $("#imagediv_inner").fadeIn(150);
     });
   }
 }
@@ -47,9 +47,9 @@ function publicationsclicked()
   animation_running = 1;
   publications_shown = 1;
 
-  $("#imagediv_inner").hide(100, function()
+  $("#imagediv_inner").fadeOut(100, function()
   {
-    $("#publicationsdiv").show(150, function()
+    $("#publicationsdiv").fadeIn(150, function()
     {
       animation_running = 0;
     });
