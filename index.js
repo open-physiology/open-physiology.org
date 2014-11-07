@@ -46,7 +46,7 @@ function publicationsclicked()
   {
     $("#publicationsdiv").show(150, function()
     {
-      animation_running = 1;
+      animation_running = 0;
     });
   });
 }
@@ -57,6 +57,7 @@ function resize_divs()
   {
     g("rightdiv").style.height = (window.innerHeight-40) + "px";
     g("imagediv").style.height = (window.innerHeight-120) + "px";
+    g("publicationsdiv").style.height = g("imagediv").style.height;
 
     $("#overall_image").load(function()
     {
@@ -69,6 +70,7 @@ function resize_divs()
   {
     g("rightdiv").style.height = "100%";
     g("imagediv").style.height = "100%";
+    g("publicationsdiv").style.height = "100%";
     g("overall_image").style.marginTop = "0px";
   }
 }
