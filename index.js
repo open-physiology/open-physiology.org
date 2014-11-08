@@ -65,14 +65,6 @@ function publicationsclicked()
       animation_running = 0;
     });
   });
-
-  $('html, body').animate
-  (
-    {
-      scrollTop: $("#imagediv).offset().top
-    },
-    250
-  );
 }
 
 function resize_divs()
