@@ -36,7 +36,18 @@ function divclicked(x)
 
 function publicationsclicked()
 {
-  if ( animation_running == 1 || publications_shown == 1 )
+  if ( animation_running == 1 )
+    return;
+
+  $('html, body').animate
+  (
+    {
+      scrollTop: $("#imagediv").offset().top
+    },
+    250
+  );
+
+  if ( publications_shown == 1 )
     return;
 
   $(".tabs").each(function()
@@ -54,6 +65,14 @@ function publicationsclicked()
       animation_running = 0;
     });
   });
+
+  $('html, body').animate
+  (
+    {
+      scrollTop: $("#imagediv).offset().top
+    },
+    250
+  );
 }
 
 function resize_divs()
