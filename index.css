@@ -31,9 +31,14 @@ i
   font-style: italic;
 }
 
-#rightdiv, #imagediv
+#rightdiv
 {
   overflow: auto;
+}
+
+#imagediv
+{
+  overflow: hidden;
 }
 
 #overall_image
