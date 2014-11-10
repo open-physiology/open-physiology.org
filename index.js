@@ -146,6 +146,8 @@ function update_slideshow()
   g("overall_image").style.marginTop = "0px";
   $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
 
+  resize_divs();
+
   $("#overall_image").fadeIn(500, function()
   {
     resize_divs();
