@@ -89,13 +89,7 @@ function resize_divs()
       center_image();
     });
 
-    if ( window.innerWidth > window.innerHeight && landscape_mode != 1 )
-    {
-      landscape_mode = 1;
-      if ( publications_shown == 0 )
-        g("imagediv").style.display = "none";
-    }
-    else if ( landscape_mode == 1 )
+    if ( landscape_mode == 1 )
     {
       landscape_mode = 0;
       g("imagediv").style.display = "block";
@@ -108,7 +102,16 @@ function resize_divs()
     g("rightdiv").style.height = "100%";
     g("imagediv").style.height = "100%";
     g("overall_image").style.marginTop = "0px";
-    if ( landscape_mode == 1 )
+    if ( window.innerWidth > window.innerHeight )
+    {
+      if ( landscape_mode == 0 )
+      {
+        landscape_mode = 1;
+        if ( publications_shown == 0 )
+          g("imagediv").style.display = "none";
+      }
+    }
+    else if ( landscape_mode == 1 )
     {
       landscape_mode = 0;
       g("imagediv").style.display = "block";
