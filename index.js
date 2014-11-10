@@ -122,6 +122,8 @@ function update_slideshow()
 
   $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
 
+  center_image();
+
   $("#overall_image").fadeIn(500, function()
   {
     $("#overall_image").delay(3000).fadeOut(500, function()
