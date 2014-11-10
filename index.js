@@ -95,3 +95,38 @@ function center_image()
 
   g("overall_image").style.marginTop = ((window.innerHeight-120-ht)/2)+"px";
 }
+
+var slidenumber = 0;
+var images =
+[
+  "OpenPhysiologySite_1.png",
+  "OpenPhysiologySite_2.png",
+  "OpenPhysiologySite_3.png",
+  "OpenPhysiologySite_4.png"
+];
+
+function init_slideshow()
+{
+  $("#overall_image").delay(3000).fadeOut(500, function()
+  {
+    update_slideshow();
+  });
+}
+
+function update_slideshow()
+{
+  slidenumber++;
+
+  if ( slidenumber >= images.length )
+    slidenumber = 0;
+
+  $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
+
+  $("#overall_image").fadeIn(500, function()
+  {
+    $("#overall_image").delay(3000).fadeOut(500, function()
+    {
+      update_slideshow();
+    });
+  });
+}
