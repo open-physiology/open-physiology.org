@@ -13,7 +13,7 @@
 {
   padding: 10px;
   color: rgb(51,51,51);
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 ul li ul
@@ -31,6 +31,11 @@ i
   font-style: italic;
 }
 
+#rightdiv, #imagediv
+{
+  overflow: auto;
+}
+
 #overall_image
 {
   width: 100%;
@@ -41,7 +46,7 @@ i
 
 #publicationsdiv
 {
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 #openphysiology
