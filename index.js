@@ -100,7 +100,8 @@ function resize_divs()
   {
     g("rightdiv").style.height = "100%";
     g("imagediv").style.height = (Math.floor(window.innerHeight / 3)) + "px";
-    g("overall_image").style.marginTop = "0px";
+    /*g("overall_image").style.marginTop = "0px";*/
+    center_image();
   }
 }
 
