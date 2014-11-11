@@ -103,7 +103,7 @@ function pubsclick(x)
     {
       animation_running = 0;
       g(x+"_link").innerHTML = "-" + $("#"+x+"_link").html().substring(1);
-    }
+    });
   }
 
   $(".pubs_tabs").each(function()
