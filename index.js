@@ -111,7 +111,7 @@ function pubsclick(x)
     if ( this.id != x && $(this).is(":visible") )
       $(this).hide(250, function()
       {
-        this.innerHTML = "+" + $(this).html().substring(1);
+        g(this.id+"_link").innerHTML = "+" + $(this).html().substring(1);
       });
   });
 }
