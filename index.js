@@ -111,7 +111,7 @@ function pubsclick(x)
     if ( this.id != x && $(this).is(":visible") )
       $(this).hide(250, function()
       {
-        g(this.id+"_link").innerHTML = "+" + $(this).html().substring(1);
+        g(this.id+"_link").innerHTML = "+" + $("#"+this.id+"_link").html().substring(1);
       });
   });
 }
@@ -134,7 +134,6 @@ function resize_divs()
   {
     g("rightdiv").style.height = "100%";
     g("imagediv").style.height = (Math.floor(window.innerHeight / 3)) + "px";
-    /*g("overall_image").style.marginTop = "0px";*/
     center_image();
   }
 }
@@ -144,11 +143,6 @@ function center_image()
   var ht = g("overall_image").height;
 
   g("overall_image").style.marginTop = Math.floor(($("#imagediv").innerHeight() - ht)/2) + "px";
-
-  /*if ( is_mobile() == 0 )
-    g("overall_image").style.marginTop = ((window.innerHeight-120-ht)/2)+"px";
-  else
-    g("overall_image").style.marginTop = 0;*/
 }
 
 var slidenumber = 0;
