@@ -155,7 +155,8 @@ function init_slideshow()
     for ( var i = 1; i < images.length; i++ )
       (new Image()).src = "http://open-physiology.org/images/"+images[i];
   })
-  .delay(3000-250).fadeOut(500, function()
+  
+  $("#overall_image").delay(3000).fadeOut(500, function()
   {
     update_slideshow();
   });
