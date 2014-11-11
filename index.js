@@ -82,6 +82,40 @@ function publicationsclicked()
   });
 }
 
+function pubsclick(x)
+{
+  if ( animation_running == 1 )
+    return;
+
+  animation_running = 1;
+
+  if ( $("#"+x).is(":visible") )
+  {
+    $("#"+x).hide(250, function()
+    {
+      animation_running = 0;
+      g(x+"_link").innerHTML = "+" + $("#"+x+"_link").html().substring(1);
+    });
+  }
+  else
+  {
+    $("#"+x).show(250, function()
+    {
+      animation_running = 0;
+      g(x+"_link").innerHTML = "-" + $("#"+x+"_link").html().substring(1);
+    }
+  }
+
+  $(".pubs_tabs").each(function()
+  {
+    if ( this.id != x && $(this).is(":visible") )
+      $(this).hide(250, function()
+      {
+        this.innerHTML = "+" + $(this).html().substring(1);
+      });
+  });
+}
+
 function resize_divs()
 {
   if ( is_mobile() == 0 )
