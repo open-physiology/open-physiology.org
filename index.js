@@ -14,6 +14,12 @@ function g(x)
   return document.getElementById(x);
 }
 
+function is_mobile()
+{
+  if ( window.innerWidth >= 767 ) return 0;
+  return 1;
+}
+
 function divclicked(x)
 {
   if ( animation_running == 1 )
@@ -78,7 +84,7 @@ function publicationsclicked()
 
 function resize_divs()
 {
-  if ( window.innerWidth >= 767 )
+  if ( is_mobile() == 0 )
   {
     g("rightdiv").style.height = (window.innerHeight-40) + "px";
     g("imagediv").style.height = (window.innerHeight-115) + "px";
@@ -102,7 +108,10 @@ function center_image()
 {
   var ht = g("overall_image").height;
 
-  g("overall_image").style.marginTop = ((window.innerHeight-120-ht)/2)+"px";
+  if ( is_mobile() == 0 )
+    g("overall_image").style.marginTop = ((window.innerHeight-120-ht)/2)+"px";
+  else
+    g("overall_image").style.marginTop = 0;
 }
 
 var slidenumber = 0;
