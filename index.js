@@ -82,7 +82,7 @@ function resize_divs()
   if ( window.innerWidth >= 767 )
   {
     g("rightdiv").style.height = (window.innerHeight-40) + "px";
-    g("imagediv").style.height = (window.innerHeight-120) + "px";
+    g("imagediv").style.height = (window.innerHeight-115) + "px";
 
     $("#overall_image").load(function()
     {
