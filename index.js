@@ -108,10 +108,12 @@ function center_image()
 {
   var ht = g("overall_image").height;
 
-  if ( is_mobile() == 0 )
+  g("overall_image").style.marginTop = Math.floor(($("#imagediv").innerHeight() - ht)/2) + "px";
+
+  /*if ( is_mobile() == 0 )
     g("overall_image").style.marginTop = ((window.innerHeight-120-ht)/2)+"px";
   else
-    g("overall_image").style.marginTop = 0;
+    g("overall_image").style.marginTop = 0;*/
 }
 
 var slidenumber = 0;
