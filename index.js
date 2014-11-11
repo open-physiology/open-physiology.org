@@ -149,12 +149,14 @@ var slidenumber = 0;
 
 function init_slideshow()
 {
-  $("#overall_image").delay(250).queue( function()
+  setTimeout(function()
   {
-    // Preload images to avoid jumpiness
+    /*
+     * Preload images to reduce jerk
+     */
     for ( var i = 1; i < images.length; i++ )
       (new Image()).src = "http://open-physiology.org/images/"+images[i];
-  })
+  }, 250 );
   
   $("#overall_image").delay(3000).fadeOut(500, function()
   {
