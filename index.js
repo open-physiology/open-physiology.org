@@ -8,7 +8,6 @@ var images =
 
 var animation_running = 0;
 var publications_shown = 0;
-var landscape_mode = 0;
 
 function g(x)
 {
@@ -89,33 +88,13 @@ function resize_divs()
       center_image();
     });
 
-    if ( landscape_mode == 1 )
-    {
-      landscape_mode = 0;
-      g("imagediv").style.display = "block";
-    }
-
     center_image();
   }
   else
   {
     g("rightdiv").style.height = "100%";
-    g("imagediv").style.height = "100%";
+    g("imagediv").style.height = (Math.floor(window.innerHeight / 3)) + "px";
     g("overall_image").style.marginTop = "0px";
-    if ( window.innerWidth > window.innerHeight )
-    {
-      if ( landscape_mode == 0 )
-      {
-        landscape_mode = 1;
-        if ( publications_shown == 0 )
-          g("imagediv").style.display = "none";
-      }
-    }
-    else if ( landscape_mode == 1 )
-    {
-      landscape_mode = 0;
-      g("imagediv").style.display = "block";
-    }
   }
 }
 
