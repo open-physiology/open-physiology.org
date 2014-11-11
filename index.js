@@ -25,15 +25,12 @@ function divclicked(x)
   if ( animation_running == 1 )
     return;
 
-  animation_running = 1;
+  set_animation(250);
 
   $(".tabs").each(function()
   {
     if ( this.id == x )
-      $(this).show(250, function()
-      {
-        animation_running = 0;
-      });
+      $(this).show(250);
     else
       $(this).hide(250);
   });
@@ -56,6 +53,8 @@ function left_takeover(x)
   if ( animation_running == 1 )
     return;
 
+  set_animation(250);
+
   if ( $("#"+x).is(":visible") )
     return;
 
@@ -70,10 +69,7 @@ function left_takeover(x)
   $(".tabs").each(function()
   {
     $(this).hide(250);
-    animation_running = 0;
   });
-
-  animation_running = 1;
 
   if ( left_taken_over == 0 )
   {
@@ -98,13 +94,12 @@ function pubsclick(x)
   if ( animation_running == 1 )
     return;
 
-  animation_running = 1;
+  set_animation(250);
 
   if ( $("#"+x).is(":visible") )
   {
     $("#"+x).hide(250, function()
     {
-      animation_running = 0;
       g(x+"_link").innerHTML = "+" + $("#"+x+"_link").html().substring(1);
     });
   }
@@ -112,7 +107,6 @@ function pubsclick(x)
   {
     $("#"+x).show(250, function()
     {
-      animation_running = 0;
       g(x+"_link").innerHTML = "-" + $("#"+x+"_link").html().substring(1);
     });
   }
@@ -196,4 +190,14 @@ function update_slideshow()
       update_slideshow();
     });
   });
+}
+
+function set_animation(x)
+{
+  animation_running = 1;
+
+  setTimeout(function()
+  {
+    animation_running = 0;
+  }, x );
 }
