@@ -7,7 +7,7 @@ var images =
 ];
 
 var animation_running = 0;
-var publications_shown = 0;
+var left_taken_over = 0;
 
 function g(x)
 {
@@ -38,19 +38,25 @@ function divclicked(x)
       $(this).hide(250);
   });
 
-  if ( publications_shown == 1 )
+  if ( left_taken_over == 1 )
   {
-    publications_shown = 0;
-    $("#publicationsdiv").fadeOut(100,function()
+    left_taken_over = 0;
+
+    $(".left_taker").fadeOut(100);
+
+    setTimeout( function()
     {
       $("#imagediv_inner").fadeIn(150);
-    });
+    }, 100 );
   }
 }
 
-function publicationsclicked()
+function left_takeover(x)
 {
   if ( animation_running == 1 )
+    return;
+
+  if ( $("#"+x).is(":visible") )
     return;
 
   $('html, body').animate
@@ -61,25 +67,30 @@ function publicationsclicked()
     250
   );
 
-  if ( publications_shown == 1 )
-    return;
-
   $(".tabs").each(function()
   {
     $(this).hide(250);
+    animation_running = 0;
   });
 
   animation_running = 1;
-  publications_shown = 1;
 
-  g("imagediv").style.display = "block";
-  $("#imagediv_inner").fadeOut(100, function()
+  if ( left_taken_over == 0 )
   {
-    $("#publicationsdiv").fadeIn(150, function()
+    left_taken_over = 1;
+
+    $("#imagediv_inner").fadeOut(100, function()
     {
-      animation_running = 0;
+      $("#"+x).fadeIn(150);
     });
-  });
+  }
+  else
+  {
+    $(".left_taker").fadeOut(100, function()
+    {
+      $("#"+x).fadeIn(150);
+    });
+  }
 }
 
 function pubsclick(x)
