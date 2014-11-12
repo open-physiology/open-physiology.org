@@ -147,7 +147,10 @@ function center_image()
 {
   var ht = g("overall_image").height;
 
-  g("overall_image").style.marginTop = Math.floor(($("#imagediv").innerHeight() - ht)/2) + "px";
+  if ( is_mobile == 0 )
+    g("overall_image").style.marginTop = Math.floor(($("#imagediv").innerHeight() - ht)/2) + "px";
+  else
+    g("overall_image").style.marginTop = "0px";
 }
 
 var slidenumber = 0;
@@ -176,7 +179,7 @@ function update_slideshow()
   if ( slidenumber >= images.length )
     slidenumber = 0;
 
-  g("overall_image").style.marginTop = "0px";
+  center_image();
   $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
 
   resize_divs();

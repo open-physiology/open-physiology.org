@@ -49,7 +49,7 @@ i
   vertical-align: middle;
 }
 
-#publicationsdiv
+#publicationsdiv, #teamsdiv
 {
   overflow: auto;
 }
