@@ -14,10 +14,16 @@ function g(x)
   return document.getElementById(x);
 }
 
-function is_mobile()
+function is_portrait()
 {
-  if ( window.innerWidth >= 767 ) return 0;
-  return 1;
+  if ( window.innerWidth < 480 ) return 1;
+  return 0;
+}
+
+function is_landscape()
+{
+  if ( is_portrait() == 0 && window.innerWidth < 768 ) return 1;
+  return 0;
 }
 
 function divclicked(x)
@@ -127,10 +133,24 @@ function pubsclick(x)
 
 function resize_divs()
 {
-  if ( is_mobile() == 0 )
+  if ( is_portrait() == 0 )
   {
+    if ( is_landscape() == 1 )
+    {
+      g("leftdiv").className = "eight columns";
+      g("rightdiv").className = "eight columns floating-box";
+      g("headerdiv").innerHTML = "<h3 id='openphysiology'>OpenPhysiology</h3>";
+      g("imagediv").style.height = (window.innerHeight-105) + "px";
+    }
+    else
+    {
+      g("leftdiv").className = "eleven columns";
+      g("rightdiv").className = "five columns floating-box";
+      g("headerdiv").innerHTML = "<h2 id='openphysiology'>Open Physiology</h2>";
+      g("imagediv").style.height = (window.innerHeight-115) + "px";
+    }
+
     g("rightdiv").style.height = (window.innerHeight-40) + "px";
-    g("imagediv").style.height = (window.innerHeight-115) + "px";
 
     $("#overall_image").load(function()
     {
@@ -153,7 +173,7 @@ function center_image()
 {
   var ht = g("overall_image").height;
 
-  if ( is_mobile() == 0 )
+  if ( is_portrait() == 0 )
     g("overall_image").style.marginTop = Math.floor(($("#imagediv").innerHeight() - ht)/2) + "px";
   else
     g("overall_image").style.marginTop = "0px";
