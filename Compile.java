@@ -87,10 +87,10 @@ public class Compile
     the_pubs = the_pubs.replace("\r", "\n");
     the_pubs = the_pubs.replace("\n", "\n            ");
 
-    the_teams = the_ppl.replace("\n\r", "\n");
-    the_teams = the_ppl.replace("\r\n", "\n");
-    the_teams = the_ppl.replace("\r", "\n");
-    the_teams = the_ppl.replace("\n", "\n            ");
+    the_teams = the_teams.replace("\n\r", "\n");
+    the_teams = the_teams.replace("\r\n", "\n");
+    the_teams = the_teams.replace("\r", "\n");
+    the_teams = the_teams.replace("\n", "\n            ");
 
     the_html = the_html.replace("@PUBLICATIONS", the_pubs);
     the_html = the_html.replace("@INFRASTRUCTURE", the_inf);
