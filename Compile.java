@@ -11,8 +11,8 @@ public class Compile
 
   public void run()
   {
-    File precompiled, publications, infrastructure, people;
-    boolean fPubs, fInf, fPpl;
+    File precompiled, publications, infrastructure, teams;
+    boolean fPubs, fInf, fTeams;
 
     try
     {
@@ -48,16 +48,16 @@ public class Compile
 
     try
     {
-      people = new File("people.html");
-      fPpl = true;
+      teams = new File("teams.html");
+      fTeams = true;
     }
     catch(Exception e)
     {
-      fPpl = false;
-      people = null;
+      fTeams = false;
+      teams = null;
     }
 
-    String the_html, the_pubs, the_inf, the_ppl;
+    String the_html, the_pubs, the_inf, the_teams;
     try
     {
       the_html = new Scanner(precompiled).useDelimiter("\\A").next();
@@ -66,7 +66,7 @@ public class Compile
 
       the_inf = fInf ? new Scanner(infrastructure).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load infrastructure.html</p>";
 
-      the_ppl = fPpl ? new Scanner(people).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load people.html</p>";
+      the_teams = fTeams ? new Scanner(teams).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load people.html</p>";
     }
     catch(Exception e)
     {
@@ -87,14 +87,14 @@ public class Compile
     the_pubs = the_pubs.replace("\r", "\n");
     the_pubs = the_pubs.replace("\n", "\n            ");
 
-    the_ppl = the_ppl.replace("\n\r", "\n");
-    the_ppl = the_ppl.replace("\r\n", "\n");
-    the_ppl = the_ppl.replace("\r", "\n");
-    the_ppl = the_ppl.replace("\n", "\n            ");
+    the_teams = the_ppl.replace("\n\r", "\n");
+    the_teams = the_ppl.replace("\r\n", "\n");
+    the_teams = the_ppl.replace("\r", "\n");
+    the_teams = the_ppl.replace("\n", "\n            ");
 
     the_html = the_html.replace("@PUBLICATIONS", the_pubs);
     the_html = the_html.replace("@INFRASTRUCTURE", the_inf);
-    the_html = the_html.replace("@PEOPLE", the_ppl);
+    the_html = the_html.replace("@TEAMS", the_teams);
 
     System.out.print( the_html );
   }
