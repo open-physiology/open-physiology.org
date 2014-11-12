@@ -46,6 +46,11 @@ i
   overflow: hidden;
 }
 
+#headerdiv
+{
+  text-align: center;
+}
+
 #publicationsdiv, #teamsdiv
 {
   overflow: auto;
