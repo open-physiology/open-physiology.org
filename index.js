@@ -146,7 +146,7 @@ function resize_divs()
     {
       g("leftdiv").className = "eleven columns";
       g("rightdiv").className = "five columns floating-box";
-      g("headerdiv").innerHTML = "<h2 id='openphysiology'>Open Physiology</h2>";
+      g("headerdiv").innerHTML = "<h2 id='openphysiology' style='margin-left:10px'>Open Physiology</h2>";
       g("imagediv").style.height = (window.innerHeight-115) + "px";
     }
 
