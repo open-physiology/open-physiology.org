@@ -64,3 +64,11 @@ h3 a:link
 {
   color: #1A1A1A;
 }
+
+@media only screen and (max-width: 500px)
+{
+  table, td, tr
+  {
+    display: block;
+  }
+}
