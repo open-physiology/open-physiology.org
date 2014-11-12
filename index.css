@@ -16,9 +16,14 @@
   margin-top: 5px;
 }
 
-ul li ul, td ul
+ul li ul
 {
   list-style: disc outside none;
+}
+
+td ul
+{
+  list-style: disc inside none;
 }
 
 b
