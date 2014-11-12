@@ -177,9 +177,13 @@
 /* #Mobile (Landscape)
 ================================================== */
 
-    /* Note: Design for a width of 480px */
+    /*
+     * Modified by Sam Alexander to prevent collapsing columns in landscape.
+     * Also breaking landscape up into micro-landscape (480px thru 623px) and
+     * macro-landscape (624px thru 767px)
+     */
 
-    @media only screen and (min-width: 480px) and (max-width: 767px) {
+    @media only screen and (min-width: 480px) and (max-width: 623px) {
         .container { width: 480px; }
         .container .columns,
         .container .column { margin-left: 10px; margin-right: 10px; }
@@ -204,6 +208,33 @@
         .container .one-third.column	{width: 140px;}
         .container .two-thirds.column	{width: 300px;}
     }
+
+    @media only screen and (min-width: 624px) and (max-width: 767px) {
+        .container { width: 624px; }
+        .container .columns,
+        .container .column { margin-left: 10px; margin-right: 10px; }
+
+        .container .one.column,
+        .container .one.columns         {width: 19px;}
+        .container .two.columns         {width: 58px;}
+        .container .three.columns       {width: 97px;}
+        .container .four.columns        {width: 136px;}
+        .container .five.columns        {width: 175px;}
+        .container .six.columns         {width: 214px;}
+        .container .seven.columns       {width: 253px;}
+        .container .eight.columns       {width: 292px;}
+        .container .nine.columns        {width: 331px;}
+        .container .ten.columns         {width: 370px;}
+        .container .eleven.columns      {width: 409px;}
+        .container .twelve.columns      {width: 448px;}
+        .container .thirteen.columns    {width: 487px;}
+        .container .fourteen.columns    {width: 526px;}
+        .container .fifteen.columns     {width: 565px;}
+        .container .sixteen.columns     {width: 604px;}
+        .container .one-third.column    {width: 188px;}
+        .container .two-thirds.column   {width: 396px;}
+    }
+
 
 
 /* #Clearing
