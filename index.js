@@ -45,6 +45,8 @@ function divclicked(x)
     {
       $("#imagediv_inner").fadeIn(150);
     }, 100 );
+
+    resize_divs();
   }
 }
 
@@ -79,6 +81,8 @@ function left_takeover(x)
     {
       $("#"+x).fadeIn(150);
     });
+
+    resize_divs();
   }
   else
   {
@@ -132,15 +136,17 @@ function resize_divs()
     {
       center_image();
     });
-
-    center_image();
   }
   else
   {
     g("rightdiv").style.height = "100%";
-    g("imagediv").style.height = (Math.floor(window.innerHeight / 3)) + "px";
-    center_image();
+    if ( left_taken_over == 0 )
+      g("imagediv").style.height = (Math.floor(window.innerHeight / 3)) + "px";
+    else
+      g("imagediv").style.height = (Math.floor((window.innerHeight * 3)/4)) + "px";
   }
+
+  center_image();
 }
 
 function center_image()
