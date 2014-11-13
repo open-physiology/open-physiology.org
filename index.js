@@ -2,7 +2,7 @@ var images =
 [
   "OpenPhysiologySite_1.png",
   "OpenPhysiologySite_2.png",
-  "OpenPhysiologySite_3.png",
+  "OpenPhysiologySite_3_bdb.gif",
   "OpenPhysiologySite_4.png"
 ];
 
