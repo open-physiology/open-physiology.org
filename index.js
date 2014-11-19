@@ -3,7 +3,8 @@ var images =
   "OpenPhysiologySite_1.png",
   "OpenPhysiologySite_2.png",
   "OpenPhysiologySite_3_bdb.gif",
-  "OpenPhysiologySite_4.png"
+  "OpenPhysiologySite_4.png",
+  "Movie2.gif"
 ];
 
 var animation_running = 0;
