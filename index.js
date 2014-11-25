@@ -1,10 +1,10 @@
 var images =
 [
   "OpenPhysiologySite_1.png",
+  "Movie2.gif",
   "OpenPhysiologySite_2.png",
   "OpenPhysiologySite_3_bdb.gif",
-  "OpenPhysiologySite_4.png",
-  "Movie2.gif"
+  "OpenPhysiologySite_4.png"
 ];
 
 var animation_running = 0;
