@@ -22,7 +22,7 @@ var youtubes =
   {
     title: "ApiNATOMY &amp; the Human Protein Atlas",
     address: "https://www.youtube.com/embed/MlmIcdlYjLk",
-    thumbnail: "http://open-physiology.org/images/youtube3.webp"
+    thumbnail: "http://open-physiology.org/images/youtube3.jpg"
   }
 ];
 
