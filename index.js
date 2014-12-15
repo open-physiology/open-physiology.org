@@ -28,6 +28,7 @@ var youtubes =
 
 var animation_running = 0;
 var left_taken_over = 0;
+var youtube_initiated = 0;
 
 function g(x)
 {
@@ -98,6 +99,12 @@ function left_takeover(x)
   {
     $(this).hide(250);
   });
+
+  if ( x == "demosdiv" && youtube_initiated == 0 )
+  {
+    youtube_initiated = 1;
+    init_youtube();
+  }
 
   if ( left_taken_over == 0 )
   {
