@@ -229,10 +229,12 @@ function init_youtube()
       "</div>";
 
     footer_html +=
-      "<div style='display:inline-block; max-width: 33%'>" +
+      "<div style='display:inline-block; vertical-align: top; max-width: 33%'>" +
         "<ul style='display:inline'>" +
           "<li>" +
-            "<img src='" + youtubes[i].thumbnail + "' style='max-width: 75%'>" +
+            "<a href='javascript:void(0)' onclick='switch_video(" + i + ");'>" +
+              "<img src='" + youtubes[i].thumbnail + "' style='max-width: 75%'>" +
+            "</a>" +
           "</li>" +
           "<li>" +
             youtubes[i].title +
@@ -243,6 +245,17 @@ function init_youtube()
 
   g("youtube_holder").innerHTML = youtube_html;
   g("youtube_footer").innerHTML = footer_html;
+}
+
+function switch_video(x)
+{
+  for ( var i = 0; i < youtubes.length; i++ )
+  {
+    if ( i != x )
+      $("#youtube"+i).hide();
+  }
+
+  $("#youtube"+x).show();
 }
 
 function update_slideshow()
