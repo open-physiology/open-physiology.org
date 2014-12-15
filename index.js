@@ -224,21 +224,21 @@ function init_youtube()
   for ( var i = 0; i < youtubes.length; i++ )
   {
     youtube_html +=
-      "<div id='youtube" + i + "'" + (i==0 ? "" : " style='display:none'") + ">" +
-        "<iframe width='560' height='315' src='" + youtubes[i].address  + "' frameborder='0' allowfullscreen></iframe>" +
+      "<div id='youtube" + i + "' style='height:100%;" + (i==0 ? "" : " display:none") + "'>" +
+        "<iframe width='100%' height='100%' src='" + youtubes[i].address  + "' frameborder='0' allowfullscreen></iframe>" +
       "</div>";
 
     footer_html +=
-      "<li style='display:inline'>" +
-        "<ul>" +
+      "<div style='display:inline-block; max-width: 33%'>" +
+        "<ul style='display:inline'>" +
           "<li>" +
-            "<img src='" + youtubes[i].thumbnail + "'>" +
+            "<img src='" + youtubes[i].thumbnail + "' style='max-width: 75%'>" +
           "</li>" +
           "<li>" +
             youtubes[i].title +
           "</li>" +
         "</ul>" +
-      "</li>";
+      "</div>";
   }
 
   g("youtube_holder").innerHTML = youtube_html;
