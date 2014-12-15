@@ -218,8 +218,13 @@ function init_slideshow()
 
 function init_youtube()
 {
+  init_youtube_holder();
+  init_youtube_footer();
+}
+
+function init_youtube_holder()
+{
   var youtube_html = "";
-  var footer_html = "";
 
   for ( var i = 0; i < youtubes.length; i++ )
   {
@@ -227,7 +232,17 @@ function init_youtube()
       "<div id='youtube" + i + "' style='height:100%;" + (i==0 ? "" : " display:none") + "'>" +
         "<iframe width='100%' height='100%' src='" + youtubes[i].address  + "' frameborder='0' allowfullscreen></iframe>" +
       "</div>";
+  }
 
+  g("youtube_holder").innerHTML = youtube_html;
+}
+
+function init_youtube_footer()
+{
+  var footer_html = "";
+
+  for ( var i = 0; i < youtubes.length; i++ )
+  {
     footer_html +=
       "<div style='display:inline-block; vertical-align: top; max-width: 33%'>" +
         "<ul style='display:inline'>" +
@@ -243,19 +258,20 @@ function init_youtube()
       "</div>";
   }
 
-  g("youtube_holder").innerHTML = youtube_html;
   g("youtube_footer").innerHTML = footer_html;
 }
 
 function switch_video(x)
 {
-  for ( var i = 0; i < youtubes.length; i++ )
-  {
-    if ( i != x )
-      $("#youtube"+i).hide();
-  }
+  g("youtube_holder").innerHTML = "";
 
-  $("#youtube"+x).show();
+  init_youtube_holder();
+
+  if ( x != 0 )
+  {
+    $("#youtube0").hide();
+    $("#youtube"+x).show();
+  }
 }
 
 function update_slideshow()
