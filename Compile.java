@@ -11,8 +11,8 @@ public class Compile
 
   public void run()
   {
-    File precompiled, publications, infrastructure, teams;
-    boolean fPubs, fInf, fTeams;
+    File precompiled, publications, infrastructure, teams, demos;
+    boolean fPubs, fInf, fTeams, fDemos;
 
     try
     {
@@ -57,7 +57,18 @@ public class Compile
       teams = null;
     }
 
-    String the_html, the_pubs, the_inf, the_teams;
+    try
+    {
+      demos = new File("demos.html");
+      fDemos = true;
+    }
+    catch(Exception e)
+    {
+      fDemos = false;
+      demos = null;
+    }
+
+    String the_html, the_pubs, the_inf, the_teams, the_demos;
     try
     {
       the_html = new Scanner(precompiled).useDelimiter("\\A").next();
@@ -67,6 +78,8 @@ public class Compile
       the_inf = fInf ? new Scanner(infrastructure).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load infrastructure.html</p>";
 
       the_teams = fTeams ? new Scanner(teams).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load people.html</p>";
+
+      the_demos = fDemos ? new Scanner(demos).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Count not load demos.html</p>";
     }
     catch(Exception e)
     {
@@ -92,9 +105,15 @@ public class Compile
     the_teams = the_teams.replace("\r", "\n");
     the_teams = the_teams.replace("\n", "\n            ");
 
+    the_demos = the_demos.replace("\n\r", "\n");
+    the_demos = the_demos.replace("\r\n", "\n");
+    the_demos = the_demos.replace("\r", "\n");
+    the_demos = the_demos.replace("\n", "\n            ");
+
     the_html = the_html.replace("@PUBLICATIONS", the_pubs);
     the_html = the_html.replace("@INFRASTRUCTURE", the_inf);
     the_html = the_html.replace("@TEAMS", the_teams);
+    the_html = the_html.replace("@DEMOS", the_demos);
 
     System.out.print( the_html );
   }
