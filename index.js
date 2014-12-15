@@ -62,10 +62,10 @@ function left_takeover(x)
   if ( animation_running == 1 )
     return;
 
-  set_animation(250);
-
   if ( $("#"+x).is(":visible") )
     return;
+
+  set_animation(250);
 
   $('html, body').animate
   (
@@ -93,10 +93,8 @@ function left_takeover(x)
   }
   else
   {
-    $(".left_taker").fadeOut(100, function()
-    {
-      $("#"+x).fadeIn(150);
-    });
+    $(".left_taker").hide();
+    $("#"+x).fadeIn(250);
   }
 }
 
