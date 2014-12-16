@@ -15,13 +15,8 @@ var youtubes =
     thumbnail: "http://open-physiology.org/images/youtube1.jpg"
   },
   {
-    title: "ApiNATOMY Overview",
-    address: "https://www.youtube.com/embed/W8f551TQXjE",
-    thumbnail: "http://open-physiology.org/images/youtube2.jpg"
-  },
-  {
-    title: "ApiNATOMY &amp; the Human Protein Atlas",
-    address: "https://www.youtube.com/embed/MlmIcdlYjLk",
+    title: "Tissue knowledge management",
+    address: "https://www.youtube.com/watch?v=mxu1yS_ErAg",
     thumbnail: "http://open-physiology.org/images/youtube3.jpg"
   }
 ];
