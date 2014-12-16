@@ -219,7 +219,7 @@ function init_slideshow()
   {
     imgfoot_html +=
       "<a href='javascript:void(0);' onclick='img_select(" + i + ");'>" +
-        "<img id='img_selector" + i + "' src='" + (i==0? "images/image_selected.png" : "images/image_unselected.png" ) + "'>" +
+        "<img style='height:18px; width:18px; padding-left: 5px;' id='img_selector" + i + "' src='" + (i==0? "images/image_selected.png" : "images/image_unselected.png" ) + "'>" +
       "</a>";
   }
   $("#image_footer").html(imgfoot_html);
