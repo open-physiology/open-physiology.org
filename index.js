@@ -247,7 +247,7 @@ function img_select(x)
     $("#overall_image").fadeIn(500, function()
     {
       resize_divs();
-    }
+    });
 
     slideshow_paused = 1;
   }, delay );
