@@ -1,7 +1,7 @@
 .floating-box
 {
   margin-top: 15px;
-  box-sizing: border box;
+  box-sizing: border-box;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
   border: solid 1px rgb(180, 180, 180) !important;
