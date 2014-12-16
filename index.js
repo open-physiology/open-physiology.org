@@ -319,18 +319,18 @@ function update_slideshow()
   if ( slidenumber >= images.length )
     slidenumber = 0;
 
-  for ( var i = 0; i < images.length; i++ )
-  {
-    if ( i == slidenumber )
-      $("#img_selector" + i).attr('src', 'images/image_selected.png');
-    else
-      $("#img_selector" + i).attr('src', 'images/image_unselected.png');
-  }
-
   $("#overall_image").fadeOut(500, function()
   {
     center_image();
     $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
+
+    for ( var i = 0; i < images.length; i++ )
+    {
+      if ( i == slidenumber )
+        $("#img_selector" + i).attr('src', 'images/image_selected.png');
+      else
+        $("#img_selector" + i).attr('src', 'images/image_unselected.png');
+    }
 
     resize_divs();
 
