@@ -10,13 +10,13 @@ var images =
 var youtubes =
 [
   {
-    title: "Physiology Circuitboarding",
+    title: "Physiology Circuitboarding (June, 2014)",
     address: "https://www.youtube.com/embed/QtnrA25n19U",
     thumbnail: "http://open-physiology.org/images/youtube1.jpg"
   },
   {
-    title: "Tissue knowledge management",
-    address: "https://www.youtube.com/watch?v=mxu1yS_ErAg",
+    title: "Tissue knowledge management (Dec, 2014)",
+    address: "https://www.youtube.com/embed/mxu1yS_ErAg",
     thumbnail: "http://open-physiology.org/images/youtube3.jpg"
   }
 ];
