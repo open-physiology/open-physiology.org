@@ -1,7 +1,7 @@
 var images =
 [
   "OpenPhysiologySite_1.png",
-  "Movie2.gif",
+  "Movie3.gif",
   "OpenPhysiologySite_2.png",
   "OpenPhysiologySite_3_bdb.gif",
   "OpenPhysiologySite_4.png"
