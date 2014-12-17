@@ -69,6 +69,11 @@ function divclicked(x)
       $("#imagediv_inner").fadeIn(150);
     }, 100 );
 
+    setTimeout( function()
+    {
+      center_image();
+    }, 110 );
+
     resize_divs();
   }
 }
