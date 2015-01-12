@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>How to bulkload data in Fuseki</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#manchesterlist
+{
+  list-style: circle inside none;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>How to bulkload data in Fuseki</h1>
+    <h2>(Warning: This will overwrite the existing store)</h2>
+    <hr>
+
+    <ul>
+      <li>
+        Download Apache Jena from here: <a href='https://jena.apache.org/download/index.cgi'>
+      </li>
+      <li>
+        Expand the .tar.gz file
+      </li>
+      <li>
+        Enter the resulting directory and go to the "bin" subdirectory
+      </li>
+      <li>
+        Run the tdbloader with syntax like the following:
+        <ul>
+          <li>
+            ./tdbloader --loc=(TDB location) (location of file to bulkload)
+          </li>
+          Here, "TDB location" is the location where you want the resulting triple store to be held.  It should match the --loc used to run Fuseki.
+        </ul>
+      </li>
+    </ul>
+
+    <hr/>
+    <a href='http://open-physiology.org/rdfstore/endpoints.html'>Back to endpoint-specific RDFStore documentation</a>
+  </div>
+
+</div>
+
+</body>
+</html>
