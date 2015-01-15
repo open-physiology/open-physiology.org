@@ -127,6 +127,9 @@
           <br>
           java Convert /home/ontologies/fma.OWL >fma.LOLS
         </blockquote>
+
+        It might be necessary to manually edit the LOLS file to remove unrelated output from the top of it, which was
+        placed there by the OWL reasoner.  (In a future version of LOLS this step will not be necessary.)
       </p>
 
       <h3>Multiple OWL files</h3>
@@ -143,8 +146,9 @@
           &lt;?xml version="1.0"?&gt;
           &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:owl="http://www.w3.org/2002/07/owl#"&gt;
             &lt;owl:Ontology rdf:about="http://open-physiology.org/shell-ontology"&gt;
-              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/pato.owl"/&gt;
-              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/celltype.owl"/&gt;
+              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/fma.owl"/&gt;
+              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/chebi.owl"/&gt;
+              &lt;owl:imports rdf:resource="file:/home/ricordo/ontology/go.owl"/&gt;
             &lt;/owl:Ontology&gt;
           &lt;/rdf:RDF&gt;
         </pre>
