@@ -114,7 +114,7 @@
     <div id='ontoprep'>
       <h2>LOLSfile prep</h2>
       <p>
-        LOLS loads IRIs and rdfs:labels from a LOLS file, which is generated from an OWL ontology file by means of a
+        LOLS loads IRIs and rdfs:labels from an N-Triples file, which can be generated from an OWL ontology file by means of a
         converter written in java.  Navigate to the LOLS converter directory (created in "Installation" above).
         Run the following command:
         <blockquote>
@@ -123,9 +123,9 @@
         For example, if your OWL file is located at "/home/ontologies/fma.OWL", and if you want the LOLS file to be called "fma.LOLS",
         then you would run:
         <blockquote>
-          # Example command to turn /home/ontologies/fma.OWL into a LOLSfile called fma.LOLS
+          # Example command to extract an N-Triples file, fma.nt, from an OWL file, /home/ontologies/fma.OWL:
           <br>
-          java Convert /home/ontologies/fma.OWL >fma.LOLS
+          java Convert /home/ontologies/fma.OWL >fma.nt
         </blockquote>
 
         It might be necessary to manually edit the LOLS file to remove unrelated output from the top of it, which was
