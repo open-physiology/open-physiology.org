@@ -80,7 +80,6 @@
       <li>&raquo; <a href='#about'>About</a></li>
       <li>&raquo; <a href='#license'>License</a></li>
       <li>&raquo; <a href='#installation'>Installation</a></li>
-      <li>&raquo; <a href='#ontoprep'>Ontology Prep</a></li>
       <li>&raquo; <a href='#ontology'>Ontology Load</a></li>
       <li>&raquo; <a href='#commandline'>Commandline</a></li>
       <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
@@ -99,26 +98,8 @@
           <li>Use "git clone", or any other means, to copy the repository from <a href='http://github.org/semitrivial/owlkb'>http://github.org/semitrivial/owlkb</a></li>
           <li>Within the directory containing the copy of the repository, expand OWLKB's dependencies using "jar -xf dep.jar"</li>
           <li>Within the directory containing the copy of the repository, compile OWLKB using "make" (or on Windows: "javac -g Owlkb.java")</li>
-          <li>If using ontologies other than the standard reference ontologies, you might need to prep them first, as described in <a href='#ontoprep'>Prepping Imported Ontologies</a>.</li>
           <li>Within that directory, run "java Owlkb.java -help" to get help on the command line arguments, or see further below.</li>
         </ol>
-      </p>
-    </div>
-
-    <div id='ontoprep'>
-      <h2>Prepping Imported Ontologies</h2>
-      <p>
-        If your main ontology imports some other ontologies, it is important to make sure the imported ontologies are really ontologies, and not just RDF fragments.
-        To do this, make sure each imported ontology has an <Ontology> tag, which should come after the <RDF> tag.
-        For an example, look at <a href='/owlkb/pato.owl' target='_blank'>this pato.owl file</a> and look for the line:
-        <pre>
-          &lt;Ontology rdf:about="http://purl.org/obo/owlapi/quality"/&gt;
-        </pre>
-        If that line were deleted, the file would become an RDF fragment instead of a real ontology.  The reason you don't want RDF fragments
-        is because due to the OWLAPI specifications, if you programmatically save changes to an ontology that imports an RDF fragment, the
-        entire RDF fragment will be copied into the importing ontology.
-        (Note: the IRI in that line is the IRI associated with the pato ontology.  When adding <Ontology> tags to ontologies,
-        use the appropriate IRIs.)
       </p>
     </div>
 
