@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>Lyphs Documentation</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1 id='topdiv'>Lyphs Documentation</h1>
+    <hr>
+  </div>
+
+  <div class='twelve columns' id='introdiv'>
+    <div id='about'>
+      <h2>About</h2>
+
+      <h4>&raquo; <a href='#apidiv'>Quickjump to API section</a></h4>
+
+      <p>
+        Lyphs are special data structures developed for ApiNATOMY 2.
+        They are intended for automated reasoning about flow
+        processes through the body.
+      </p>
+
+      <h3>Lyphs</h3>
+
+      <p>
+        There are three types of lyph:
+        <ul>
+          <li>
+            Basic lyph: A <i>basic</i> lyph is just a term from a reference ontology
+            (typically FMA or CHEBI).
+          </li>
+          <li>
+            Mix lyph: A <i>mix</i> lyph is an unordered list (with size at least 2) of <i>layers</i> (layers are
+            defined below).
+          </li>
+          <li>
+            Shell lyph: A <i>shell</i> lyph is an ordered list (with size at least 2) of layers (defined below).
+          </li>
+        </ul>
+      Every lyph has an <i>id</i>, used to retrieve the lyph from the database.
+      </p>
+
+      <h3>Layers</h3>
+      <p>
+        A <i>layer</i> is a lyph together with a thickness and a color.
+        If the layer consists of lyph X with thickness Y, we intuitively think
+        of it as a right hollow cylinder constructed out of X (considered as
+        a material), with thickness Y.  A layer's thickness and/or color can
+        also be ``unspecified''.
+      </p>
+      <p>
+        Every layer has an <i>id</i>, used for retrieval from the database.
+      </p>
+
+      <h3>Lyphnodes</h3>
+      <p>
+        A <i>lyphnode</i> is an entity whose only purpose is to serve as an
+        endpoint of a <i>lyphedge</i> (defined below).  Every lyphnode has an
+        <i>id</i>, for retrieval from the database.
+      </p>
+      <p>
+        Every lyphnode also has a list of <i>exits</i> (an <i>exit</i> consists
+        of a 'to' destination---which is another lyphnode---and a 'via' lyphedge).
+        These <i>exits</i> are not user-defined; rather, they are automatically
+        calculated from the lyphedges.
+      </p>
+
+      <h3>Lyphedges</h3>
+      <p>
+        A <i>lyphedge</i> consists of a 'from' vertex (which is a lyphnode,
+        defined above); a 'to' vertex (also a lyphnode); a 'name' (which, in
+        practice, may be a very verbose description of a segment of flow
+        in the body); a 'type' (see below); a 'lyph' (which should be a 'shell'
+        type of lyph); and an 'fma' term.  Only the 'from' and 'to' fields are
+        mandatory, the rest maybe unspecified.
+      </p>
+      <p>
+        The 'type' of a lyphedge is one of the following:
+        <ul>
+          <li>1: arterial segment</li>
+          <li>2: microcirculation</li>
+          <li>3: venous</li>
+          <li>4: cardiac chamber</li>
+        </ul>
+      </p>
+      <p>
+        Every lyphedge also has an <i>id</i>, for retrieval from the database.
+      </p>
+
+      <h3>Lyphviews</h3>
+      <p>
+        A <i>lyphview</i> is a set of lyphnodes along with x-y-coordinates
+        for those lyphnodes.  Every lyphview also has an <i>id</i>, for retrieval
+        from the database.
+      </p>
+    </div>
+
+    <div id='apidiv'>
+      <h2>API</h2>
+      <p>
+        The Lyph API consists of commands which the user can send to LOLS via
+        HTTP.  LOLS send its responses in JSON.  JSONP is supported.
+      </p>
+
+      <h3 id='apicmd_lyph'>lyph</h3>
+
+      <p>
+        Used to look up a lyph by its ID.
+        <blockquote>
+          Example: http://localhost:5052/lyph/LYPH_1
+        </blockquote>
+        Note: You can specify a term in a reference ontology in order to retrieve the corresponding <i>basic lyph</i>.
+        <blockquote>
+          Example: http://localhost:5052/lyph/CHEBI_37527
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_layer'>layer</h3>
+      <p>
+        Used to look up a layer by its ID.
+        <blockquote>
+          Example: http://localhost:5052/layer/LAYER_1
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphview'>lyphview</h3>
+      <p>
+        Used to look up a lyphview by its ID.
+        <blockquote>
+          Example: http://localhost:5052/lyphview/1
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphedge'>lyphedge</h3>
+      <p>
+        Used to look up a lyphedge by its ID.
+        <blockquote>
+          Example: http://localhost:5052/lyphedge/6039
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphnode'>lyphnode</h3>
+      <p>
+        Used to look up a lyphnode by its ID.
+        <blockquote>
+          Example: http://localhost:5052/lyphnode/50022150_0
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphpath'>lyphpath</h3>
+      <p>
+        Used to compute the shortest path from one lyphnode to another.
+        <blockquote>
+          Example: http://localhost:5052/lyphpath/?from=50022150_0&to=50022153_0
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphview'>lyphview</h3>
+      <p>
+        Used to look up a lyphview by its ID.
+        <blockquote>
+          Example: http://localhost:5052/lyphview/1
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_makelayer'>makelayer</h3>
+      <p>
+        Used to create a new layer (or, if the specified layer already exists, retrieve it).
+        <ul>
+          <li>Mandatory argument: material: the material of the layer (a lyph ID)</li>
+          <li>Optional argument: thickness: the thickness of the layer</li>
+          <li>Optional argument: color: the color of the layer</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/makelayer/?material=LYPH_1&thickness=5&color=red
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_makelyph'>makelyph</h3>
+        Used to create a new lyph (or, if the specified lyph already exists, create it).
+        <ul>
+          <li>
+            Mandatory argument: name: a proposed name for the lyph.
+            <ul>
+              <li>Note: If a lyph already exists which matches everything else, then this proposed name will be discarded, in favor of the existing lyph's name.</li>
+            </ul>
+          </li>
+          <li>
+            Mandatory argument: type: mix or shell.
+            <ul>
+              <li>Note: To create a lyph of type 'basic', use the 'lyph' command (above).
+            </ul>
+          </li>
+          <li>Mandatory arguments: layer1, layer2: specify layers of the lyph (by layer id)</li>
+          <li>Optional arguments: layer3, layer4, etc: as above.
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/makelyph/?name=my+lyph&type=mix&layer1=LAYER_5&layer2=LAYER_77&layer3=LAYER_4
+        </blockquote>
+
+      <h3 id='apicmd_makeview'>makeview</h3>
+      Used to create a new lyphview (or, if the specified view already exists, retrieve it).
+      <ul>
+        <li>Optional arguments: node1, node2, node3, ...: The nodes in the lyphview</li>
+        <li>Optional arguments: x1, x2, x3, ...: The x-coordinates of the nodes</li>
+        <li>Optional arguments: y1, y2, y3, ...: The y-coordinates of the nodes</li>
+      </ul>
+      Each node must be given an x- and a y-coordinate.
+      <blockquote>
+        Example: http://localhost:5052/makeview/?node1=500&x1=3&y1=5&node2=9342&x2=0&y2=0&node3=654&x3=99&y3=50
+      </blockquote>
+
+      <h3 id='apicmd_makelyphnode'>makelyphnode</h3>
+      Used to create a new lyphnode.  Takes no arguments.
+      <blockquote>
+        Example: http://localhost:5052/makelyphnode/
+      </blockquote>
+      Note: The lyphnode will not actually be saved to disk unless it is used in a lyphedge or lyphview.
+
+      <h3 id='apicmd_makelyphedge'>makelyphedge</h3>
+      Used to create a new lyphedge (or, if such a lyphedge already exists, retrieve it).
+      <ul>
+        <li>Mandatory argument: type: 1, 2, 3, or 4.  The meanings of these numbers are:
+          <ul>
+            <li>1: arterial segment</li>
+            <li>2: microcirculation</li>
+            <li>3: venous</li>
+            <li>4: cardiac chamber</li>
+          </ul>
+        </li>
+        <li>Optional argument: name: a description of the edge.</li>
+        <li>Mandatory argument: from: the initial node of the edge (specified via lyphnode ID).</li>
+        <li>Mandatory argument: to: the terminal node of the edge (specified via lyphnode ID).</li>
+        <li>Optional argument: lyph: a lyph to describe the tube around the edge (specified via lyph ID).
+        <li>Optional argument: fma: an FMA term (specified as a number, e.g., 7197 refers to FMA_7197).</li>
+      </ul>
+      <blockquote>
+        Example: http://localhost:5052/makelyphedge/?type=1&name=mystery+artery&from=5432&to=57465&lyph=LYPH_5&fma=7197
+      </blockquote>
+    </div> <!-- divid -->
+  </div> <!-- twelve columns -->
+
+  <div class='four columns'>
+    <h3>Quick Nav</h3>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#about'>About</a></li>
+      <li>
+        &raquo; <a href='#api'>API</a>
+        <ul>
+          <li>&raquo; <a href='#apicmd_lyph'>lyph</a></li>
+          <li>&raquo; <a href='#apicmd_layer'>layer</a></li>
+          <li>&raquo; <a href='#apicmd_lyphedge'>lyphedge</a></li>
+          <li>&raquo; <a href='#apicmd_lyphnode'>lyphnode</a></li>
+          <li>&raquo; <a href='#apicmd_lyphpath'>lyphpath</a></li>
+          <li>&raquo; <a href='#apicmd_lyphview'>lyphview</a></li>
+          <li>&raquo; <a href='#apicmd_makelayer'>makelayer</a></li>
+          <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
+          <li>&raquo; <a href='#apicmd_makeview'>makeview</a></li>
+          <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
+          <li>&raquo; <a href='#apicmd_makelyphedge'>makelyphedge</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>  <!-- four columns -->
+
+  <div class='sixteen columns'>
+    <hr>
+    <ul>
+      <li>&raquo; <a href='#topdiv'>Back to top</a></li>
+      <li>&raquo; <a href='doc.html'>Back to main LOLS documentation</a></li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>
