@@ -76,7 +76,17 @@
           for example:
           <blockquote>
             KBCaller kbcaller = new KBCaller( "http://open-physiology.org:20080" );<br>
-            List<String> subclasses = kbcaller.parse_json( kbcaller.subterms( "part-of some FMA_50801" ) );
+            String subclasses_raw;<br>
+            List&lt;String&gt; subclasses;
+            try<br>
+            {<br>
+              String subclasses_raw = kbcaller.subterms( "part-of some FMA_50801" );<br>
+              subclasses = kbcaller.parse_json( kbcaller.subterms( "part-of some FMA_50801" ) );
+            }<br>
+            catch( Exception e )<br>
+            {<br>
+              e.printStackTrace();<br>
+            }
           </blockquote>
         </p>
 
