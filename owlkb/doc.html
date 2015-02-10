@@ -83,6 +83,7 @@
       <li>&raquo; <a href='#ontology'>Ontology Load</a></li>
       <li>&raquo; <a href='#commandline'>Commandline</a></li>
       <li>&raquo; <a href='#simplegui'>Simple GUI</a></li>
+      <li>&raquo; <a href='#library'>KBCaller Java Library</a></li>
       <li>&raquo; <a href='#mailinglist'>Mailing List</a></li>
       <li>&raquo; <a href='#api'>The API</a></li>
     </ul>
@@ -150,6 +151,22 @@
         </p>
       </blockquote>
     </div>
+
+    <div id='library'>
+      <h2>KBCaller Java Library</h2>
+      <p>
+        If you are wanting to incorporate OWLKB into your own Java project,
+        we're sorry to say OWLKB is not designed as a library.  There's a good
+        reason for this:  OWLKB is rather resource-intensive when loaded with
+        a non-trivial ontology.  Thus it makes more sense as a separate process
+        than as a library.
+      </p>
+
+      <p>
+        Nevertheless, we've created KBCaller.java, a library which abstracts the
+        act of sending an HTTP API request to OWLKB.
+        For details, see <a href='kbcaller.html'>KBCaller Documentation</a>.
+      </p>
 
     <div id='mailinglist'>
       <h2>Mailing List</h2>
