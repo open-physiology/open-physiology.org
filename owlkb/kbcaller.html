@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>OWLKB 2.0 Documentation</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#manchesterlist
+{
+  list-style: circle inside none;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>OWLKB 2.0's KBCaller Documentation</h1>
+    <hr>
+  </div>
+
+  <div class='sixteen columns' id='introdiv'>
+    <div id='about'>
+      <h2>About</h2>
+
+      <p>
+        KBCaller is a Java mini-library which abstracts the act of sending API
+        requests to OWLKB over HTTP.  See <a href='doc.html'>here</a> for
+        documentation about OWLKB.
+      </p>
+
+      <h2>Constructor</h2>
+      <p>
+        <blockquote>
+          public KBCaller( String url )
+        </blockquote>
+
+        Creates a KBCaller object.  Specify the url of an OWLKB instance,
+        including port.  For example, our OWLKB demo instance has the url
+        http://open-physiology.org:20080.  If OWLKB is running on the same
+        machine as the Java application you're working on, and if OWLKB is
+        running on its default port (20080), you can use the url
+        http://localhost:20080
+      </p>
+
+      <h2>API Methods</h2>
+        <p>
+          For documentation on the different API methods, see the comments
+          in KBCaller.java.  In all cases except for "addlabel", the methods
+          return a list of results as a JSON list, e.g. something like:
+          <blockquote>
+            ['FMA_50801','CHEBI_999','RICORDO_56345634']
+          </blockquote>
+          If you would prefer the results as an ArrayList<String> and you don't
+          want to add a full JSON parser dependency to your project, we've
+          included a bare-bones JSON-list-parser function in KBCaller:
+          <blockquote>
+            public ArrayList<String> parse_json( String json ) throws IOException
+          </blockquote>
+          You can compose this with any of the String-returning API methods,
+          for example:
+          <blockquote>
+            KBCaller kbcaller = new KBCaller( "http://open-physiology.org:20080" );<br>
+            List<String> subclasses = kbcaller.parse_json( kbcaller.subterms( "part-of some FMA_50801" ) );
+          </blockquote>
+        </p>
+
+      <h2>Back</h2>
+      <a href='doc.html'>Back to main OWLKB documentation</a>
+    </div>
+  </div>
+</body>
+</html>
