@@ -11,8 +11,8 @@ public class Compile
 
   public void run()
   {
-    File precompiled, publications, infrastructure, teams, demos;
-    boolean fPubs, fInf, fTeams, fDemos;
+    File precompiled, publications, infrastructure, teams, demos, funding;
+    boolean fPubs, fInf, fTeams, fDemos, fFunding;
 
     try
     {
@@ -33,6 +33,17 @@ public class Compile
     {
       fPubs = false;
       publications = null;
+    }
+
+    try
+    {
+      funding = new File("funding.html");
+      fFunding = true;
+    }
+    catch(Exception e)
+    {
+      fFunding = false;
+      funding = null;
     }
 
     try
@@ -68,7 +79,7 @@ public class Compile
       demos = null;
     }
 
-    String the_html, the_pubs, the_inf, the_teams, the_demos;
+    String the_html, the_pubs, the_inf, the_teams, the_demos, the_funding;
     try
     {
       the_html = new Scanner(precompiled).useDelimiter("\\A").next();
@@ -80,6 +91,8 @@ public class Compile
       the_teams = fTeams ? new Scanner(teams).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Could not load people.html</p>";
 
       the_demos = fDemos ? new Scanner(demos).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Count not load demos.html</p>";
+
+      the_funding = fFunding ? new Scanner(funding).useDelimiter("\\A").next() : "<p style='background-color: #FFC2C2'>Count not load funding.html</p>";
     }
     catch(Exception e)
     {
@@ -90,31 +103,24 @@ public class Compile
     /*
      * Ensure proper indenting in final product (for people who "view source")
      */
-    the_inf = the_inf.replace("\n\r", "\n");
-    the_inf = the_inf.replace("\r\n", "\n");
-    the_inf = the_inf.replace("\r", "\n");
-    the_inf = the_inf.replace("\n", "\n          ");
-
-    the_pubs = the_pubs.replace("\n\r", "\n");
-    the_pubs = the_pubs.replace("\r\n", "\n");
-    the_pubs = the_pubs.replace("\r", "\n");
-    the_pubs = the_pubs.replace("\n", "\n            ");
-
-    the_teams = the_teams.replace("\n\r", "\n");
-    the_teams = the_teams.replace("\r\n", "\n");
-    the_teams = the_teams.replace("\r", "\n");
-    the_teams = the_teams.replace("\n", "\n            ");
-
-    the_demos = the_demos.replace("\n\r", "\n");
-    the_demos = the_demos.replace("\r\n", "\n");
-    the_demos = the_demos.replace("\r", "\n");
-    the_demos = the_demos.replace("\n", "\n            ");
+    the_inf = replace_linebreaks( the_inf );
+    the_pubs = replace_linebreaks( the_pubs );
+    the_teams = replace_linebreaks( the_teams );
+    the_demos = replace_linebreaks( the_demos );
+    the_funding = replace_linebreaks( the_funding );
+    the_html = replace_linebreaks( the_html );
 
     the_html = the_html.replace("@PUBLICATIONS", the_pubs);
     the_html = the_html.replace("@INFRASTRUCTURE", the_inf);
     the_html = the_html.replace("@TEAMS", the_teams);
     the_html = the_html.replace("@DEMOS", the_demos);
+    the_html = the_html.replace("@FUNDING", the_funding);
 
     System.out.print( the_html );
+  }
+
+  String replace_linebreaks( String x )
+  {
+    return x.replace("\n\r", "\n").replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\n            ");
   }
 }

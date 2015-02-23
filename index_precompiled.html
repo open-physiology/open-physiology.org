@@ -18,7 +18,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
+
     <!-- Google Analytics Script-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -30,7 +30,7 @@
       ga('require', 'displayfeatures');
       ga('send', 'pageview');
     </script>
-    
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="index.js"></script>
 
@@ -41,7 +41,7 @@
         init_slideshow();
       });
     </script>
-    
+
 
   </head>
   <body onresize="resize_divs();" ontransitionend="resize_divs();">
@@ -59,6 +59,10 @@
 
           <div id="publicationsdiv" style="display:none; height:99%; margin-left:10px" class="left_taker">
             @PUBLICATIONS
+          </div>
+
+          <div id="fundingdiv" style="display:none; height:99%; margin-left:10px" class="left_taker">
+            @FUNDING
           </div>
 
           <div id="teamsdiv" style="display:none; height: 99%; margin-left:10px; margin-top: 10px" class="left_taker">
@@ -103,6 +107,8 @@
         </div>
 
         <h3 id='publications'><a href='javascript:void(0)' onclick='left_takeover("publicationsdiv");'>Publications</a></h3>
+
+        <h3 id='funding'><a href='javascript:void(0)' onclick='left_takeover("fundingdiv");'>Funding</a></h3>
 
         <h3 id='demos'><a href='javascript:void(0)' onclick='left_takeover("demosdiv");'>Demos</a></h3>
 
