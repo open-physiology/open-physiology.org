@@ -174,6 +174,40 @@
         <blockquote>
           Example: http://localhost:5052/lyphpath/?from=50022150_0&to=50022153_0
         </blockquote>
+        Optional arguments:
+        <ul>
+          <li>&raquo; filter: specify a filter lyph, the algorithm will only consider edges with lyphs that are sublyphs of the filter.</li>
+          <li>&raquo; include_lyphless: specify ('yes' or 'no') whether lyphless edges should be considered, when performing a filtered search.  Default: no.</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_assignlyph'>assignlyph</h3>
+      <p>
+        Used to assign a lyph to an edge.
+        <blockquote>
+          Example: http://localhost:5052/assignlyph/?edge=5000&lyph=LYPH_5
+        </blockquote>
+        Will send an error message if the indicated lyph is inconsistent (not a sublyph of) any constraints previouly placed on the edge.
+      </p>
+
+      <h3 id='apicmd_lyph_along_path'>
+      <p>
+        Used to assign a lyph to every edge along a path.
+        <blockquote>
+          Example: http://localhost:5052/lyph_along_path/?from=5000&to=6000&lyph=LYPH_3
+        </blockquote>
+        Will send an error message (and not assign any lyphs) if any edge in the path has constraints preventing this lyph from being assigned to it.
+        <ul><li>Optional arguments: Same as the "lyphpath" command</li></ul>
+      </p>
+
+      <h3 id='apicmd_constrain_along_path'>
+      <p>
+        Used to add a constraint to every edge along a path.
+        <blockquote>
+          Example: http://localhost:5052/constrain_along_path/?from=5000&to=6000&lyph=LYPH_3
+        </blockquote>
+        Will send an error message (and not assign any constraints) if any edge in the path has a lyph that already violates the constraint.
+        <ul><li>Optional arguments: Same as the "lyphpath" command</li></ul>
       </p>
 
       <h3 id='apicmd_lyphview'>lyphview</h3>
@@ -258,6 +292,91 @@
       <blockquote>
         Example: http://localhost:5052/makelyphedge/?type=1&name=mystery+artery&from=5432&to=57465&lyph=LYPH_5&fma=7197
       </blockquote>
+
+      <h3 id='apicmd_editedge'>editedge</h3>
+      <p>
+        Used to edit an existing lyphedge.
+        <ul>
+          <li>Mandatory argument: edge: the ID of the edge to edit.</li>
+          <li>Optional arguments: all the arguments that "makelyphedge" takes.</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_editlyph'>editlyph</h3>
+      <p>
+        Used to edit an existing lyph.
+        <ul>
+          <li>Mandatory argument: lyph: the ID of the lyph to edit.</li>
+          <li>Optional arguments: name, type, ont</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_editview'>editview</h3>
+      <p>
+        Used to edit an existing lyphview.
+        <ul>
+          <li>Mandatory argument: view: the ID of the view to edit.</li>
+          <li>Optional arguments: name</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_editlayer'>editlayer</h3>
+      <p>
+        Used to edit an existing layer.
+        <ul>
+          <li>Mandatory argument: layer: the ID of the layer to edit.</li>
+          <li>Optional arguments: material, thickness</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_edgeconstrain'>edgeconstrain</h3>
+      <p>
+        Add a constraint to an edge.  A constraint is a lyph, and what it does is it restricts which lyphs can be assigned to the edge.  To be precise: only sublyphs of the constraint lyph will be allowed to be assigned to the edge.
+        <blockquote>
+          Example: http://localhost:5052/edgeconstrain/?edge=5000&lyph=LYPH_5
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_sublyphs'>sublyphs</h3>
+      <p>
+        List the sublyphs of the indicated lyph.
+        <ul>
+          <li>Mandatory argument: lyph: which lyph to view the sublyphs of.
+          <li>Optional argument: direct: ('yes' or 'no') whether to restrict to only show *direct* sublyphs (default: 'no').
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/sublyphs/?lyph=LYPH_5&direct=yes
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_all_lyphs'>all_lyphs</h3>
+      <p>(Temporary command during development only) View all lyphs</p>
+
+      <h3 id='apicmd_all_lyphnodes'>all_lyphnodes</h3>
+      <p>(Temporary command during development only) View all lyphnodes</p>
+
+      <h3 id='apicmd_all_lyphedges'>all_lyphedges</h3>
+      <p>(Temporary command during development only) View all lyphedges</p>
+
+      <h3 id='apicmd_all_lyphviews'>all_lyphviews</h3>
+      <p>(Temporary command during development only) View all lyphviews</p>
+
+      <h3 id='apicmd_all_ont_terms'>all_ont_terms</h3>
+      <p>(Temporary command during development only) View all ontology terms</p>
+
+      <h3 id='apicmd_lyph_hierarchy'>lyph_hierarchy</h3>
+      <p>(Temporary command during development only) View the lyph hierarchy</p>
+
+      <h3 id='apicmd_reset_db'>reset_db</h3>
+      <p>
+        (Temporary command during development only) Reset (part of) the database (based on given arguments).
+        <ul>
+          <li>Optional argument: views: if set to 'yes', the command will delete all lyphviews in the database.</li>
+          <li>Optional argument: lyphs: if set to 'yes', the command will delete all lyphs in the database.</li>
+          <li>Optional argument: graph: if set to 'yes', the command will reset the graph to the original graph provided by Dr. de Bono.</li>
+        </ul>
+      </p>
+
     </div> <!-- divid -->
   </div> <!-- twelve columns -->
 
@@ -274,12 +393,33 @@
           <li>&raquo; <a href='#apicmd_lyphedge'>lyphedge</a></li>
           <li>&raquo; <a href='#apicmd_lyphnode'>lyphnode</a></li>
           <li>&raquo; <a href='#apicmd_lyphpath'>lyphpath</a></li>
+          <li>&raquo; <a href='#apicmd_assignlyph'>assignlyph</a></li>
+          <li>&raquo; <a href='#apicmd_lyph_along_path'>lyph_along_path</a></li>
+          <li>&raquo; <a href='#apicmd_constrain_along_path'>constrain_along_path</a></li>
           <li>&raquo; <a href='#apicmd_lyphview'>lyphview</a></li>
           <li>&raquo; <a href='#apicmd_makelayer'>makelayer</a></li>
           <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
           <li>&raquo; <a href='#apicmd_makeview'>makeview</a></li>
           <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
           <li>&raquo; <a href='#apicmd_makelyphedge'>makelyphedge</a></li>
+          <li>&raquo; <a href='#apicmd_editedge'>editedge</a></li>
+          <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
+          <li>&raquo; <a href='#apicmd_editview'>editview</a></li>
+          <li>&raquo; <a href='#apicmd_editlayer'>editlayer</a></li>
+          <li>&raquo; <a href='#apicmd_edgeconstrain'>edgeconstrain</a></li>
+          <li>&raquo; <a href='#apicmd_sublyphs'>sublyphs</a></li>
+        </ul>
+      </li>
+      <li>
+        &raquo; Dev-only commands
+        <ul>
+          <li>&raquo; <a href='#apicmd_all_lyphs'>all_lyphs</a></li>
+          <li>&raquo; <a href='#apicmd_all_lyphnodes'>all_lyphnodes</a></li>
+          <li>&raquo; <a href='#apicmd_all_lyphedges'>all_lyphedges</a></li>
+          <li>&raquo; <a href='#apicmd_all_lyphviews'>all_lyphviews</a></li>
+          <li>&raquo; <a href='#apicmd_all_ont_terms'>all_ont_terms</a></li>
+          <li>&raquo; <a href='#apicmd_lyph_hierarchy'>lyph_hierarchy</a></li>
+          <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
         </ul>
       </li>
     </ul>
