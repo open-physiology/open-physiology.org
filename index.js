@@ -357,11 +357,11 @@ function update_slideshow()
 
 function adjust_image_hyperlink(slide)
 {
-  if ( $("#overall_image").parent().get(0).tagName === 'a' )
+  if ( $("#overall_image").parent().get(0).tagName.toLowerCase() === 'a' )
     $("#overall_image").unwrap();
 
   if ( images[slide].hasOwnProperty("href") )
-    $("#overall_imega").wrap("<a href='" + images[slide].href + "' target='_blank'></a>");  
+    $("#overall_image").wrap("<a href='" + images[slide].href + "' target='_blank'></a>");  
 }
 
 function set_animation(x)
