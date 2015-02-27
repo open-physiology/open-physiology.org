@@ -1,0 +1,22 @@
+#
+# Sample N-Triples file.
+# Lines beginning with '#' are comments.
+#
+# Every non-comment is one triple, and has the format:
+# (subject) (predicate) (object) .
+#
+# (subject) can either be <IRI> or "string".  Same with (predicate) and (object).
+# In practice, (subject) and (predicate) are usually <IRI>, while (object)
+# is either <IRI> or "string".
+#
+# Below, we give some triples using some made-up IRIs.
+#
+<http://geo.org/kb#GEO_1234> <http://www.w3.org/2000/01/rdf-schema#label> "Africa" .
+<http://geo.org/kb#GEO_1234> <http://geo.org/kb#has_type> <http://geo.org/kb/geo#GEO_CONTINENT> .
+<http://geo.org/kb#GEO_1234> <http://geo.org/kb#has_population> "2000000000" .
+<http://geo.org/kb#GEO_1234> <http://yoursite.com/apinatomy#comment> "This term refers to Africa. --Bob" .
+<http://geo.org/kb#GEO_7000> <http://www.w3.org/2000/01/rdf-schema#label> "Libya" .
+<http://geo.org/kb#GEO_7000> <http://geo.org/kb#regional_part_of> <http://geo.org/kb#GEO_AFRICA> .
+<http://geo.org/kb#GEO_7000> <http://economics.org/ont.owl#ECN_MAIN_EXPORT> <http://economics.org/ont.owl#ECN_OIL> .
+<http://geo.org/kb#GEO_7000> <http://yoursite.com/apinatomy#number_of_customers> "75" .
+

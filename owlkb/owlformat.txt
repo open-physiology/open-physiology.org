@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<!-- This is an example of an ontology -->
+<!-- Make sure to start the file with <?xml version="1.0"?> (even before any comments) -->
+
+<!-- Let's keep things simple -->
+<!-- We'll record the following treemap structure and nothing more: -->
+<!--     Animal -->
+<!--       Mammal -->
+<!--         Dog -->
+<!--         Cat -->
+<!--       Fish -->
+<!--         Goldfish -->
+
+<!-- First, some boilerplate (change the YOUR_SITE IRI as needed) -->
+
+<rdf:RDF
+  xmlns="http://www.YOUR_SITE/dirs/mykb.owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <!-- Note, the IRI in this next line should -->
+  <!-- match the IRI in the previous line, except no # at the end -->
+  <owl:Ontology rdf:about="http://www.YOUR_SITE/dirs/mykb.owl">
+
+    <!-- Now, the imports, in case you want to import some existing ontologies -->
+    <!-- into your own.  If not, then leave these out. -->
+
+    <owl:imports rdf:resource="file:/my_ontologies/fma.owl">
+    <owl:imports rdf:resource="file:/my_ontologies/chebi.owl">
+    <owl:imports rdf:resource="file:/my_ontologies/pato.owl">
+  </owl:Ontology>
+
+  <!-- Now, the treemap structure -->
+  <!-- Rather than "TERM_1" etc., you should use term names based on your -->
+  <!-- project/organization/etc.  For instance if your company is Acme, -->
+  <!-- you might use ACME_ANIMAL, etc. -->
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_ANIMAL">
+
+    <!-- Use rdfs:label to give a term a label -->
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">animal</rdfs:label>
+
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_MAMMAL">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mammal</rdfs:label>
+
+    <!-- Use rdfs:subClassOf to specify treemap structure -->
+    <rdfs:subClassOf rdf:resource="http://www.YOUR_SITE/dirs/mykb.owl#TERM_ANIMAL"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_DOG">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dog</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.YOUR_SITE/dirs/mykb.owl#TERM_MAMMAL"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_CAT">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cat</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.YOUR_SITE/dirs/mykb.owl#TERM_MAMMAL"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_FISH">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fish</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.YOUR_SITE/dirs/mykb.owl#TERM_ANIMAL"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.YOUR_SITE/dirs/mykb.owl#TERM_GOLDFISH">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">goldfish</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.YOUR_SITE/dirs/mykb.owl#TERM_FISH"/>
+  </owl:Class>
+
+  <!-- And that's it. -->
+  <!-- Note, we've only scraped a tiny speck of the giant iceburg that is -->
+  <!-- OWL.  There are a LOT more things you can say in OWL.  But as far as -->
+  <!-- just creating a treemap structure and nothing else, the above is -->
+  <!-- sufficient. -->
+
+</rdf:RDF>
