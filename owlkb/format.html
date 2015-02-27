@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<title>RICORDO data formats</title>
+
+<link rel="stylesheet" href="/Skeleton/stylesheets/base.css">
+<link rel="stylesheet" href="/Skeleton/stylesheets/skeleton.css">
+
+<style media='screen' type='text/css'>
+#maindiv, #apidiv, #introdiv
+{
+  background-image: url(http://open-physiology.org/owlkb/swirly.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#manchesterlist
+{
+  list-style: circle inside none;
+}
+</style>
+
+</head>
+<body>
+
+<div class='container'>
+
+  <div class='sixteen columns'>
+    <h1>RICORDO data formats</h1>
+    <hr>
+  </div>
+
+  <div class='twelve columns'>
+    <h2 id='two_types'>Two Types of Data</h2>
+    <p>
+      There are two types of data:
+      <ol>
+        <li>
+          Knowledgebase (KB)
+          <ul>
+            <li>Ontology</li>
+            <li>Determines the treemap structure</li>
+            <li>Format: OWL</li>
+            <li>Size: relatively small (10s of thousands of terms usually)</li>
+          </ul>
+        </li>
+        <li>
+          Annotations
+          <ul>
+            <li>Triples</li>
+            <li>Adds individual facts</li>
+            <li>Format: RDF (N-Triples or...)</li>
+            <li>Size: possibly large (in principle can include billions of facts)</li>
+          </ul>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      It is helpful to think of a GoogleMaps analogy.
+      <ol>
+        <li>
+          Knowledgebase defines which cities are in which states, etc...
+        </li>
+        <li>
+          Annotations indicate locations of individual restaurants, libraries, etc...
+        </li>
+      </ol>
+    </p>
+
+    <h2 id='kbdata'>Knowledgebase data format</h2>
+
+    Knowledgebase data uses the OWL/XML format.  There are two possibilities.
+    <ol>
+      <li>
+        Use an existing, open-source ontology.
+        <ul>
+          <li>
+            If so, no need to worry about this specific data format.
+          </li>
+          <li>
+            For example, the apiNATOMY demo instance uses FMA, an ontology
+            of anatomy terms.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Roll your own ontology.
+        <ul>
+          <li>
+            May be lots of work.
+          </li>
+          <li>
+            Offers maximum control over the treemap structure.
+          </li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>
+      If you choose to roll your own ontology, <a target='_blank' href='owlformat.txt'>click
+      here for an outline of a bare-bones OWL file</a> (opens in new tab).
+    </p>
+
+    <p>
+      If you choose to use existing ontology/ontologies, you should "wrap" them up in
+      your own CREST ontology.  This is simple;
+      <a target='_blank' href='wrapper_ontology.txt'>click here for a basic wrapper
+      ontology that you can edit as needed</a> (opens in new tab).
+    </p>
+
+    <h2 id='annotationsdata'>Annotations data format</h2>
+
+    <ul>
+      <li>
+        Annotations consist of "triples".
+      </li>
+      <li>
+        A "triple" has three parts:
+        <ol>
+          <li>subject</li>
+          <li>predicate</li>
+          <li>object</li>
+        </ol>
+      </li>
+      <li>
+        Example: An annotation saying "Item 555 is an image of a brain" might be like so:
+        <ol>
+          <li>Subject: &lt;http://crest.org/items#CREST_555&gt;</li>
+          <li>Predicate: &lt;http://crest.org/items#image_of&gt;</li>
+          <li>Object: &lt;http://some-ontology-homepage.org/version_info/FMA_50801&gt;</li>
+        </ol>
+        (Assuming your knowledgebase includes an ontology with a term FMA_50801 for "brain")
+      </li>
+    </ul>
+
+    <p>
+      There are various different formats for triples.
+      <ul>
+        </li>&raquo; We recommend the N-Triples format, as it is by far the simplest option.
+      </ul>
+      <a target='_blank' href='ntformat.txt'>Click here for a simple N-Triples
+      example file</a> (opens in new tab).
+    </p>
+  </div>
+
+  <div class='four columns'>
+    <p>
+      <h3>QuickNav</h3>
+      <ul>
+        <li>
+          &raquo; <a href='#two_types'>Two types of data</a>
+        </li>
+        <li>
+          &raquo; <a href='#kbdata'>Knowledgebase data format</a>
+        </li>
+        <li>
+          &raquo; <a href='#annotationsdata'>Annotations data format</a>
+        </li>
+      </ul>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

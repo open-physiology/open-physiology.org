@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<!-- This is an example of a wrapper ontology -->
+<!-- For if you want to use some already existing ontologies as your knowledgebase -->
+
+<!-- Make sure to start the file with <?xml version="1.0"?> (even before any comments) -->
+
+<!-- First, some boilerplate (change the YOUR_WEBSITE IRI as you please) -->
+
+<rdf:RDF
+  xmlns="http://www.YOUR_WEBSITE/directory_structure/my_ontology.owl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <!-- Note, the IRI in this next line should -->
+  <!-- match the IRI in the previous line, except no # at the end -->
+  <owl:Ontology rdf:about="http://www.YOUR_WEBSITE/directory_structure/my_ontology.owl">
+
+    <!-- Now, the imports.  Modify these examples as needed. -->
+
+    <owl:imports rdf:resource="file:/my_ontologies/fma.owl">
+    <owl:imports rdf:resource="file:/my_ontologies/chebi.owl">
+    <owl:imports rdf:resource="file:/my_ontologies/pato.owl">
+
+    <!-- That's it.  Now we just close all the XML tags.  -->
+
+  </owl:Ontology>
+</rdf:RDF>
