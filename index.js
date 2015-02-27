@@ -1,11 +1,14 @@
 var images =
 [
-  "workflow_paper.png",
-  "OpenPhysiologySite_1.png",
-  "Movie3.gif",
-  "OpenPhysiologySite_2.png",
-  "OpenPhysiologySite_3_bdb.gif",
-  "OpenPhysiologySite_4.png"
+  {
+    file: "workflow_paper.png",
+    href: "http://journal.frontiersin.org/article/10.3389/fphys.2015.00024/abstract"
+  },
+  {file: "OpenPhysiologySite_1.png"},
+  {file: "Movie3.gif"},
+  {file: "OpenPhysiologySite_2.png"},
+  {file: "OpenPhysiologySite_3_bdb.gif"},
+  {file: "OpenPhysiologySite_4.png"}
 ];
 
 var youtubes =
@@ -216,7 +219,7 @@ function init_slideshow()
      * Preload images to reduce jerk
      */
     for ( var i = 1; i < images.length; i++ )
-      (new Image()).src = "http://open-physiology.org/images/"+images[i];
+      (new Image()).src = "http://open-physiology.org/images/"+encodeURIComponent(images[i].file);
   }, 250 );
 
   var imgfoot_html = "";
@@ -246,7 +249,7 @@ function img_select(x)
       $("#img_selector" + i).attr('src', 'images/image_unselected.png');
   }
 
-  $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[x]) );
+  $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[x].file) );
 
   center_image();
   resize_divs();
@@ -327,7 +330,7 @@ function update_slideshow()
   $("#overall_image").fadeOut(500, function()
   {
     center_image();
-    $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber]) );
+    $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[slidenumber].file) );
     adjust_image_hyperlink(slidenumber);
 
     for ( var i = 0; i < images.length; i++ )
