@@ -250,6 +250,7 @@ function img_select(x)
   }
 
   $("#overall_image").attr('src', 'http://open-physiology.org/images/'+encodeURIComponent(images[x].file) );
+  adjust_image_hyperlink(x);
 
   center_image();
   resize_divs();
