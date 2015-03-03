@@ -337,6 +337,80 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_delete_edges'>delete_edges</h3>
+      <p>
+        Delete some edges.  The edges are specified via the 'edges' parameter, in the
+        form of a comma-separated list.
+        <blockquote>
+          Example: http://localhost:5052/delete_edges/?edges=5000,6000,7000
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_nodes'>delete_nodes</h3>
+      <p>
+        Delete some nodes.  The nodes are specified via the 'nodes' parameter, in the
+        form of a comma-separated list.  Note: any edges which have any of these nodes
+        as endpoint, will also be deleted.
+        <blockquote>
+          Example: http://localhost:5052/delete_nodes/?nodes=50,60,70
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_lyphs'>delete_lyphs</h3>
+      <p>
+        Delete some lyphs.  The lyphs are specified via the 'lyphs' parameter, in the
+        form of a comma-separated list.  Note: any lyphs/layers which are built-up from
+        deleted lyphs will also be deleted.
+        <blockquote>
+          Example: http://localhost:5052/delete_lyphs/?lyphs=LYPH_5,LYPH_6,LYPH_7
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_views'>delete_views</h3>
+      <p>
+        Delete some views.  The views are specified via the 'views' parameter, in the
+        form of a comma-separated list.
+        <blockquote>
+          Example: http://localhost:5052/delete_views/?views=50,60,70
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_layers'>delete_layers</h3>
+      <p>
+        Delete some layers.  The layers are specified via the 'layers' parameter, in the
+        form of a comma-separated list.  Note, any lyphs/layers built up from deleted
+        layers will also be deleted.
+        <blockquote>
+          Example: http://localhost:5052/delete_layers/?layers=LAYER_1,LAYER_2,LAYER_3
+        </blockquote>
+      </p>
+
+      <h3 id='nodes_to_view'>nodes_to_view</h3>
+      <p>
+        Add some nodes to a view.  The view is specified via the 'view' parameter.
+        The nodes, along with their x- and y-coordinates, are specified via
+        paramters 'node1', 'x1', 'y1', 'node2', 'x2', 'y2', etc., just like in the
+        <a href='#apicmd_makelyph'>makelyph</a> command.  Note, if any of the
+        indicated nodes are already in the view, they will be ignored (in particular
+        the command will not override their existing x-y-coordinates).
+        <blockquote>
+          Example: http://localhost:5052/nodes_to_view/?view=5&node1=5000&x1=0&y1=3&node2=5001&x2=6&y2=90
+        </blockquote>
+      </p>
+
+      <h3 id='nodes_from_view'>nodes_from_view</h3>
+      <p>
+        Remove some nodes from a view.  The view is specified with the 'view'
+        parameter.  The nodes are specified with the 'nodes' parameter, in the
+        form of a comma-separated list.  Note, any nodes in the list which are
+        not in the view, will simply be ignored, so you don't have to worry about
+        checking whether the nodes are already in the view, before sending the
+        command.
+        <blockquote>
+          Example: http://localhost:5052/nodes_from_view/?view=5&nodes=5000,5001
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_sublyphs'>sublyphs</h3>
       <p>
         List the sublyphs of the indicated lyph.
@@ -407,6 +481,13 @@
           <li>&raquo; <a href='#apicmd_editview'>editview</a></li>
           <li>&raquo; <a href='#apicmd_editlayer'>editlayer</a></li>
           <li>&raquo; <a href='#apicmd_edgeconstrain'>edgeconstrain</a></li>
+          <li>&raquo; <a href='#apicmd_delete_edges'>delete_edges</a></li>
+          <li>&raquo; <a href='#apicmd_delete_nodes'>delete_nodes</a></li>
+          <li>&raquo; <a href='#apicmd_delete_lyphs'>delete_lyphs</a></li>
+          <li>&raquo; <a href='#apicmd_delete_views'>delete_views</a></li>
+          <li>&raquo; <a href='#apicmd_delete_layers'>delete_layers</a></li>
+          <li>&raquo; <a href='#apicmd_nodes_to_view'>nodes_to_view</a></li>
+          <li>&raquo; <a href='#apicmd_nodes_from_view'>nodes_from_view</a></li>
           <li>&raquo; <a href='#apicmd_sublyphs'>sublyphs</a></li>
         </ul>
       </li>
