@@ -265,9 +265,13 @@
       </blockquote>
 
       <h3 id='apicmd_makelyphnode'>makelyphnode</h3>
-      Used to create a new lyphnode.  Takes no arguments.
+      Used to create a new lyphnode.
+      <ul>
+        Optional argument: location: the location of the node (specified by a lyph ID).  If this argument is used, 'loctype' must also be used.
+        Optional argument: loctype: the loctype of the node.  Can be 'interior' or 'border'.
+      </ul>
       <blockquote>
-        Example: http://localhost:5052/makelyphnode/
+        Example: http://localhost:5052/makelyphnode/?location=6039&loctype=interior
       </blockquote>
       Note: The lyphnode will not actually be saved to disk unless it is used in a lyph or lyphview.
 
@@ -299,6 +303,17 @@
           <li>Mandatory argument: lyph: the ID of the lyph to edit.</li>
           <li>Optional arguments: all the arguments that "makelyph" takes.</li>
         </ul>
+      </p>
+
+      <h3 id='apicmd_editlyphnode'>editlyphnode</h3>
+      <p>
+        Used to edit an existing lyphnode.
+        <ul>
+          <li>Argument: location: the location of the lyphnode (specified with a lyph ID).</li>
+          <li>Argument: loctype: the loctype of the lyphnode ('interior' or 'border').</li>
+        </ul>
+        If the node already has a location, then the location argument is optional.
+        If the node already has a loctype, then the loctype argument is optional.
       </p>
 
       <h3 id='apicmd_edit_template'>edit_template</h3>
@@ -476,6 +491,7 @@
           <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
           <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
+          <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
           <li>&raquo; <a href='#apicmd_editview'>editview</a></li>
           <li>&raquo; <a href='#apicmd_editlayer'>editlayer</a></li>
