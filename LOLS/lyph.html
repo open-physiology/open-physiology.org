@@ -36,37 +36,37 @@
       <h4>&raquo; <a href='#apidiv'>Quickjump to API section</a></h4>
 
       <p>
-        Lyphs are special data structures developed for ApiNATOMY 2.
+        Lyphs and lyph templates are special data structures developed for ApiNATOMY 2.
         They are intended for automated reasoning about flow
         processes through the body.
       </p>
 
-      <h3>Lyphs</h3>
+      <h3>Templates</h3>
 
       <p>
-        There are three types of lyph:
+        There are three types of template:
         <ul>
           <li>
-            &raquo; Basic lyph: A <i>basic</i> lyph is just a term from a reference ontology
+            &raquo; Basic template: A <i>basic</i> template is just a term from a reference ontology
             (typically FMA or CHEBI).
           </li>
           <li>
-            &raquo; Mix lyph: A <i>mix</i> lyph is an unordered list (with size at least 2) of <i>layers</i> (layers are
+            &raquo; Mix template: A <i>mix</i> template is an unordered list of <i>layers</i> (layers are
             defined below).
           </li>
           <li>
-            &raquo; Shell lyph: A <i>shell</i> lyph is an ordered list (with size at least 2) of layers (defined below).
+            &raquo; Shell template: A <i>shell</i> template is an ordered list of layers (defined below).
           </li>
         </ul>
-      Every lyph has an <i>id</i>, used to retrieve the lyph from the database.
+      Every template has an <i>id</i>, used to retrieve the template from the database.
       </p>
 
       <h3>Layers</h3>
       <p>
-        A <i>layer</i> is a lyph together with a thickness and a color.
-        If the layer consists of lyph X with thickness Y, we intuitively think
+        A <i>layer</i> is a template together with a thickness.
+        If the layer consists of template X with thickness Y, we intuitively think
         of it as a right hollow cylinder constructed out of X (considered as
-        a material), with thickness Y.  A layer's thickness and/or color can
+        a material), with thickness Y.  A layer's thickness can
         also be ``unspecified''.
       </p>
       <p>
@@ -76,27 +76,27 @@
       <h3>Lyphnodes</h3>
       <p>
         A <i>lyphnode</i> is an entity whose only purpose is to serve as an
-        endpoint of a <i>lyphedge</i> (defined below).  Every lyphnode has an
+        endpoint of a <i>lyph</i> (defined below).  Every lyphnode has an
         <i>id</i>, for retrieval from the database.
       </p>
       <p>
         Every lyphnode also has a list of <i>exits</i> (an <i>exit</i> consists
         of a 'to' destination---which is another lyphnode---and a 'via' lyphedge).
         These <i>exits</i> are not user-defined; rather, they are automatically
-        calculated from the lyphedges.
+        calculated from the lyphs.
       </p>
 
-      <h3>Lyphedges</h3>
+      <h3>Lyphs</h3>
       <p>
-        A <i>lyphedge</i> consists of a 'from' vertex (which is a lyphnode,
+        A <i>lyph</i> consists of a 'from' vertex (which is a lyphnode,
         defined above); a 'to' vertex (also a lyphnode); a 'name' (which, in
         practice, may be a very verbose description of a segment of flow
-        in the body); a 'type' (see below); a 'lyph' (which should be a 'shell'
-        type of lyph); and an 'fma' term.  Only the 'from' and 'to' fields are
-        mandatory, the rest maybe unspecified.
+        in the body); a 'type' (see below); a 'template' (which should be a 'shell'
+        type of template); and an 'fma' term.  Only the 'from' and 'to' fields are
+        mandatory, the rest may be unspecified.
       </p>
       <p>
-        The 'type' of a lyphedge is one of the following:
+        The 'type' of a lyph is one of the following:
         <ul>
           <li>1: arterial segment</li>
           <li>2: microcirculation</li>
@@ -105,34 +105,34 @@
         </ul>
       </p>
       <p>
-        Every lyphedge also has an <i>id</i>, for retrieval from the database.
+        Every lyph also has an <i>id</i>, for retrieval from the database.
       </p>
 
       <h3>Lyphviews</h3>
       <p>
         A <i>lyphview</i> is a set of lyphnodes along with x-y-coordinates
         for those lyphnodes.  Every lyphview also has an <i>id</i>, for retrieval
-        from the database.
+        from the database, and (optionally) a <i>name</i>.
       </p>
     </div>
 
     <div id='apidiv'>
       <h2>API</h2>
       <p>
-        The Lyph API consists of commands which the user can send to LOLS via
-        HTTP.  LOLS send its responses in JSON.  JSONP is supported.
+        The Lyph API consists of commands which the user can send via
+        HTTP.  The server sends its responses in JSON.  JSONP is supported.
       </p>
 
-      <h3 id='apicmd_lyph'>lyph</h3>
+      <h3 id='apicmd_template'>template</h3>
 
       <p>
-        Used to look up a lyph by its ID.
+        Used to look up a template by its ID.
         <blockquote>
-          Example: http://localhost:5052/lyph/LYPH_1
+          Example: http://localhost:5052/template/TEMPLATE_1
         </blockquote>
-        Note: You can specify a term in a reference ontology in order to retrieve the corresponding <i>basic lyph</i>.
+        Note: You can specify a term in a reference ontology in order to retrieve the corresponding <i>basic template</i>.
         <blockquote>
-          Example: http://localhost:5052/lyph/CHEBI_37527
+          Example: http://localhost:5052/template/CHEBI_37527
         </blockquote>
       </p>
 
@@ -152,11 +152,11 @@
         </blockquote>
       </p>
 
-      <h3 id='apicmd_lyphedge'>lyphedge</h3>
+      <h3 id='apicmd_lyph'>lyph</h3>
       <p>
-        Used to look up a lyphedge by its ID.
+        Used to look up a lyph by its ID.
         <blockquote>
-          Example: http://localhost:5052/lyphedge/6039
+          Example: http://localhost:5052/lyph/6039
         </blockquote>
       </p>
 
@@ -176,37 +176,37 @@
         </blockquote>
         Optional arguments:
         <ul>
-          <li>&raquo; filter: specify a filter lyph, the algorithm will only consider edges with lyphs that are sublyphs of the filter.</li>
-          <li>&raquo; include_lyphless: specify ('yes' or 'no') whether lyphless edges should be considered, when performing a filtered search.  Default: no.</li>
+          <li>&raquo; filter: specify a filter template, the algorithm will only consider lyphs with templates that are subtemplates of the filter.</li>
+          <li>&raquo; include_templateless: specify ('yes' or 'no') whether templateless lyphs should be considered, when performing a filtered search.  Default: no.</li>
         </ul>
       </p>
 
-      <h3 id='apicmd_assignlyph'>assignlyph</h3>
+      <h3 id='apicmd_assign_template'>assign_template</h3>
       <p>
-        Used to assign a lyph to an edge.
+        Used to assign a template to a lyph.
         <blockquote>
-          Example: http://localhost:5052/assignlyph/?edge=5000&lyph=LYPH_5
+          Example: http://localhost:5052/assign_template/?lyph=5000&template=TEMPLATE_5
         </blockquote>
-        Will send an error message if the indicated lyph is inconsistent (not a sublyph of) any constraints previouly placed on the edge.
+        Will send an error message if the indicated template is inconsistent (not a subtemplate of) any constraints previouly placed on the lyph.
       </p>
 
-      <h3 id='apicmd_lyph_along_path'>lyph_along_path</h3>
+      <h3 id='apicmd_template_along_path'>template_along_path</h3>
       <p>
-        Used to assign a lyph to every edge along a path.
+        Used to assign a template to every lyph along a path.
         <blockquote>
-          Example: http://localhost:5052/lyph_along_path/?from=5000&to=6000&lyph=LYPH_3
+          Example: http://localhost:5052/template_along_path/?from=5000&to=6000&template=TEMPLATE_3
         </blockquote>
-        Will send an error message (and not assign any lyphs) if any edge in the path has constraints preventing this lyph from being assigned to it.
+        Will send an error message (and not assign any templates) if any lyph in the path has constraints preventing this template from being assigned to it.
         <ul><li>Optional arguments: Same as the "lyphpath" command</li></ul>
       </p>
 
       <h3 id='apicmd_constrain_along_path'>constrain_along_path</h3>
       <p>
-        Used to add a constraint to every edge along a path.
+        Used to add a constraint to every lyph along a path.
         <blockquote>
-          Example: http://localhost:5052/constrain_along_path/?from=5000&to=6000&lyph=LYPH_3
+          Example: http://localhost:5052/constrain_along_path/?from=5000&to=6000&template=TEMPLATE_3
         </blockquote>
-        Will send an error message (and not assign any constraints) if any edge in the path has a lyph that already violates the constraint.
+        Will send an error message (and not assign any constraints) if any lyph in the path has a template that already violates the constraint.
         <ul><li>Optional arguments: Same as the "lyphpath" command</li></ul>
       </p>
 
@@ -222,35 +222,34 @@
       <p>
         Used to create a new layer (or, if the specified layer already exists, retrieve it).
         <ul>
-          <li>Mandatory argument: material: the material of the layer (a lyph ID)</li>
+          <li>Mandatory argument: material: the material of the layer (a template ID)</li>
           <li>Optional argument: thickness: the thickness of the layer</li>
-          <li>Optional argument: color: the color of the layer</li>
         </ul>
         <blockquote>
-          Example: http://localhost:5052/makelayer/?material=LYPH_1&thickness=5&color=red
+          Example: http://localhost:5052/makelayer/?material=TEMPLATE_1&thickness=5
         </blockquote>
       </p>
 
-      <h3 id='apicmd_makelyph'>makelyph</h3>
-        Used to create a new lyph (or, if the specified lyph already exists, create it).
+      <h3 id='apicmd_maketemplate'>maketemplate</h3>
+        Used to create a new template (or, if the specified template already exists, find it).
         <ul>
           <li>
-            Mandatory argument: name: a proposed name for the lyph.
+            Mandatory argument: name: a proposed name for the template.
             <ul>
-              <li>Note: If a lyph already exists which matches everything else, then this proposed name will be discarded, in favor of the existing lyph's name.</li>
+              <li>Note: If a template already exists which matches everything else, then this proposed name will be discarded, in favor of the existing template's name.</li>
             </ul>
           </li>
           <li>
             Mandatory argument: type: mix or shell.
             <ul>
-              <li>Note: To create a lyph of type 'basic', use the 'lyph' command (above).
+              <li>Note: To create a template of type 'basic', use the 'template' command (above).
             </ul>
           </li>
-          <li>Mandatory arguments: layer1, layer2: specify layers of the lyph (by layer id)</li>
-          <li>Optional arguments: layer3, layer4, etc: as above.
+          <li>Mandatory arguments: layer1: specify layers of the template (by layer id)</li>
+          <li>Optional arguments: layer2, layer3, layer4, etc: as above.
         </ul>
         <blockquote>
-          Example: http://localhost:5052/makelyph/?name=my+lyph&type=mix&layer1=LAYER_5&layer2=LAYER_77&layer3=LAYER_4
+          Example: http://localhost:5052/maketemplate/?name=my+template&type=mix&layer1=LAYER_5&layer2=LAYER_77&layer3=LAYER_4
         </blockquote>
 
       <h3 id='apicmd_makeview'>makeview</h3>
@@ -270,10 +269,10 @@
       <blockquote>
         Example: http://localhost:5052/makelyphnode/
       </blockquote>
-      Note: The lyphnode will not actually be saved to disk unless it is used in a lyphedge or lyphview.
+      Note: The lyphnode will not actually be saved to disk unless it is used in a lyph or lyphview.
 
-      <h3 id='apicmd_makelyphedge'>makelyphedge</h3>
-      Used to create a new lyphedge (or, if such a lyphedge already exists, retrieve it).
+      <h3 id='apicmd_makelyph'>makelyph</h3>
+      Used to create a new lyph (or, if such a lyph already exists, retrieve it).
       <ul>
         <li>Mandatory argument: type: 1, 2, 3, or 4.  The meanings of these numbers are:
           <ul>
@@ -283,30 +282,30 @@
             <li>4: cardiac chamber</li>
           </ul>
         </li>
-        <li>Optional argument: name: a description of the edge.</li>
-        <li>Mandatory argument: from: the initial node of the edge (specified via lyphnode ID).</li>
-        <li>Mandatory argument: to: the terminal node of the edge (specified via lyphnode ID).</li>
-        <li>Optional argument: lyph: a lyph to describe the tube around the edge (specified via lyph ID).
+        <li>Optional argument: name: a description of the lyph.</li>
+        <li>Mandatory argument: from: the initial node of the lyph (specified via lyphnode ID).</li>
+        <li>Mandatory argument: to: the terminal node of the lyph (specified via lyphnode ID).</li>
+        <li>Optional argument: template: a template to describe the tube around the edge (specified via template ID).
         <li>Optional argument: fma: an FMA term (specified as a number, e.g., 7197 refers to FMA_7197).</li>
       </ul>
       <blockquote>
-        Example: http://localhost:5052/makelyphedge/?type=1&name=mystery+artery&from=5432&to=57465&lyph=LYPH_5&fma=7197
+        Example: http://localhost:5052/makelyph/?type=1&name=mystery+artery&from=5432&to=57465&template=TEMPLATE_5&fma=7197
       </blockquote>
-
-      <h3 id='apicmd_editedge'>editedge</h3>
-      <p>
-        Used to edit an existing lyphedge.
-        <ul>
-          <li>Mandatory argument: edge: the ID of the edge to edit.</li>
-          <li>Optional arguments: all the arguments that "makelyphedge" takes.</li>
-        </ul>
-      </p>
 
       <h3 id='apicmd_editlyph'>editlyph</h3>
       <p>
         Used to edit an existing lyph.
         <ul>
           <li>Mandatory argument: lyph: the ID of the lyph to edit.</li>
+          <li>Optional arguments: all the arguments that "makelyph" takes.</li>
+        </ul>
+      </p>
+
+      <h3 id='apicmd_edit_template'>edit_template</h3>
+      <p>
+        Used to edit an existing template.
+        <ul>
+          <li>Mandatory argument: template: the ID of the template to edit.</li>
           <li>Optional arguments: name, type, ont</li>
         </ul>
       </p>
@@ -329,40 +328,40 @@
         </ul>
       </p>
 
-      <h3 id='apicmd_edgeconstrain'>edgeconstrain</h3>
+      <h3 id='apicmd_lyphconstrain'>lyphconstrain</h3>
       <p>
-        Add a constraint to an edge.  A constraint is a lyph, and what it does is it restricts which lyphs can be assigned to the edge.  To be precise: only sublyphs of the constraint lyph will be allowed to be assigned to the edge.
+        Add a constraint to a lyph.  A constraint is a template, and what it does is it restricts which templates can be assigned to the lyph.  To be precise: only subtemplates of the constraint template will be allowed to be assigned to the lyph.
         <blockquote>
-          Example: http://localhost:5052/edgeconstrain/?edge=5000&lyph=LYPH_5
-        </blockquote>
-      </p>
-
-      <h3 id='apicmd_delete_edges'>delete_edges</h3>
-      <p>
-        Delete some edges.  The edges are specified via the 'edges' parameter, in the
-        form of a comma-separated list.
-        <blockquote>
-          Example: http://localhost:5052/delete_edges/?edges=5000,6000,7000
-        </blockquote>
-      </p>
-
-      <h3 id='apicmd_delete_nodes'>delete_nodes</h3>
-      <p>
-        Delete some nodes.  The nodes are specified via the 'nodes' parameter, in the
-        form of a comma-separated list.  Note: any edges which have any of these nodes
-        as endpoint, will also be deleted.
-        <blockquote>
-          Example: http://localhost:5052/delete_nodes/?nodes=50,60,70
+          Example: http://localhost:5052/lyphconstrain/?lyph=5000&template=TEMPLATE_5
         </blockquote>
       </p>
 
       <h3 id='apicmd_delete_lyphs'>delete_lyphs</h3>
       <p>
         Delete some lyphs.  The lyphs are specified via the 'lyphs' parameter, in the
-        form of a comma-separated list.  Note: any lyphs/layers which are built-up from
-        deleted lyphs will also be deleted.
+        form of a comma-separated list.
         <blockquote>
-          Example: http://localhost:5052/delete_lyphs/?lyphs=LYPH_5,LYPH_6,LYPH_7
+          Example: http://localhost:5052/delete_lyphs/?lyphs=5000,6000,7000
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_nodes'>delete_nodes</h3>
+      <p>
+        Delete some nodes.  The nodes are specified via the 'nodes' parameter, in the
+        form of a comma-separated list.  Note: any lyphs which have any of these nodes
+        as endpoint, will also be deleted.
+        <blockquote>
+          Example: http://localhost:5052/delete_nodes/?nodes=50,60,70
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_templates'>delete_templates</h3>
+      <p>
+        Delete some templates.  The templates are specified via the 'templates' parameter, in the
+        form of a comma-separated list.  Note: any templates/layers which are built-up from
+        deleted templates will also be deleted.
+        <blockquote>
+          Example: http://localhost:5052/delete_templates/?templates=TEMPLATE_5,TEMPLATE_6,TEMPLATE_7
         </blockquote>
       </p>
 
@@ -378,7 +377,7 @@
       <h3 id='apicmd_delete_layers'>delete_layers</h3>
       <p>
         Delete some layers.  The layers are specified via the 'layers' parameter, in the
-        form of a comma-separated list.  Note, any lyphs/layers built up from deleted
+        form of a comma-separated list.  Note, any templates/layers built up from deleted
         layers will also be deleted.
         <blockquote>
           Example: http://localhost:5052/delete_layers/?layers=LAYER_1,LAYER_2,LAYER_3
@@ -390,7 +389,7 @@
         Add some nodes to a view.  The view is specified via the 'view' parameter.
         The nodes, along with their x- and y-coordinates, are specified via
         paramters 'node1', 'x1', 'y1', 'node2', 'x2', 'y2', etc., just like in the
-        <a href='#apicmd_makelyph'>makelyph</a> command.  Note, if any of the
+        <a href='#apicmd_maketemplate'>maketemplate</a> command.  Note, if any of the
         indicated nodes are already in the view, they will be ignored (in particular
         the command will not override their existing x-y-coordinates).
         <blockquote>
@@ -411,26 +410,26 @@
         </blockquote>
       </p>
 
-      <h3 id='apicmd_sublyphs'>sublyphs</h3>
+      <h3 id='apicmd_subtemplates'>subtemplates</h3>
       <p>
-        List the sublyphs of the indicated lyph.
+        List the subtemplates of the indicated template.
         <ul>
-          <li>Mandatory argument: lyph: which lyph to view the sublyphs of.
-          <li>Optional argument: direct: ('yes' or 'no') whether to restrict to only show *direct* sublyphs (default: 'no').
+          <li>Mandatory argument: template: which template to view the subtemplates of.
+          <li>Optional argument: direct: ('yes' or 'no') whether to restrict to only show *direct* subtemplates (default: 'no').
         </ul>
         <blockquote>
-          Example: http://localhost:5052/sublyphs/?lyph=LYPH_5&direct=yes
+          Example: http://localhost:5052/subtemplates/?template=TEMPLATE_5&direct=yes
         </blockquote>
       </p>
 
-      <h3 id='apicmd_all_lyphs'>all_lyphs</h3>
-      <p>(Temporary command during development only) View all lyphs</p>
+      <h3 id='apicmd_all_templates'>all_templates</h3>
+      <p>(Temporary command during development only) View all templates</p>
 
       <h3 id='apicmd_all_lyphnodes'>all_lyphnodes</h3>
       <p>(Temporary command during development only) View all lyphnodes</p>
 
-      <h3 id='apicmd_all_lyphedges'>all_lyphedges</h3>
-      <p>(Temporary command during development only) View all lyphedges</p>
+      <h3 id='apicmd_all_lyphedges'>all_lyphs</h3>
+      <p>(Temporary command during development only) View all lyphs</p>
 
       <h3 id='apicmd_all_lyphviews'>all_lyphviews</h3>
       <p>(Temporary command during development only) View all lyphviews</p>
@@ -438,15 +437,15 @@
       <h3 id='apicmd_all_ont_terms'>all_ont_terms</h3>
       <p>(Temporary command during development only) View all ontology terms</p>
 
-      <h3 id='apicmd_lyph_hierarchy'>lyph_hierarchy</h3>
-      <p>(Temporary command during development only) View the lyph hierarchy</p>
+      <h3 id='apicmd_template_hierarchy'>template_hierarchy</h3>
+      <p>(Temporary command during development only) View the template hierarchy</p>
 
       <h3 id='apicmd_reset_db'>reset_db</h3>
       <p>
         (Temporary command during development only) Reset (part of) the database (based on given arguments).
         <ul>
           <li>Optional argument: views: if set to 'yes', the command will delete all lyphviews in the database.</li>
-          <li>Optional argument: lyphs: if set to 'yes', the command will delete all lyphs in the database.</li>
+          <li>Optional argument: templates: if set to 'yes', the command will delete all templates in the database.</li>
           <li>Optional argument: graph: if set to 'yes', the command will reset the graph to the original graph provided by Dr. de Bono.</li>
         </ul>
       </p>
@@ -462,44 +461,44 @@
       <li>
         &raquo; <a href='#api'>API</a>
         <ul>
-          <li>&raquo; <a href='#apicmd_lyph'>lyph</a></li>
+          <li>&raquo; <a href='#apicmd_template'>template</a></li>
           <li>&raquo; <a href='#apicmd_layer'>layer</a></li>
-          <li>&raquo; <a href='#apicmd_lyphedge'>lyphedge</a></li>
+          <li>&raquo; <a href='#apicmd_lyph'>lyph</a></li>
           <li>&raquo; <a href='#apicmd_lyphnode'>lyphnode</a></li>
           <li>&raquo; <a href='#apicmd_lyphpath'>lyphpath</a></li>
-          <li>&raquo; <a href='#apicmd_assignlyph'>assignlyph</a></li>
-          <li>&raquo; <a href='#apicmd_lyph_along_path'>lyph_along_path</a></li>
+          <li>&raquo; <a href='#apicmd_assign_template'>assign_template</a></li>
+          <li>&raquo; <a href='#apicmd_template_along_path'>template_along_path</a></li>
           <li>&raquo; <a href='#apicmd_constrain_along_path'>constrain_along_path</a></li>
           <li>&raquo; <a href='#apicmd_lyphview'>lyphview</a></li>
           <li>&raquo; <a href='#apicmd_makelayer'>makelayer</a></li>
-          <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
+          <li>&raquo; <a href='#apicmd_maketemplate'>maketemplate</a></li>
           <li>&raquo; <a href='#apicmd_makeview'>makeview</a></li>
           <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
-          <li>&raquo; <a href='#apicmd_makelyphedge'>makelyphedge</a></li>
-          <li>&raquo; <a href='#apicmd_editedge'>editedge</a></li>
+          <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
+          <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
           <li>&raquo; <a href='#apicmd_editview'>editview</a></li>
           <li>&raquo; <a href='#apicmd_editlayer'>editlayer</a></li>
-          <li>&raquo; <a href='#apicmd_edgeconstrain'>edgeconstrain</a></li>
-          <li>&raquo; <a href='#apicmd_delete_edges'>delete_edges</a></li>
-          <li>&raquo; <a href='#apicmd_delete_nodes'>delete_nodes</a></li>
+          <li>&raquo; <a href='#apicmd_lyphconstrain'>lyphconstrain</a></li>
           <li>&raquo; <a href='#apicmd_delete_lyphs'>delete_lyphs</a></li>
+          <li>&raquo; <a href='#apicmd_delete_nodes'>delete_nodes</a></li>
+          <li>&raquo; <a href='#apicmd_delete_templates'>delete_templates</a></li>
           <li>&raquo; <a href='#apicmd_delete_views'>delete_views</a></li>
           <li>&raquo; <a href='#apicmd_delete_layers'>delete_layers</a></li>
           <li>&raquo; <a href='#apicmd_nodes_to_view'>nodes_to_view</a></li>
           <li>&raquo; <a href='#apicmd_nodes_from_view'>nodes_from_view</a></li>
-          <li>&raquo; <a href='#apicmd_sublyphs'>sublyphs</a></li>
+          <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
         </ul>
       </li>
       <li>
         &raquo; Dev-only commands
         <ul>
-          <li>&raquo; <a href='#apicmd_all_lyphs'>all_lyphs</a></li>
+          <li>&raquo; <a href='#apicmd_all_templates'>all_templates</a></li>
           <li>&raquo; <a href='#apicmd_all_lyphnodes'>all_lyphnodes</a></li>
-          <li>&raquo; <a href='#apicmd_all_lyphedges'>all_lyphedges</a></li>
+          <li>&raquo; <a href='#apicmd_all_lyphs'>all_lyphs</a></li>
           <li>&raquo; <a href='#apicmd_all_lyphviews'>all_lyphviews</a></li>
           <li>&raquo; <a href='#apicmd_all_ont_terms'>all_ont_terms</a></li>
-          <li>&raquo; <a href='#apicmd_lyph_hierarchy'>lyph_hierarchy</a></li>
+          <li>&raquo; <a href='#apicmd_template_hierarchy'>template_hierarchy</a></li>
           <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
         </ul>
       </li>
@@ -510,7 +509,7 @@
     <hr>
     <ul>
       <li>&raquo; <a href='#topdiv'>Back to top</a></li>
-      <li>&raquo; <a href='doc.html'>Back to main LOLS documentation</a></li>
+      <li>&raquo; <a href='http://open-physiology.org'>Open Physiology</a></li>
     </ul>
   </div>
 
