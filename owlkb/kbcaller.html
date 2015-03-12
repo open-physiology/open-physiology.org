@@ -72,7 +72,7 @@
           <blockquote>
             public ArrayList&lt;String&gt; parse_json( String json ) throws IOException
           </blockquote>
-          You can compose this with any of the String-returning API methods,
+          You can compose this with any of the String-returning API methods (except "subhierarchy"),
           for example:
           <blockquote>
             KBCaller kbcaller = new KBCaller( "http://open-physiology.org:20080" );<br>
@@ -88,6 +88,8 @@
               &nbsp;&nbsp;e.printStackTrace();<br>
             }
           </blockquote>
+          If you want to parse the "subhierarchy" JSON, you'll probably want to use
+          a full JSON parser for that, as it's not a flat list.
         </p>
 
       <h2>Back</h2>
