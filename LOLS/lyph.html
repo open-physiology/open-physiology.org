@@ -468,6 +468,18 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_instances_of'>instances_of</h3>
+      <p>
+        Given a lyph template, say X, this command finds all lyphs L such that L
+        has a template Y such that Y is a subtemplate of (or equal to) X.
+        <ul>
+          <li>Argument: template: the ID of the template X described above.</li>
+        </ul>
+        <blockquote>
+          http://localhost:5052/instances_of/?template=TEMPLATE_1
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_all_templates'>all_templates</h3>
       <p>(Temporary command during development only) View all templates</p>
 
@@ -537,6 +549,7 @@
           <li>&raquo; <a href='#apicmd_lyphs_to_view'>lyphs_to_view</a></li>
           <li>&raquo; <a href='#apicmd_lyphs_from_view'>lyphs_from_view</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
+          <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
         </ul>
       </li>
       <li>
