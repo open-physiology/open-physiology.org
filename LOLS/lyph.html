@@ -480,6 +480,23 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_involves_template'>involves_template</h3>
+      <p>
+        Given a lyph template, say X, this command finds all lyphs L such that L
+        has a template Y such that Y 'involves' X as a part.  This is defined
+        recursively:
+        <ol>
+          <li>If Y=X, then Y involves X as a part.</li>
+          <li>If Y has layers with materials Y1,...,Yn, then Y involves X as a part if any of Y1,...,Yn involve X as a part.</li>
+        </ol>
+        <ul>
+          <li>Argument: template: the template X as described above.</li>
+        </ul>
+        <blockquote>
+          http://localhost:5052/involves_template/?template=TEMPLATE_1
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_all_templates'>all_templates</h3>
       <p>(Temporary command during development only) View all templates</p>
 
@@ -550,6 +567,7 @@
           <li>&raquo; <a href='#apicmd_lyphs_from_view'>lyphs_from_view</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
+          <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
         </ul>
       </li>
       <li>
