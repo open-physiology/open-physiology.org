@@ -111,7 +111,9 @@
       <h3>Lyphviews</h3>
       <p>
         A <i>lyphview</i> is a set of lyphnodes along with x-y-coordinates
-        for those lyphnodes.  Every lyphview also has an <i>id</i>, for retrieval
+        for those lyphnodes, plus a set of 'rectangles' (a 'rectangle' being
+        a lyph together with a width, a height, and the x-y-coordinates of
+        its upper-left point).  Every lyphview also has an <i>id</i>, for retrieval
         from the database, and (optionally) a <i>name</i>.
       </p>
     </div>
@@ -210,14 +212,6 @@
         <ul><li>Optional arguments: Same as the "lyphpath" command</li></ul>
       </p>
 
-      <h3 id='apicmd_lyphview'>lyphview</h3>
-      <p>
-        Used to look up a lyphview by its ID.
-        <blockquote>
-          Example: http://localhost:5052/lyphview/1
-        </blockquote>
-      </p>
-
       <h3 id='apicmd_makelayer'>makelayer</h3>
       <p>
         Used to create a new layer (or, if the specified layer already exists, retrieve it).
@@ -258,10 +252,20 @@
         <li>Optional arguments: node1, node2, node3, ...: The nodes in the lyphview</li>
         <li>Optional arguments: x1, x2, x3, ...: The x-coordinates of the nodes</li>
         <li>Optional arguments: y1, y2, y3, ...: The y-coordinates of the nodes</li>
+        <li>Optional arguments: lyphs1, lyph2, lyph3, ...: The lyphs (rectanlges) in the lyphview</li>
+        <li>
+          Optional arguments: lx1, lx2, lx3, ...: The x-coordinates of the lyphs' upper-left points</li>
+          <ul>
+            <li>(Note, that first character is a lowercase L, as in "lyph")</li>
+          </ul>
+        </li>
+        <li>Optional arguments: ly1, ly2, ly3, ...: The y-coordinates of the lyphs' upper-left points</li>
+        <li>Optional arguments: width1, width2, width3, ...: The widths of the lyphs</li>
+        <li>Optional arguments: height1, height2, height3, ...: The heights of the lyphs</li>
       </ul>
       Each node must be given an x- and a y-coordinate.
       <blockquote>
-        Example: http://localhost:5052/makeview/?node1=500&x1=3&y1=5&node2=9342&x2=0&y2=0&node3=654&x3=99&y3=50
+        Example: http://localhost:5052/makeview/?node1=500&x1=3&y1=5&node2=9342&x2=0&y2=0&lyph1=6039&lx1=3&ly1=5&width1=12&height1=8
       </blockquote>
 
       <h3 id='apicmd_makelyphnode'>makelyphnode</h3>
@@ -332,6 +336,8 @@
           <li>Mandatory argument: view: the ID of the view to edit.</li>
           <li>Optional arguments: name</li>
         </ul>
+        (Note: to add/remove nodes, use the nodes_to_view/nodes_from_view commands
+        instead.  To add/remove lyphs, use the lyphs_to_view/lyphs_from view commands.)
       </p>
 
       <h3 id='apicmd_editlayer'>editlayer</h3>
@@ -425,6 +431,31 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_lyphs_from_view'>lyphs_from_view</h3>
+      <p>
+        Remove some lyphs from a view.  The view is specified with the 'view'
+        parameter.  The lyphs are specified with the 'lyphs' parameter, in the
+        form of a comma-separated list.  Note, any lyphs in the list which are
+        not in the view, will simply be ignored, so you don't have to worry about
+        checking whether the nodes are already in the view, before sending the
+        command.
+        <blockquote>
+          Example: http://localhost:5052/lyphs_from_view/?view=10&lyphs=6039,6040
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_lyphs_to_view'>lyphs_to_view</h3>
+      <p>
+        Add some lyphs (rectangles) to a view.  The view is indicated with the
+        'view' parameter.  The lyphs are indicated using the same syntax as the
+        <a href='#apicmd_makeview>makeview</a> command.  Note that any lyphs that
+        are already present in the view, will be ignored (in particular, their
+        existing coordinates/length/width will *not* be overwritten).
+        <blockquote>
+          Example: http://localhost:5052/lyphs_to_view/?view=50&lyph1=6039&lx1=5&ly1=6&width1=10&height1=20
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
       <p>
         List the subtemplates of the indicated template.
@@ -434,6 +465,18 @@
         </ul>
         <blockquote>
           Example: http://localhost:5052/subtemplates/?template=TEMPLATE_5&direct=yes
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_instances_of'>instances_of</h3>
+      <p>
+        Given a lyph template, say X, this command finds all lyphs L such that L
+        has a template Y such that Y is a subtemplate of (or equal to) X.
+        <ul>
+          <li>Argument: template: the ID of the template X described above.</li>
+        </ul>
+        <blockquote>
+          http://localhost:5052/instances_of/?template=TEMPLATE_1
         </blockquote>
       </p>
 
@@ -503,7 +546,10 @@
           <li>&raquo; <a href='#apicmd_delete_layers'>delete_layers</a></li>
           <li>&raquo; <a href='#apicmd_nodes_to_view'>nodes_to_view</a></li>
           <li>&raquo; <a href='#apicmd_nodes_from_view'>nodes_from_view</a></li>
+          <li>&raquo; <a href='#apicmd_lyphs_to_view'>lyphs_to_view</a></li>
+          <li>&raquo; <a href='#apicmd_lyphs_from_view'>lyphs_from_view</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
+          <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
         </ul>
       </li>
       <li>
