@@ -198,6 +198,7 @@
     <h3>API Quick Nav</h3>
     <ul>
       <li>&raquo; <a href='#subterms'>subterms</a></li>
+      <li>&raquo; <a href='#siblings'>siblings</a></li>
       <li>&raquo; <a href='#subhierarchy'>subhierarchy</a></li>
       <li>&raquo; <a href='#eqterms'>eqterms</a></li>
       <li>&raquo; <a href='#terms'>terms</a></li>
@@ -217,6 +218,13 @@
         <h3>subterms</h3>
         <blockquote>Example: http://localhost:20080/subterms/CHEBI_33709</blockquote>
         <p>Finds all subterms of the indicated term.  For example, "amino acid" is a subterm of "acid".</p>
+      </div>
+
+      <div id='siblings'>
+        <h3>siblings</h3>
+        <blockquote>Example: http://localhost:20080/siblings/CHEBI_33709</blockquote>
+        <p>Finds all siblings of the indicated term.  A 'sibling' is defined to be an
+           immediate subterm of an immediate superterm of the indicated term.</p>
       </div>
 
       <div id='subhierarchy'>
