@@ -157,8 +157,14 @@
       <h3 id='apicmd_lyph'>lyph</h3>
       <p>
         Used to look up a lyph by its ID.
+        <ul>
+          <li>Optional argument: 'annots': set annots=1 if you want to see lyph's annotations.
+        </ul>
         <blockquote>
           Example: http://localhost:5052/lyph/6039
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/lyph/6039?annots=1
         </blockquote>
       </p>
 
@@ -299,6 +305,16 @@
       <blockquote>
         Example: http://localhost:5052/makelyph/?type=1&name=mystery+artery&from=5432&to=57465&template=TEMPLATE_5&fma=7197
       </blockquote>
+
+      <h3 id='apicmd_annotate'>annotate</h3>
+      <p>
+        Add an annotation to a set of lyphs.
+        <ul>
+          <li>Mandatory argument: lyphs: the lyphs to annotate (as a comma-separated list)</li>
+          <li>Mandatory argument: annot: the annotation to annotate the lyphs with (a string)</li>
+          <li>Optional argument: pred: a predicate, to specify what type of annotation this is.</li>
+        </ul>
+      </p>
 
       <h3 id='apicmd_editlyph'>editlyph</h3>
       <p>
@@ -550,6 +566,7 @@
           <li>&raquo; <a href='#apicmd_makeview'>makeview</a></li>
           <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
           <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
+          <li>&raquo; <a href='#apicmd_annotate'>annotate</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
