@@ -207,6 +207,7 @@
       <li>&raquo; <a href='#search'>search</a></li>
       <li>&raquo; <a href='#addlabel'>addlabel</a></li>
       <li>&raquo; <a href='#json'>JSON</a></li>
+      <li>&raquo; <a href='#verbose'>Verbose Results</a></li>
       <li>&raquo; <a href='#manchester'>Manchester Syntax</a></li>
     </ul>
   </div>
@@ -292,8 +293,45 @@
 
       <div id='json'>
         <h2>JSON</h2>
-        <p>To get results in JSON, send a request header "Accept: application/json".
-        <blockquote>Example: curl --header "Accept: application/json" "http://localhost:20080/subterms/CHEBI_33709"</blockquote>
+        <p>
+          There are three ways to coerce data into JSON format:
+          <ol>
+            <li>
+              Include an URL paramater 'json'.
+              <blockquote>
+                Example: http://localhost:20080/subterms/FMA_50801?json
+              </blockquote>
+            </li>
+            <li>
+              Include an URL parameter 'verbose'.  In addition to changing the command
+              output to json, this also causes the command to send additional information
+              (most importantly, it will send labels along with terms).
+              <blockquote>
+                Example: http://localhost:20080/siblings/FMA_50801?verbose
+              </blockquote>
+            </li>
+            <li>
+              Send a request header "Accept: application/json".  This has the same
+              effect as method number 1 from above.
+              <blockquote>
+                Example: curl --header "Accept: application/json" "http://localhost:20080/subterms/CHEBI_33709"
+              </blockquote>
+            </li>
+          </ol>
+        </p>
+      </div>
+
+      <div id='verbose'>
+        <h2>Verbose Results</h2>
+        <p>
+          Because of backward-compatibility considerations, the default form of
+          OWLKB results is sparse (including nothing but raw terms in most cases,
+          whereas the user is probably interested in the labels of those terms as
+          well).  In order to get labels along with terms, use the 'verbose' URL
+          parameter.  Note: this will also coerce the results into JSON format.
+          <blockquote>
+            Example: http://localhost:20080/subterms/CHEBI_33709?verbose
+          </blockquote>
         </p>
       </div>
 
