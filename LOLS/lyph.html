@@ -333,11 +333,15 @@
       <p>
         Used to edit an existing lyphnode.
         <ul>
+          <li>Argument: node: the node you want to edit.</li>
           <li>Argument: location: the location of the lyphnode (specified with a lyph ID).</li>
           <li>Argument: loctype: the loctype of the lyphnode ('interior' or 'border').</li>
         </ul>
         If the node already has a location, then the location argument is optional.
         If the node already has a loctype, then the loctype argument is optional.
+        <blockquote>
+          Example: http://localhost:5052/editlyphnode/?node=5&location=10&loctype=interior
+        </blockquote>
       </p>
 
       <h3 id='apicmd_edit_template'>edit_template</h3>
