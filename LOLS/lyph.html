@@ -178,14 +178,36 @@
 
       <h3 id='apicmd_lyphpath'>lyphpath</h3>
       <p>
-        Used to compute the shortest path from one lyphnode to another.
+        Used to compute shortest path(s) through the lyph graph..
         <blockquote>
-          Example: http://localhost:5052/lyphpath/?from=50022150_0&to=50022153_0
+          Example 1: http://localhost:5052/lyphpath/?from=50022150_0&to=50022153_0
         </blockquote>
+        <blockquote>
+          Example 2: http://localhost:5052/lyphpath/?fromlyph=6039&tolyph=6032
+        </blockquote>
+        <blockquote>
+          Example 3: http://localhost:5052/lyphpath/?from=50022150_0&tolyph=6032
+        </blockquote>
+        <blockquote>
+          Example 4: http://localhost:5052/lyphpath/?fromlyph=6039&to=50022153_0
+        </blockquote>
+        'From' or 'Fromlyph' argument:
+        <ul>
+          <li>&raquo; 'from': specify a lyphnode to search for paths starting at that lyphnode.</li>
+          <li>&raquo; 'fromlyph': specify a lyph to search for paths starting at any lyphnode located inside that lyph</li>
+          <li>&raquo; Only one of the above arguments should be used.</li>
+        </ul>
+        'To' or 'Tolyph' argument:
+        <ul>
+          <li>&raquo; 'to': specify a lyphnode to search for paths ending at that lyphnode.</li>
+          <li>&raquo; 'tolyph': specify a lyph to search for paths ending at any lyphnode located in that lyph.</li>
+          <li>&raquo; Only one of the above arguments should be used.</li>
+        </ul>
         Optional arguments:
         <ul>
           <li>&raquo; filter: specify a filter template, the algorithm will only consider lyphs with templates that are subtemplates of the filter.</li>
           <li>&raquo; include_templateless: specify ('yes' or 'no') whether templateless lyphs should be considered, when performing a filtered search.  Default: no.</li>
+          <li>&raquo; numpaths: If you want to find multiple paths, rather than just the shortest one, use 'numpaths' to indicate how many paths you want.  The program will output up to that many paths, from shortest to longest.</li>
         </ul>
       </p>
 
