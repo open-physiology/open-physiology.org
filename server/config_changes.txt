@@ -1,0 +1,4 @@
+30 Mar 2015, 13:53pm UK time:
+I ran
+  sysctl -w kernel.core_pattern="core"
+to make coredumps be generated in the directory where the offending executables were run.
