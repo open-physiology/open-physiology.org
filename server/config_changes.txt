@@ -2,3 +2,7 @@
 I ran
   sysctl -w kernel.core_pattern="core"
 to make coredumps be generated in the directory where the offending executables were run.
+
+1 Apr 2015, 15:39pm UK time:
+I added "ulimit -c unlimited" to the following scripts to ensure coredumps when they crash:
+  LOLS_5052.sh, LOLS_dev_5054.sh, LOLS_dev_5055.sh, feather_5053.sh
