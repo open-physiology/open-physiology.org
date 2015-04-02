@@ -176,6 +176,22 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_pubmed'>pubmed</h3>
+      <p>
+        Used to look up a pubmed entry based on its ID (specified with the 'pubmed' parameter).
+        <blockquote>
+          Example: http://localhost:5052/pubmed/?pubmed=5000
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_clinical_index'>clinical_index</h3>
+      <p>
+        Used to look up a clinical index based on index (specified with the 'index' parameter).
+        <blockquote>
+          Example: http://localhost:5052/clinical_index/?index=cooties
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_lyphpath'>lyphpath</h3>
       <p>
         Used to compute shortest path(s) through the lyph graph..
@@ -329,6 +345,22 @@
         Example: http://localhost:5052/makelyph/?type=1&name=mystery+artery&from=5432&to=57465&template=TEMPLATE_5&fma=7197
       </blockquote>
 
+      <h3 id='apicmd_make_pubmed'>make_pubmed</h3>
+      <p>
+        Add a pubmed entry, specified its ID ('id') and the title of the paper ('title').
+        <blockquote>
+          Example: http://localhost:5052/make_pubmed/?id=5000&title=The+Theory+of+Everything
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_make_clinical_index'>make_clinical_index</h3>
+      <p>
+        Add a clinical index entry, specified by its index ('index') and label ('label').
+        <blockquote>
+          Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_annotate'>annotate</h3>
       <p>
         Add an annotation to a set of lyphs.
@@ -336,9 +368,10 @@
           <li>Mandatory argument: lyphs: the lyphs to annotate (as a comma-separated list)</li>
           <li>Mandatory argument: annot: the annotation to annotate the lyphs with (a string)</li>
           <li>Optional argument: pred: a predicate, to specify what type of annotation this is.</li>
+          <li>Optional argument: pubmed: a pubmed ID.  The corresponding pubmed entry must first have been created with the <a href='#apicmd_make_pubmed'>pubmed</a> command.</li>
         </ul>
         <blockquote>
-          Example: http://localhost:5052/annotate/?lyphs=6039,6040&pred=mentioned+in+paper&annot=de+Bono+(2018)</li>
+          Example: http://localhost:5052/annotate/?lyphs=6039,6040&pred=mentioned+in+paper&annot=de+Bono+(2018)&pubmed=500</li>
         </blockquote>
       </p>
 
@@ -393,6 +426,24 @@
           <li>Mandatory argument: layer: the ID of the layer to edit.</li>
           <li>Optional arguments: material, thickness</li>
         </ul>
+      </p>
+
+      <h3 id='apicmd_edit_pubmed'>edit_pubmed</h3>
+      <p>
+        Edit a pubmed entry (specified with the 'pubmed' parameter).  The only field
+        you can edit right now is 'title'.
+        <blockquote>
+          Example: http://localhost:5052/edit_pubmed/?pubmed=500&title=On+Corrections+of+Paper+Names
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
+      <p>
+        Edit a clinical index entry (specified with the 'index' parameter).  The only field
+        you can edit right now is 'label'.
+        <blockquote>
+          Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
+        </blockquote>
       </p>
 
       <h3 id='apicmd_lyphconstrain'>lyphconstrain</h3>
@@ -558,6 +609,12 @@
       <h3 id='apicmd_all_ont_terms'>all_ont_terms</h3>
       <p>(Temporary command during development only) View all ontology terms</p>
 
+      <h3 id='apicmd_all_pubmeds'>all_pubmeds</h3>
+      <p>(Temporary command during development only) View all pubmed entries</p>
+
+      <h3 id='apicmd_all_clinical_indices'>all_clinical_indices</h3>
+      <p>(Temporary command during development only) View all clinical indices</p>
+
       <h3 id='apicmd_template_hierarchy'>template_hierarchy</h3>
       <p>(Temporary command during development only) View the template hierarchy</p>
 
@@ -586,6 +643,8 @@
           <li>&raquo; <a href='#apicmd_layer'>layer</a></li>
           <li>&raquo; <a href='#apicmd_lyph'>lyph</a></li>
           <li>&raquo; <a href='#apicmd_lyphnode'>lyphnode</a></li>
+          <li>&raquo; <a href='#apicmd_pubmed'>pubmed</a></li>
+          <li>&raquo; <a href='#apicmd_clinical_index'>clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_lyphpath'>lyphpath</a></li>
           <li>&raquo; <a href='#apicmd_assign_template'>assign_template</a></li>
           <li>&raquo; <a href='#apicmd_template_along_path'>template_along_path</a></li>
@@ -596,12 +655,16 @@
           <li>&raquo; <a href='#apicmd_makeview'>makeview</a></li>
           <li>&raquo; <a href='#apicmd_makelyphnode'>makelyphnode</a></li>
           <li>&raquo; <a href='#apicmd_makelyph'>makelyph</a></li>
+          <li>&raquo; <a href='#apicmd_make_pubmed'>make_pubmed</a></li>
+          <li>&raquo; <a href='#apicmd_make_clinical_index'>make_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_annotate'>annotate</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
           <li>&raquo; <a href='#apicmd_editview'>editview</a></li>
           <li>&raquo; <a href='#apicmd_editlayer'>editlayer</a></li>
+          <li>&raquo; <a href='#apicmd_edit_pubmed'>edit_pubmed</a></li>
+          <li>&raquo; <a href='#apicmd_edit_clinical_index'>edit_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_lyphconstrain'>lyphconstrain</a></li>
           <li>&raquo; <a href='#apicmd_delete_lyphs'>delete_lyphs</a></li>
           <li>&raquo; <a href='#apicmd_delete_nodes'>delete_nodes</a></li>
@@ -625,6 +688,8 @@
           <li>&raquo; <a href='#apicmd_all_lyphs'>all_lyphs</a></li>
           <li>&raquo; <a href='#apicmd_all_lyphviews'>all_lyphviews</a></li>
           <li>&raquo; <a href='#apicmd_all_ont_terms'>all_ont_terms</a></li>
+          <li>&raquo; <a href='#apicmd_all_pubmeds'>all_pubmeds</a></li>
+          <li>&raquo; <a href='#apicmd_all_clinical_indices'>all_clinical_indices</a></li>
           <li>&raquo; <a href='#apicmd_template_hierarchy'>template_hierarchy</a></li>
           <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
         </ul>
