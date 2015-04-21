@@ -91,7 +91,7 @@
         A <i>lyph</i> consists of a 'from' vertex (which is a lyphnode,
         defined above); a 'to' vertex (also a lyphnode); a 'name' (which, in
         practice, may be a very verbose description of a segment of flow
-        in the body); a 'type' (see below); a 'template' (which should be a 'shell'
+        in the body); a 'type' (optional, see below); a 'template' (which should be a 'shell'
         type of template); and an 'fma' term.  Only the 'from' and 'to' fields are
         mandatory, the rest may be unspecified.
       </p>
@@ -103,6 +103,7 @@
           <li>3: venous</li>
           <li>4: cardiac chamber</li>
         </ul>
+        If no type is specified, the type defaults to 1.  Type is, currently, a deprecated feature.
       </p>
       <p>
         Every lyph also has an <i>id</i>, for retrieval from the database.
@@ -297,7 +298,12 @@
         <li>Optional arguments: node1, node2, node3, ...: The nodes in the lyphview</li>
         <li>Optional arguments: x1, x2, x3, ...: The x-coordinates of the nodes</li>
         <li>Optional arguments: y1, y2, y3, ...: The y-coordinates of the nodes</li>
-        <li>Optional arguments: lyphs1, lyph2, lyph3, ...: The lyphs (rectanlges) in the lyphview</li>
+        <li>
+          Optional arguments: lyph1, lyph2, lyph3, ...: The lyphs (rectangles) in the lyphview
+          <ul>
+            <li>Note: template IDs can also be used, in which case a lyph with that template will be chosen (or created, if none exist yet).</li>
+          </ul>
+        </li>
         <li>
           Optional arguments: lx1, lx2, lx3, ...: The x-coordinates of the lyphs' upper-left points</li>
           <ul>
@@ -327,7 +333,7 @@
       <h3 id='apicmd_makelyph'>makelyph</h3>
       Used to create a new lyph (or, if such a lyph already exists, retrieve it).
       <ul>
-        <li>Mandatory argument: type: 1, 2, 3, or 4.  The meanings of these numbers are:
+        <li>Optional argument: type: 1, 2, 3, or 4.  The meanings of these numbers are:
           <ul>
             <li>1: arterial segment</li>
             <li>2: microcirculation</li>
@@ -358,6 +364,10 @@
         Add a clinical index entry, specified by its index ('index') and label ('label').
         <blockquote>
           Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease
+        </blockquote>
+        Optionally, a comma-separated list of pubmed IDs can be specified with the 'pubmeds' parameter (these should first be created using make_pubmed).
+        <blockquote>
+          Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease&pubmeds=123,456,789
         </blockquote>
       </p>
 
@@ -439,10 +449,13 @@
 
       <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
       <p>
-        Edit a clinical index entry (specified with the 'index' parameter).  The only field
-        you can edit right now is 'label'.
+        Edit a clinical index entry (specified with the 'index' parameter).  Editable fields
+        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs, which should first be created using make_pubmed.)
         <blockquote>
           Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/edit_clinical_index/?index=cooties&pubmeds=123,456,789
         </blockquote>
       </p>
 
