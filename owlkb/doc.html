@@ -198,6 +198,8 @@
     <h3>API Quick Nav</h3>
     <ul>
       <li>&raquo; <a href='#subterms'>subterms</a></li>
+      <li>&raquo; <a href='#parents'>parents</a></li>
+      <li>&raquo; <a href='#children'>children</a></li>
       <li>&raquo; <a href='#siblings'>siblings</a></li>
       <li>&raquo; <a href='#subhierarchy'>subhierarchy</a></li>
       <li>&raquo; <a href='#eqterms'>eqterms</a></li>
@@ -219,6 +221,18 @@
         <h3>subterms</h3>
         <blockquote>Example: http://localhost:20080/subterms/CHEBI_33709</blockquote>
         <p>Finds all subterms of the indicated term.  For example, "amino acid" is a subterm of "acid".</p>
+      </div>
+
+      <div id='parents'>
+        <h3>parents</h3>
+        <blockquote>Example: http://localhost:20080/parents/CHEBI_33709</blockquote>
+        <p>Finds all the direct parents (i.e., the direct superclasses) of the indicated term.</p>
+      </div>
+
+      <div id='children'>
+        <h3>children</h3>
+        <blockquote>Example: http://localhost:20080/children/CHEBI_33709</blockquote>
+        <p>Finds all the direct children (i.e., the direct subclasses) of the indicated term.</p>
       </div>
 
       <div id='siblings'>
