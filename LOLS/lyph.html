@@ -618,6 +618,26 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_has_clinical_index'>has_clinical_index</h3>
+      <p>
+        Find all lyphs that have (all|at least one of) the indicates clinical (index|indices).
+        <ul>
+          <li>Argument: indices: a comma-separated list of clinical indices.</li>
+          <li>Argument: type: either union or intersection (default: union).</li>
+        </ul>
+        If 'type' is 'union', the command will find all lyphs which have at least one of the indicated clinical indices.
+        If 'type' is 'intersection', the command will find all lyphs which have all of the indicated indices.
+        (Note: To give a lyph a clinical index, use the 'annotate' command with the clinical index as the annotation.)
+        <blockquote>
+          Note about location:  in this command's output, there is a field 'house' added to the JSON for each lyph.
+          What the command does is, for a given lyph L, is it looks at all the lyphs which are being
+          output, and among those, finds the smallest one (if any) in which L is located.
+          For example, if Lyph1 is located in Lyph2 is located in Lyph3, and if Lyph1 and Lyph3 have
+          clinical index X, but Lyph2 does not have that clinical index, then, when you search
+          for lyphs with clinical index X, in the output, Lyph1 will have Lyph3 as its house.
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_all_templates'>all_templates</h3>
       <p>(Temporary command during development only) View all templates</p>
 
@@ -703,6 +723,7 @@
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
           <li>&raquo; <a href='#apicmd_has_template'>has_template</a></li>
+          <li>&raquo; <a href='#apicmd_has_clinical_index'>has_clinical_index</a></li>
         </ul>
       </li>
       <li>
