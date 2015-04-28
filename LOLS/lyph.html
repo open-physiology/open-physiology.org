@@ -261,7 +261,7 @@
       <p>
         Used to create a new layer (or, if the specified layer already exists, retrieve it).
         <ul>
-          <li>Mandatory argument: material: the material of the layer (a template ID)</li>
+          <li>Mandatory argument: material: the materials of the layer (a comma-separated list of template IDs)</li>
           <li>Optional argument: thickness: the thickness of the layer</li>
         </ul>
         <blockquote>
@@ -434,7 +434,7 @@
         Used to edit an existing layer.
         <ul>
           <li>Mandatory argument: layer: the ID of the layer to edit.</li>
-          <li>Optional arguments: material, thickness</li>
+          <li>Optional arguments: material (as comma-separated list), thickness</li>
         </ul>
       </p>
 
@@ -460,6 +460,7 @@
       </p>
 
       <h3 id='apicmd_lyphconstrain'>lyphconstrain</h3>
+      <p>Temporarily disabled due to change in layer structure.</p>
       <p>
         Add a constraint to a lyph.  A constraint is a template, and what it does is it restricts which templates can be assigned to the lyph.  To be precise: only subtemplates of the constraint template will be allowed to be assigned to the lyph.
         <blockquote>
@@ -567,6 +568,7 @@
       </p>
 
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
+      <p>Temporarily disabled due to change in layers structure.</p>
       <p>
         List the subtemplates of the indicated template.
         <ul>
@@ -579,6 +581,7 @@
       </p>
 
       <h3 id='apicmd_instances_of'>instances_of</h3>
+      <p>Temporarily disabled due to change of layer structure.</p>
       <p>
         Given a lyph template, say X, this command finds all lyphs L such that L
         has a template Y such that Y is a subtemplate of (or equal to) X.
@@ -666,6 +669,7 @@
       <p>(Temporary command during development only) View all clinical indices</p>
 
       <h3 id='apicmd_template_hierarchy'>template_hierarchy</h3>
+      <p>Temporarily disabled due to change in layer structure</p>
       <p>(Temporary command during development only) View the template hierarchy</p>
 
       <h3 id='apicmd_reset_db'>reset_db</h3>
