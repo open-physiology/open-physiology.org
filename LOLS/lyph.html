@@ -286,6 +286,7 @@
           </li>
           <li>Mandatory arguments: layer1: specify layers of the template (by layer id)</li>
           <li>Optional arguments: layer2, layer3, layer4, etc: as above.
+          <li>Optional argument: misc_materials: comma-separated list of materials which occur somewhere in this template (when the individual layer where they occur is unknown)</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/maketemplate/?name=my+template&type=mix&layer1=LAYER_5&layer2=LAYER_77&layer3=LAYER_4
@@ -415,6 +416,7 @@
         <ul>
           <li>Mandatory argument: template: the ID of the template to edit.</li>
           <li>Optional arguments: name, type, ont</li>
+          <li>Optional argument: misc_materials: comma-separated list of materials (given by template IDs) which occur somewhere in this template, when it is unclear which layer exactly they occur in.</li>
         </ul>
       </p>
 
