@@ -303,6 +303,7 @@
           Optional arguments: lyph1, lyph2, lyph3, ...: The lyphs (rectangles) in the lyphview
           <ul>
             <li>Note: template IDs can also be used, in which case a lyph with that template will be chosen (or created, if none exist yet).</li>
+            <li>Optional argument: species: if a lyph is created as in the previous line, it will be created with this indicated species.</li>
           </ul>
         </li>
         <li>
@@ -347,6 +348,7 @@
         <li>Mandatory argument: to: the terminal node of the lyph (specified via lyphnode ID).</li>
         <li>Optional argument: template: a template to describe the tube around the edge (specified via template ID).
         <li>Optional argument: fma: an FMA term (specified as a number, e.g., 7197 refers to FMA_7197).</li>
+        <li>Optional argument: species: the species of the lyph (curator should use NCBI taxonomy IDs here)</li>
       </ul>
       <blockquote>
         Example: http://localhost:5052/makelyph/?type=1&name=mystery+artery&from=5432&to=57465&template=TEMPLATE_5&fma=7197
@@ -567,6 +569,11 @@
         <blockquote>
           Example: http://localhost:5052/lyphs_to_view/?view=50&lyph1=6039&lx1=5&ly1=6&width1=10&height1=20
         </blockquote>
+        Note: template IDs can be used in place of lyph IDs.  In that case, the system
+        will search for a lyph with that template, and use that.  If no such lyph exists,
+        one will be created.  lyphs_to_view can also take an optional 'species' parameter.
+        If supplied, and if a lyph is created for a given template, the lyph will have the
+        indicated species set.
       </p>
 
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
