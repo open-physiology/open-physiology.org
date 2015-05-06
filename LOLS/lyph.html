@@ -388,6 +388,18 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_remove_annotations'>remove_annotations</h3>
+      <p>
+        Remove an annotation from a set of lyphs.
+        <ul>
+          <li>Mandatory argument: lyphs: a comma-separated list of lyph IDs to remove the annotation from.</li>
+          <li>Mandatory argument: annot: the annotation to remove.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/remove_annotations/?lyphs=6039,6040,6041&annot=CLINDEX_244
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_editlyph'>editlyph</h3>
       <p>
         Used to edit an existing lyph.
@@ -727,6 +739,7 @@
           <li>&raquo; <a href='#apicmd_make_pubmed'>make_pubmed</a></li>
           <li>&raquo; <a href='#apicmd_make_clinical_index'>make_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_annotate'>annotate</a></li>
+          <li>&raquo; <a href='#apicmd_remove_annotations'>remove_annotations</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
