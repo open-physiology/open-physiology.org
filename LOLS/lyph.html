@@ -368,7 +368,7 @@
         <blockquote>
           Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease
         </blockquote>
-        Optionally, a comma-separated list of pubmed IDs can be specified with the 'pubmeds' parameter (these should first be created using make_pubmed).
+        Optionally, a comma-separated list of pubmed IDs can be specified with the 'pubmeds' parameter.
         <blockquote>
           Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease&pubmeds=123,456,789
         </blockquote>
@@ -380,11 +380,23 @@
         <ul>
           <li>Mandatory argument: lyphs: the lyphs to annotate (as a comma-separated list)</li>
           <li>Mandatory argument: annot: the annotation to annotate the lyphs with (a string)</li>
+          <li>Mandatory argument: pubmed: a pubmed ID.</li>
           <li>Optional argument: pred: a predicate, to specify what type of annotation this is.</li>
-          <li>Optional argument: pubmed: a pubmed ID.  The corresponding pubmed entry must first have been created with the <a href='#apicmd_make_pubmed'>pubmed</a> command.</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/annotate/?lyphs=6039,6040&pred=mentioned+in+paper&annot=de+Bono+(2018)&pubmed=500</li>
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_remove_annotations'>remove_annotations</h3>
+      <p>
+        Remove an annotation from a set of lyphs.
+        <ul>
+          <li>Mandatory argument: lyphs: a comma-separated list of lyph IDs to remove the annotation from.</li>
+          <li>Mandatory argument: annot: the annotation to remove.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/remove_annotations/?lyphs=6039,6040,6041&annot=CLINDEX_244
         </blockquote>
       </p>
 
@@ -420,6 +432,9 @@
           <li>Optional arguments: name, type, ont</li>
           <li>Optional argument: misc_materials: comma-separated list of materials (given by template IDs) which occur somewhere in this template, when it is unclear which layer exactly they occur in.</li>
         </ul>
+        <blockquote>
+          Example: http://localhost:5052/edit_template?template=TEMPLATE_1&misc_materials=TEMPLATE_2,TEMPLATE_3&name=Renamed!&type=shell
+        </blockquote>
       </p>
 
       <h3 id='apicmd_editview'>editview</h3>
@@ -440,6 +455,9 @@
           <li>Mandatory argument: layer: the ID of the layer to edit.</li>
           <li>Optional arguments: material (as comma-separated list), thickness</li>
         </ul>
+        <blockquote>
+          Example: http://localhost:5052/editlayer/?layer=LAYER_1&material=TEMPLATE_1,TEMPLATE_2&thickness=10
+        </blockquote>
       </p>
 
       <h3 id='apicmd_edit_pubmed'>edit_pubmed</h3>
@@ -454,7 +472,7 @@
       <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
       <p>
         Edit a clinical index entry (specified with the 'index' parameter).  Editable fields
-        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs, which should first be created using make_pubmed.)
+        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs.)
         <blockquote>
           Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
         </blockquote>
@@ -721,6 +739,7 @@
           <li>&raquo; <a href='#apicmd_make_pubmed'>make_pubmed</a></li>
           <li>&raquo; <a href='#apicmd_make_clinical_index'>make_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_annotate'>annotate</a></li>
+          <li>&raquo; <a href='#apicmd_remove_annotations'>remove_annotations</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
