@@ -368,7 +368,7 @@
         <blockquote>
           Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease
         </blockquote>
-        Optionally, a comma-separated list of pubmed IDs can be specified with the 'pubmeds' parameter (these should first be created using make_pubmed).
+        Optionally, a comma-separated list of pubmed IDs can be specified with the 'pubmeds' parameter.
         <blockquote>
           Example: http://localhost:5052/make_clinical_index/?index=cooties&label=The+Dreadful+Cooties+Disease&pubmeds=123,456,789
         </blockquote>
@@ -380,7 +380,7 @@
         <ul>
           <li>Mandatory argument: lyphs: the lyphs to annotate (as a comma-separated list)</li>
           <li>Mandatory argument: annot: the annotation to annotate the lyphs with (a string)</li>
-          <li>Mandatory argument: pubmed: a pubmed ID.  The corresponding pubmed entry must first have been created with the <a href='#apicmd_make_pubmed'>pubmed</a> command.</li>
+          <li>Mandatory argument: pubmed: a pubmed ID.</li>
           <li>Optional argument: pred: a predicate, to specify what type of annotation this is.</li>
         </ul>
         <blockquote>
@@ -460,7 +460,7 @@
       <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
       <p>
         Edit a clinical index entry (specified with the 'index' parameter).  Editable fields
-        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs, which should first be created using make_pubmed.)
+        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs.)
         <blockquote>
           Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
         </blockquote>
