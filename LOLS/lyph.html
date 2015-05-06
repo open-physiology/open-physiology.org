@@ -393,10 +393,13 @@
         Remove an annotation from a set of lyphs.
         <ul>
           <li>Mandatory argument: lyphs: a comma-separated list of lyph IDs to remove the annotation from.</li>
-          <li>Mandatory argument: annot: the annotation to remove.</li>
+          <li>Mandatory argument: annot: the annotation to remove (or 'all').  If set to 'all', then all annotations will be removed from the indicated lyphs.</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/remove_annotations/?lyphs=6039,6040,6041&annot=CLINDEX_244
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/remove_annotations/?lyphs=6039,6040,6041&annot=all
         </blockquote>
       </p>
 
