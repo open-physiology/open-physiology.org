@@ -420,6 +420,9 @@
           <li>Optional arguments: name, type, ont</li>
           <li>Optional argument: misc_materials: comma-separated list of materials (given by template IDs) which occur somewhere in this template, when it is unclear which layer exactly they occur in.</li>
         </ul>
+        <blockquote>
+          Example: http://localhost:5052/edit_template?template=TEMPLATE_1&misc_materials=TEMPLATE_2,TEMPLATE_3&name=Renamed!&type=shell
+        </blockquote>
       </p>
 
       <h3 id='apicmd_editview'>editview</h3>
@@ -440,6 +443,9 @@
           <li>Mandatory argument: layer: the ID of the layer to edit.</li>
           <li>Optional arguments: material (as comma-separated list), thickness</li>
         </ul>
+        <blockquote>
+          Example: http://localhost:5052/editlayer/?layer=LAYER_1&material=TEMPLATE_1,TEMPLATE_2&thickness=10
+        </blockquote>
       </p>
 
       <h3 id='apicmd_edit_pubmed'>edit_pubmed</h3>
