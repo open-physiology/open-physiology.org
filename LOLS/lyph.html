@@ -747,6 +747,30 @@
         </ul>
       </p>
 
+      <h3 id='apicmd_parse_csv'>parse_csv</h3>
+      <p>
+        Read a specified CSV file from /srv/lyph_uploads.
+        For each line of the CSV file, use the fields of that line as parameters to run a specified command.
+        <ul>
+          <li>Mandatory argument: filename: the name of the file, which must be located in /srv/lyph_uploads</li>
+          <li>Mandatory argument: cmd: an API command to run on each line of the CSV file.</li>
+        </ul>
+        For 'cmd', you can use special variables $1, $2, $3, etc., which will be filled in with the corresponding
+        fields of the line in question.  For example, $1 will be replaced by field 1 of the line.
+        <ul>
+          <li>Example: Suppose clin_indices.csv is a CSV file with clinical index IDs in column 1 and clinical index labels in column 2.
+              Once clin_indices.csv is in /srv/lyph_uploads, and its permissions are set appropriately,
+              you can load its clinical indices into the database as follows.
+              <ul>
+                <li>First, the <a href='#apicmd_make_clinical_index'>command</a> to add one clinical index is /make_clinical_index/?index=ID&label=LABEL</li>
+                <li>Since ID is column 1 and LABEL is column 2, that becomes /make_clinical_index/?index=$1&label=$2</li>
+                <li>Url-encode that to get make_clinical_index%2F%3Findex%3D%241%26label%3D%242</li>
+                <li>Finally:  http://localhost:5052/parse_csv/?filename=clin_indices.csv&cmd=make_clinical_index%2F%3Findex%3D%241%26label%3D%242</li>
+              </ul>
+          </li>
+        </ul>
+      </p>
+
     </div> <!-- divid -->
   </div> <!-- twelve columns -->
 
