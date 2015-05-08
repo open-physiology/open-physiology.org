@@ -597,6 +597,30 @@
         indicated species set.
       </p>
 
+      <h3 id='apicmd_layer_from_template'>layer_from_template</h3>
+      <p>Remove a layer from a template.
+        <ul>
+          <li>Mandatory argument: template: the ID of the template to remove a layer from.</li>
+          <li>Mandatory argument: layer: the ID of the layer to remove from the template.</li>
+          <li>Optional argument: pos: If the layer occurs multiple times in the template, indicate which occurrence to delete, e.g., if pos=1, delete the first occurrence, if pos=2, delete the second, etc.  Default: 1.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/layer_from_template/?template=TEMPLATE_1&layer=LAYER_1
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_layer_to_template'>layer_to_template</h3>
+      <p>Add a layer to a template.
+        <ul>
+          <li>Mandatory argument: template: the ID of the template to which you want to add a layer</li>
+          <li>Mandatory argument: layer: the ID of the layer you want to add to the template</li>
+          <li>Maybe-mandatory argument (mandatory if the template is a shell): pos: the position at which to insert the layer.  pos=1 means insert as first layer.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/layer_to_template/?template=TEMPLATE_1&layer=LAYER_1&pos=1
+        </blockquote>
+      </h3>
+
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
       <p>Temporarily disabled due to change in layers structure.</p>
       <p>
@@ -771,6 +795,8 @@
           <li>&raquo; <a href='#apicmd_nodes_from_view'>nodes_from_view</a></li>
           <li>&raquo; <a href='#apicmd_lyphs_to_view'>lyphs_to_view</a></li>
           <li>&raquo; <a href='#apicmd_lyphs_from_view'>lyphs_from_view</a></li>
+          <li>&raquo; <a href='#apicmd_layer_from_template'>layer_from_template</a></li>
+          <li>&raquo; <a href='#apicmd_layer_to_template'>layer_to_template</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
