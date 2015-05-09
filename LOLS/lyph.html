@@ -261,7 +261,11 @@
       <p>
         Used to create a new layer (or, if the specified layer already exists, retrieve it).
         <ul>
-          <li>Mandatory argument: material: the materials of the layer (a comma-separated list of template IDs)</li>
+          <li>Mandatory argument: materials: the materials of the layer (a comma-separated list of template IDs)
+              <ul>
+                <li>You can use 'none' to indicate that the layer has no materials.</li>
+              </ul>
+          </li>
           <li>Optional argument: thickness: the thickness of the layer</li>
         </ul>
         <blockquote>
@@ -455,11 +459,19 @@
       <p>
         Used to edit an existing layer.
         <ul>
-          <li>Mandatory argument: layer: the ID of the layer to edit.</li>
-          <li>Optional arguments: material (as comma-separated list), thickness</li>
+          <li>Mandatory argument: layer: the ID of the layer to (clone and) edit.</li>
+          <li>Optional arguments: materials (as comma-separated list), thickness
+            <ul>
+              <li>You can also set the materials to 'none' to create a layer with no materials.
+            </ul>
+          </li>
+          <li>Optional argument: mutable: If set to 'yes', the actual layer you specify will be directly edited (indirectly modifying all templates that use it).  Otherwise, the layer will be cloned, and the clone will be edited.</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/editlayer/?layer=LAYER_1&material=TEMPLATE_1,TEMPLATE_2&thickness=10
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/editlayer/?layer=LAYER_1&material=TEMPLATE_1,TEMPLATE_2&thickness=10&mutable=yes
         </blockquote>
       </p>
 
