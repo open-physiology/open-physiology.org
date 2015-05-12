@@ -486,8 +486,13 @@
 
       <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
       <p>
-        Edit a clinical index entry (specified with the 'index' parameter).  Editable fields
-        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs.)
+        Edit a clinical index entry (specified with the 'index' parameter).
+        <ul>
+          <li>Mandatory argument: index: the ID of the clinical index to edit.</li>
+          <li>Optional argument: label: the label of the clinical index.</li>
+          <li>Optional argument: pubmeds: a comma-separated list of pubmed IDs.</li>
+          <li>Optional argument: claimed: a string indicating which clinician has claimed the task of annotating lyphs with this index (for use in the 'unused clinical indices' page)</li>
+        </ul>
         <blockquote>
           Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
         </blockquote>
