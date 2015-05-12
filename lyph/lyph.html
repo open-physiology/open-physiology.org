@@ -486,8 +486,13 @@
 
       <h3 id='apicmd_edit_clinical_index'>edit_clinical_index</h3>
       <p>
-        Edit a clinical index entry (specified with the 'index' parameter).  Editable fields
-        are 'label' and 'pubmeds'.  (The latter is specified as a comma-separated list of pubmed IDs.)
+        Edit a clinical index entry (specified with the 'index' parameter).
+        <ul>
+          <li>Mandatory argument: index: the ID of the clinical index to edit.</li>
+          <li>Optional argument: label: the label of the clinical index.</li>
+          <li>Optional argument: pubmeds: a comma-separated list of pubmed IDs.</li>
+          <li>Optional argument: claimed: a string indicating which clinician has claimed the task of annotating lyphs with this index (for use in the 'unused clinical indices' page)</li>
+        </ul>
         <blockquote>
           Example: http://localhost:5052/edit_clinical_index/?index=cooties&label=A+Terrible+Disease+called+Cooties
         </blockquote>
@@ -632,6 +637,36 @@
           Example: http://localhost:5052/layer_to_template/?template=TEMPLATE_1&layer=LAYER_1&pos=1
         </blockquote>
       </h3>
+
+      <h3 id='apicmd_material_to_layer'>material_to_layer</h3>
+      <p>Add a single material to a layer.  Unless otherwise specified (see 'mutable' parameter), the layer will actually be clonsed, and the new material added to the clone.
+        <ul>
+          <li>Mandatory argument: layer: the layer to add the material to.</li>
+          <li>Mandatory argument: material: the material (template) to add to the layer.</li>
+          <li>Optional argument: mutable: if set to mutable=yes, then the actual layer will be edited.  Otherwise, the layer will be cloned, and the material added to the clone.  (Default: mutable=no)</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/material_to_layer/?layer=LAYER_7&material=TEMPLATE_3
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/material_to_layer/?layer=LAYER_7&material=TEMPLATE_3&mutable=yes
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_material_from_layer'>material_from_layer</h3>
+      <p>From a single material from a layer.  Unless otherwise specified (see 'mutable' parameter), the layer will actually be clonsed, and the material removed from the clone.
+        <ul>
+          <li>Mandatory argument: layer: the layer to remove the material from.</li>
+          <li>Mandatory argument: material: the material (template) to remove from the layer.</li>
+          <li>Optional argument: mutable: if set to mutable=yes, then the actual layer will be edited.  Otherwise, the layer will be cloned, and the material removed from the clone.  (Default: mutable=no)</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/material_from_layer/?layer=LAYER_7&material=TEMPLATE_3
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/material_from_layer/?layer=LAYER_7&material=TEMPLATE_3&mutable=yes
+        </blockquote>
+      </p>
 
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
       <p>Temporarily disabled due to change in layers structure.</p>
@@ -833,6 +868,8 @@
           <li>&raquo; <a href='#apicmd_lyphs_from_view'>lyphs_from_view</a></li>
           <li>&raquo; <a href='#apicmd_layer_from_template'>layer_from_template</a></li>
           <li>&raquo; <a href='#apicmd_layer_to_template'>layer_to_template</a></li>
+          <li>&raquo; <a href='#apicmd_material_to_layer'>material_to_layer</a></li>
+          <li>&raquo; <a href='#apicmd_material_from_layer'>material_from_layer</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
