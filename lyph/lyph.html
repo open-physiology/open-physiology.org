@@ -380,7 +380,7 @@
 
       <h3 id='apicmd_annotate'>annotate</h3>
       <p>
-        Add an annotation to a set of lyphs.
+        Add an annotation to a set of lyphs.  (See also: <a href='#apicmd_bulk_annot'>bulk_annot</a>)
         <ul>
           <li>Mandatory argument: lyphs: the lyphs to annotate (as a comma-separated list)</li>
           <li>Mandatory argument: annot: the annotation to annotate the lyphs with (a string)</li>
@@ -404,6 +404,33 @@
         </blockquote>
         <blockquote>
           Example: http://localhost:5052/remove_annotations/?lyphs=6039,6040,6041&annot=all
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_bulk_annot'>bulk_annot</h3>
+      <p>
+        Used for assigning bulk annotations (this command created by special request of Bernard).
+        <ul>
+          <li>Mandatory argument: type: one of C, R, or F.
+            <ul>
+              <li>C stands for Clinical Index.</li>
+              <li>R stands for Radiological Index.</li>
+              <li>F stands for Functional.</li>
+            </ul>
+          </li>
+          <li>Mandatory argument: pubmed: the pubmed ID where this annotation is taken from.</li>
+          <li>Mandatory argument: lyphs: comma-separated list of lyphs that this annotation annotates.</li>
+          <li>Mandatory (for type C): clindex: the internal ID of a clinical index.</li>
+          <li>Mandatory (for type R): radio: a radiological index.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/bulk_annot/?type=C&clindex=CLINDEX_1&lyphs=6039,6040&pubmed=73546346
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/bulk_annot/?type=R&radio=Causes+Cancer&lyphs=6039,6040&pubmed=73546346
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/bulk_annot/?type=F&lyphs=6039,6040&pubmed=73546346
         </blockquote>
       </p>
 
@@ -780,6 +807,9 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_all_bulk_annots'>all_bulk_annots</h3>
+      <p>View all bulk annotations.</p>
+
       <h3 id='apicmd_template_hierarchy'>template_hierarchy</h3>
       <p>Temporarily disabled due to change in layer structure</p>
       <p>(Temporary command during development only) View the template hierarchy</p>
@@ -849,6 +879,7 @@
           <li>&raquo; <a href='#apicmd_make_clinical_index'>make_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_annotate'>annotate</a></li>
           <li>&raquo; <a href='#apicmd_remove_annotations'>remove_annotations</a></li>
+          <li>&raquo; <a href='#apicmd_bulk_annot'>bulk_annot</a></li>
           <li>&raquo; <a href='#apicmd_editlyph'>editlyph</a></li>
           <li>&raquo; <a href='#apicmd_editlyphnode'>editlyphnode</a></li>
           <li>&raquo; <a href='#apicmd_edit_template'>edit_template</a></li>
@@ -889,6 +920,7 @@
           <li>&raquo; <a href='#apicmd_all_pubmeds'>all_pubmeds</a></li>
           <li>&raquo; <a href='#apicmd_all_clinical_indices'>all_clinical_indices</a></li>
           <li>&raquo; <a href='#apicmd_all_radiological_indices'>all_radiological_indices</a></li>
+          <li>&raquo; <a href='#apicmd_all_bulk_annots'>all_bulk_annots</a></li>
           <li>&raquo; <a href='#apicmd_template_hierarchy'>template_hierarchy</a></li>
           <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
           <li>&raquo; <a href='#apicmd_parse_csv'>parse_csv</a></li>
