@@ -127,9 +127,11 @@
       </p>
 
       <h3 id='apicmd_template'>template</h3>
-
       <p>
         Used to look up a template by its ID.
+        <ul>
+          <li>Optional argument: commons: if set to commons=yes, the JSON for the template will also indicate the set of materials which are common to all layers of the template</li>
+        </ul>
         <blockquote>
           Example: http://localhost:5052/template/TEMPLATE_1
         </blockquote>
@@ -815,7 +817,11 @@
       </p>
 
       <h3 id='apicmd_all_templates'>all_templates</h3>
-      <p>(Temporary command during development only) View all templates</p>
+      <p>(Temporary command during development only) View all templates
+        <ul>
+          <li>Optional argument: commons: if set to commons=yes, then for each template, the JSON output will also indicate the set of materials which are common to all the layers of that template</li>
+        </ul>
+      </p>
 
       <h3 id='apicmd_all_lyphnodes'>all_lyphnodes</h3>
       <p>(Temporary command during development only) View all lyphnodes</p>
