@@ -756,14 +756,24 @@
         <blockquote>Example: http://localhost:5052/templates_involving/?ont=brain</blockquote>
       </p>
 
-      <h3 id='apicmd_lyphs_located_in_lyph'>lyphs_located_in_lyph</h3>
+      <h3 id='apicmd_lyphs_located_in_term'>lyphs_located_in_term</h3>
       <p>
-        Find all lyphs located in a given lyph.
+        Find all lyphs located in a given part of the body.
         <ul>
-          <li>Mandatory argument: lyph: the lyph which will be searched for lyphs located inside of it</li>
+          <li>Mandatory argument: term: A term describing where in the body to search for lyphs.
+            <ul>
+              <li>Term can be: a lyph id: in which case the lyphs located inside that lyph will be returned.</li>
+              <li>Term can be: an ontology short-IRI (e.g. FMA_50801) or rdfs:label (e.g. brain): in which case, the system will find all lyphs X such that X is located inside a lyph Y such that Y has a template T which is built up from the indicated term or some subclass of it.</li>
+            </ul>
         </ul>
         <blockquote>
-          Example: http://localhost:5052/lyphs_located_in_lyph/?lyph=6039
+          Example: http://localhost:5052/lyphs_located_in_term/?term=6039
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/lyphs_located_in_term/?term=FMA_50801
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/lyphs_located_in_term/?term=brain
         </blockquote>
       </p>
 
@@ -934,7 +944,7 @@
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
           <li>&raquo; <a href='#apicmd_templates_involving'>templates_involving</a></li>
-          <li>&raquo; <a href='#apicmd_lyphs_located_in_lyph'>lyphs_located_in_lyph</a></li>
+          <li>&raquo; <a href='#apicmd_lyphs_located_in_term'>lyphs_located_in_term</a></li>
           <li>&raquo; <a href='#apicmd_has_template'>has_template</a></li>
           <li>&raquo; <a href='#apicmd_has_clinical_index'>has_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_unused_indices'>unused_indices</a></li>
