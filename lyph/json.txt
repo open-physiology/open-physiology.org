@@ -1,0 +1,359 @@
+JSON output in the lyph API is produced by XXX_to_json functions.
+These are documented below along with comments about where they occur.
+
+trie_to_json, str_to_json, int_to_json:
+  These three base functions simply copy different basic datatypes into
+  strings.  (NOTE: the lyph API doesn't use numbers in JSON,
+  instead uses string representations of numbers, e.g. "5" instead of 5).
+  The only difference between
+  {
+    "x": mystring
+  }
+  and
+  {
+    "x": str_to_json(mystring)
+  }
+  is that the latter is 'reentrant' (e.g., if "mystr" is actually
+  "my_function_with_side_effects()", then the latter is used to make
+  sure the side effects only occur once)
+
+JS_ARRAY( XXX_to_json, array ):
+  Returns a JSON array using XXX_to_json.
+  Example:
+    JS_ARRAY( str_to_json, ["hello","world"] ) = [str_to_json("hello"),str_to_json("world")]
+
+JS_ARRAY_R( XXX_to_json_r, array, data ):
+  (R stands for "reentrant")
+  Returns a JSON array using XXX_to_json_r and data.
+  Example:
+    JS_ARRAY_R( lyph_to_json_r, [lyph1,lyph2], preferences )
+      = [lyph_to_json_r(lyph1,preferences),lyph_to_json_r(lyph2,preferences)]
+
+
+/*
+ * lv_rect = lyph view rectangle
+ * Used to output a rectangle in a lyphview.
+ * NOTE:  rect->L is the lyph which the rectangle represents.
+ */
+char *lv_rect_to_json_r( lv_rect *rect, lyphview *v )
+{
+  return JSON
+  (
+    "id": trie_to_json( rect->L->id ),
+    "x": rect->x,
+    "y": rect->y,
+    "width": rect->width,
+    "height": rect->height,
+    "annots": JS_ARRAY( lyph_annot_to_json, rect->L->annots ),
+    "location": lyph_relative_loc_to_json_v( rect->L, v )
+  );
+}
+
+/*
+ * Display a 'viewed node' (a node along with "x" and "y" coordinates)
+ */
+char *viewed_node_to_json( viewed_node *vn )
+{
+  lyphnode *n = The actual lyphnode
+  char *x,y = The x,y coordinates of the viewed node
+
+  return JSON
+  (
+    "id": trie_to_json( n->id ),
+    "exits": JS_ARRAY( exit_to_json, exits ),
+    "location": n->location ? trie_to_json( n->location->id ) : NULL,
+    "loctype": loctype_to_str( n->loctype ),
+    "x": x,
+    "y": y
+  );
+}
+
+/*
+ * DIRECTLY-USEDBY:lyphview
+ * DIRECTLY-USEDBY:editview
+ * DIRECTLY-USEDBY:lyphs_from_view
+ * DIRECTLY-USEDBY:lyphs_to_view
+ * DIRECTLY-USEDBY:nodes_from_view
+ * DIRECTLY-USEDBY:nodes_to_view
+ * DIRECTLY-USEDBY:makeview
+ * DIRECTLY-USEDBY:all_lyphviews
+ * DIRECTLY-USEDBY:change_coords
+ */
+char *lyphview_to_json( lyphview *v )
+{
+  return JSON
+  (
+    "id": int_to_json( v->id ),
+    "name": v->name,
+    "nodes": JS_ARRAY( viewed_node_to_json, vn ),
+    "lyphs": JS_ARRAY_R( lv_rect_to_json_r, v->rects, v )
+  );
+}
+
+char *lyphplate_to_json_brief( lyphplate *L )
+{
+  return JSON
+  (
+    "id": trie_to_json( L->id ),
+    "name": trie_to_json( L->name )
+  );
+}
+
+/*
+ * DIRECTLY-USEDBY:template
+ * DIRECTLY-USEDBY:maketemplate
+ * DIRECTLY-USEDBY:edit_template
+ * DIRECTLY-USEDBY:layer_from_template
+ * DIRECTLY-USEDBY:layer_to_template
+ * DIRECTLY-USEDBY:templates_involving
+ * DIRECTLY-USEDBY:all_templates
+ * DIRECTLY-USEDBY:subtemplates  // currently disabled
+ */
+char *lyphplate_to_json( lyphplate *L )
+{
+  return lyphplate_to_json_r( L, NULL );
+}
+
+char *lyphplate_to_json_r( lyphplate *L, preferences )
+{
+  (**) The "common_materials" field may or may not be present in the JSON,
+  depending on the 'preferences' (this corresponds to whether or not you
+  passed the "?commons=yes" parameter when requesting the template).
+  You can use javascript's Object#hasOwnProperty to check whether the field is present.
+
+  return JSON
+  (
+    "id": trie_to_json( L->id ),
+    "name": trie_to_json( L->name ),
+    "type": lyphplate_type_as_char( L ),
+    "ont_term": L->ont_term ? trie_to_json( L->ont_term ) : NULL,
+    "layers": JS_ARRAY( layer_to_json, L->layers ),
+    "misc_materials": JS_ARRAY( lyphplate_to_json_brief, L->misc_material ),
+    (**) "common_materials": common_mats
+  );
+}
+
+/*
+ * DIRECTLY-USEDBY:layer
+ * DIRECTLY-USEDBY:makelayer
+ * DIRECTLY-USEDBY:editlayer
+ * DIRECTLY-USEDBY:material_to_layer
+ * DIRECTLY-USEDBY:material_from_layer
+ */
+char *layer_to_json( layer *lyr )
+{
+  return JSON
+  (
+    "id": trie_to_json( lyr->id ),
+    "materials": JS_ARRAY( lyphplate_to_json_brief, lyr->material ),
+    "thickness": lyr->thickness == -1 ? "unspecified" : int_to_json( lyr->thickness )
+  );
+}
+
+/*
+ * DIRECTLY-USEDBY:lyphnode
+ * DIRECTLY-USEDBY:editlyphnode
+ * DIRECTLY-USEDBY:makelyphnode
+ * DIRECTLY-USEDBY:all_lyphnodes
+ * /
+char *lyphnode_to_json( lyphnode *n )
+{
+  (**) The 'exits' field is sometimes suppressed, depending on the circumstances
+  under which lyphnode_to_json is called.  You can use javascript's Object#hasOwnProperty
+  to test for presence of these fields.  If 'exits' is present, its meaning is
+  context-dependent.  If called by lyphview_to_json, the 'exits' are relative to that view,
+  e.g., exits leading outside the view get suppressed.  If not called by lyphview_to_json,
+  'exits' means all exits from this node.
+
+  return JSON
+  (
+    "id": trie_to_json( n->id ),
+    (**) "exits": JS_ARRAY( exit_to_json, exits ),
+    "location": n->location ? trie_to_json( n->location->id ) : NULL,
+    "loctype": loctype_to_str( n->loctype )
+  );
+}
+
+char *exit_to_json( exit_data *x )
+{
+  (**) The nature of the "via" field is context-dependent.
+  In certain contexts, it is a string, equal to the ID of the
+  lyph representing the exit.  In other contexts, it is a json
+  object giving full details about that lyph (see lyph_to_json).
+
+  return JSON
+  (
+    "to": trie_to_json( x->to->id ),
+    (**) "via": lyph_to_json( x->via ),
+    (**) "via": trie_to_json( x->via )
+  );
+}
+
+char *lyph_annot_to_json( lyph_annot *a )
+{
+  return JSON
+  (
+    "pred": trie_to_json( a->pred ),
+    "obj": trie_to_json( a->obj ),
+    "pubmed": pubmed_to_json_full( a->pubmed )
+  );
+}
+
+/*
+ *DIRECTLY-USEDBY:do_radiological_indices
+ */
+char *lyph_annot_obj_to_json( lyph_annot *a )
+{
+  return trie_to_json( a->obj );
+}
+
+/*
+ * DIRECTLY-USEDBY:lyph
+ * DIRECTLY-USEDBY:makelyph
+ * DIRECTLY-USEDBY:editlyph
+ * DIRECTLY-USEDBY:involves_template
+ * DIRECTLY-USEDBY:instances_of
+ * DIRECTLY-USEDBY:has_template
+ * DIRECTLY-USEDBY:lyphs_located_in_term
+ * DIRECTLY-USEDBY:has_clinical_index
+ * DIRECTLY-USEDBY:all_lyphs
+ */
+char *lyph_to_json( lyph *e )
+{
+  return lyph_to_json_r( e, NULL );
+}
+
+char *lyph_to_json_r( lyph *e, preferences )
+{
+  (*) The "annots" field may or may not be present.  Generally it's absent
+      unless you called the "lyph" command with "?annots=yes".
+  (**) The "house" field is only displayed if lyph_to_json_r was called
+       by lyphview_to_json.  In that case, "house" gives the ID of the
+       lyph's "house" relative to that view.  Example:  Assume lyph A is located
+       in B, is located in C.  If the view contains A,B,C, then A's house is "B".
+       If the view contains A,C, not B, then A's house is "C".  If the view contains
+       A, not B,C, then A's house is null.
+  (***) The species field is only included if the lyph has non-null species.
+        If the field is absent, this indicates the lyph has species null.
+
+  return JSON
+  (
+    "id": trie_to_json( e->id ),
+    "fma": trie_to_json( e->fma ),
+    "name": trie_to_json( e->name ),
+    "type": int_to_json( e->type ),
+    "from": lyphnode_to_json( e->from ),
+    "to": lyphnode_to_json( e->to ),
+    "template": e->lyphplt ? lyphplate_to_json( e->lyphplt ) : NULL,
+    (*) "annots": JS_ARRAY( lyph_annot_to_json, e->annots ),
+    "constraints": JS_ARRAY( lyphplate_to_shallow_json, e->constraints ),
+    (**) "house": See note above
+    (***)"species": trie_to_json( e->species )
+  );
+}
+
+/*
+ * DIRECTLY-USEDBY:lyphpath
+ */
+char *lyphpath_to_json( lyph **path )
+{
+  return JSON
+  (
+    "length": int_to_json( length of the path ),
+    "edges": JS_ARRAY( lyph_to_json, path )
+  );
+}
+
+char *lyphplate_to_shallow_json( lyphplate *L )
+{
+  return trie_to_json( L->id );
+}
+
+/*
+ * DIRECTLY-USEDBY:bulk_annot
+ * DIRECTLY-USEDBY:all_bulk_annots
+ */
+char *bulk_annot_to_json( bulk_annot *a )
+{
+  (**) The "clinical index" field is only present if the bulk_annot has type "clinical index".
+  (**) The "radiological index" field is only present if the bulk_annot has type "radiological index".
+
+  return JSON
+  (
+    "id": trie_to_json( a->id ),
+    "type": bulk_annot_type_to_str( a->type ),  // "clinical index", "radiological index", or "functional"
+    "lyphs": JS_ARRAY( lyph_to_json_id, a->lyphs ),
+    (**) "clinical index": a->ci ? clinical_index_to_json_full( a->ci ),
+    (**) "radiological index": a->radio_index ? trie_to_json( a->radio_index ),
+    "pubmed": pubmed_to_json_brief( a->pbmd )
+  );
+}
+
+char *lyph_to_json_id( lyph *e )
+{
+  return trie_to_json( e->id );
+}
+
+/*
+ * DIRECTLY-USEDBY:pubmed
+ * DIRECTLY-USEDBY:make_pubmed
+ * DIRECTLY-USEDBY:edit_pubmed
+ * DIRECTLY-USEDBY:all_pubmeds
+ */
+char *pubmed_to_json_full( pubmed *p )
+{
+  return JSON
+  (
+    "id": p->id,
+    "title": p->title
+  );
+}
+
+char *pubmed_to_json_brief( pubmed *p )
+{
+  if ( p )
+    return str_to_json( p->id );
+  else
+    return NULL;
+}
+
+/*
+ * DIRECTLY-USEDBY:clinical_index
+ * DIRECTLY-USEDBY:make_clinical_index
+ * DIRECTLY-USEDBY:edit_clinical_index
+ * DIRECTLY-USEDBY:unused_indices
+ * DIRECTLY-USEDBY:all_clinical_indices
+ */
+char *clinical_index_to_json_full( clinical_index *ci )
+{
+  (**) The "claimed" field (a string indicating the name of the clinician who
+       has 'claimed' this clinical index) is only present if it is non-null.
+       If absent, the clinical index has claimed = null.
+
+  return JSON
+  (
+    "index": trie_to_json( ci->index ),
+    "label": trie_to_json( ci->label ),
+    "pubmeds": JS_ARRAY( pubmed_to_json_brief, ci->pubmeds ),
+    (**) "claimed": ci->claimed
+  );
+}
+
+char *clinical_index_to_json_brief( clinical_index *ci )
+{
+  return trie_to_json( ci->index );
+}
+
+/*
+ * DIRECTLY-USEDBY:all_ont_terms
+ */
+char *ont_term_to_json( trie *t )
+{
+  trie *label = *t->data;
+
+  return JSON
+  (
+    "term": trie_to_json( t ),
+    "label": trie_to_json( label )
+  );
+}
