@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="The Farr Institute">
+    <title>Lyph Annotations</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Lyph API bulk annotation frontend">
+
+    <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/base.css">
+    <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/skeleton.css">
+    <link rel="stylesheet" href="http://open-physiology.org/index.css">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Google Analytics Script-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58380934-1', 'auto');
+      ga('require', 'displayfeatures');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+      function reset_inputs()
+      {
+        g("annot_pubmed").value="";
+        g("annot_lyphs").value="";
+        g("annot_obj").value="";
+      }
+
+      function lyphsearch()
+      {
+        var srch = g("lyphsearch").value.trim();
+        if ( srch === "" )
+          return;
+        var url = "http://open-physiology.org:5055/lyphs_located_in_term/?term=";
+        url += encodeURIComponent( srch );
+
+        $.ajax(
+        {
+          "url": url,
+          "dataType": "jsonp",
+          "success": function(result)
+          {
+            if ( result.hasOwnProperty("Error") )
+            {
+              alert("Error: " + result["Error"]);
+              return;
+            }
+
+            var html = "";
+            for ( var i = 0; i < result.length; i++ )
+            {
+              html += "<h4>ID: " + result[i]["id"] + "</h4>";
+              if ( result[i]["name"] !== null )
+                html += "<span>" + result[i]["name"] + "</span>" + "<br>";
+              if ( result[i]["template"] !== null )
+              {
+                html += "<span>Template: " + result[i]["template"]["id"];
+                if ( result[i]["template"]["name"] !== null )
+                  html += " (" + result[i]["template"]["name"] + ")";
+
+                html += "</span>"                
+              }
+              html += "</id>";
+            }
+            g("searchresults").innerHTML = html;
+            g("lyphsearch").value="";
+          }
+        });
+      }
+
+      function annotate()
+      {
+        var typebox = g("annot_type");
+        var pubmedbox = g("annot_pubmed");
+        var lyphsbox = g("annot_lyphs");
+        var objbox = g("annot_obj");
+
+        if ( typebox.value !== "C" && typebox.value !== "R" && typebox.value !== "F" )
+        {
+          alert("Please select an annotation type");
+          return;
+        }
+        if ( pubmedbox.value.trim() === "" )
+        {
+          alert("Please indicate a Pubmed ID");
+          return;
+        }
+        if ( lyphsbox.value.trim() === "" )
+        {
+          alert("Please indicate a comma-separated list of lyphs");
+          return;
+        }
+        if ( objbox.value.trim() === "" && (typebox.value !== "F") )
+        {
+          alert("Please indicate what you want to annotate the lyphs with (a clinical or radiological index)" );
+          return;
+        }
+
+        var url = "http://open-physiology.org:5055/bulk_annot/?type="+typebox.value;
+        url += "&pubmed=" + encodeURIComponent(pubmedbox.value.trim());
+        if ( typebox.value !== "F" )
+        {
+          if ( typebox.value === "R" )
+            url += "&radio=" + encodeURIComponent(objbox.value.trim());
+          else
+            url += "&clindex=" + encodeURIComponent(objbox.value.trim());
+        }
+
+        var lyphsstr = lyphsbox.value.split(",").map(function(currentValue,index,array)
+        {
+          return currentValue.trim();
+        }).join(",");
+
+        url += "&lyphs=" + lyphsstr;
+
+        $.ajax(
+        {
+          "url": url,
+          "dataType": "jsonp",
+          "success": function(result)
+          {
+            if ( result.hasOwnProperty("Error") )
+            {
+              alert("Error: " + result["Error"]);
+              return;
+            }
+            var html = bulk_annot_to_html(result);
+            g("bulk_annot_list").innerHTML = html + "<br>" + g("bulk_annot_list").innerHTML;
+            reset_inputs();
+          }
+        });
+      }
+
+      function g(x){ return document.getElementById(x); }
+
+      $(function()
+      {
+        $.ajax(
+	{
+	  "url": "http://open-physiology.org:5055/all_bulk_annots/",
+	  "success": function(result)
+	  {
+	    var annotlist = "";
+	    
+	    for ( var i = 0; i < result.length; i++ )
+	      annotlist += bulk_annot_to_html( result[i] ) + "<br>";
+	    
+	    document.getElementById("bulk_annot_list").innerHTML = annotlist;
+	  },
+	  "dataType": "jsonp"
+	});
+      });
+      
+      function bulk_annot_to_html( x )
+      {
+        var retval = "";
+	retval += "<div>";
+	retval += "<h4 style='margin-left:10px'>" + x["id"] + " (";
+	
+	if ( x["type"] === "clinical index" )
+	  retval += "clinical index";
+	else if ( x["type"] === "radiological index" )
+	  retval += "radiological index";
+	else if ( x["type"] === "functional" )
+	  retval += "functional";
+	
+	retval += ") PMID: " + x["pubmed"] + "</h4>";
+	
+	if ( x["type"] === "clinical index" )
+	  retval += "&nbsp; <span>" + x["clinical index"]["index"] + ": " + x["clinical index"]["label"] + "</span>";
+	else if ( x["type"] === "radiological index" )
+	  retval += "&nbsp; <span>" + x["radiological index"] + "</span>";
+	
+        retval += "<div style='margin-left:10px'>Lyphs annotated: ";
+
+	var fFirst = 0;
+	for ( var i = 0; i < x["lyphs"].length; i++ )
+	{
+	  if ( fFirst )
+	    retval += ", ";
+	  else
+	    fFirst = 1;
+	  
+	  retval += x["lyphs"][i];
+	}
+	
+	retval += "</div></div>";
+	return retval;
+      }
+    </script>
+    
+  </head>
+  <body>
+    <div class="container" id="maindiv">
+      <div id="leftdiv" class="eleven columns">
+        <div class="floating-box" id="headerdiv">
+          <h2 id='openphysiology'>Annotations</h2>
+        </div>
+
+        <div class="floating-box" id="imagediv" style="position:relative;">
+          <div id="bulk_annot_form" style='margin-top:10px'>
+            &nbsp; <select id='annot_type' style='width:45%; display:inline'>
+	      <option value='none'>Annotation Type</option>
+	      <option value='C'>Clinical index</option>
+	      <option value='R'>Radiological index</option>
+	      <option value='F'>Functional</option>
+            </select>
+	    <input id='annot_pubmed' placeholder='Pubmed ID' style='width:45%; display:inline'/>
+	    <br>
+	    &nbsp; <input id='annot_lyphs' placeholder='Lyphs (comma-separated)' style='width:95%'/>
+	    <br>
+            &nbsp; <input id='annot_obj' style='width:95%' placeholder='Annotation (clinical/radiological index only)'/>
+            <br>
+	    &nbsp; <button style='width:95%; margin-top:10px' onclick='annotate()'>Annotate</button>
+	  </div>
+          <div id="bulk_annot_list" style="height:300px; overflow:auto">
+            Loading...
+          </div>
+        </div>
+      </div>
+
+      <div class="five columns floating-box" id="rightdiv" style="height:100%; margin-top: 15px">
+       <div class="floating-contents" style="height:507px">
+        <h3 id='home'>Lyph Search</h3>
+        <div id='homediv' class='tabs'>
+          <input id='lyphsearch' style='width:97%'/>
+	  <button style='width:100%; margin-top:5%' onclick='lyphsearch()'>Search for lyphs</button>
+          <hr>
+          <div id='searchresults' style='height:100%; overflow: auto'>
+          </div>
+        </div>
+       </div>
+      </div>
+
+    </div>
+  </body>
+</html>
