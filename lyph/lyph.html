@@ -741,7 +741,30 @@
           Example: http://localhost:5052/involves_template/?template=TEMPLATE_1
         </blockquote>
       </p>
-
+      
+      <h3 id='apicmd_is_built_from_template'>is_built_from_template</h3>
+      <p>
+        Find whether or not an indicated template (or list of templates, or layer)
+        is built from a given part (the part being another template).  We say X is
+        built from Y if X=Y or, recursively, X has a misc. material Z (or a layer with
+        a material Z) such that Z is built from Y.
+        <blockquote>
+          Response:  The command response with a JSON structure with "response": "yes"
+          or "response": "no".
+        </blockquote>
+        <ul>
+          <li>Mandatory argument: part: the part (a template) out of which we are checking whether the other parameter is built.</li>
+          <li>Optional argument: layer: if specified, the command will check whether the indicated layer is built from the part.</li>
+          <li>Optional argument: template (or templates): comma-separated list of templates.  If specified, the command will check whether any of these templates are built from the part.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/is_built_from_part/?part=TEMPLATE_1&templates=TEMPLATE_2,TEMPLATE_3
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/is_built_from_part/?part=TEMPLATE_1&layer=LAYER_1
+        </blockquote>
+      </p>
+     
       <h3 id='apicmd_templates_involving'>templates_involving</h3>
       <p>
         Find all templates involving a given template, or involving a given ontology term
@@ -951,6 +974,7 @@
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
+          <li>&raquo; <a href='#apicmd_is_built_from_template'>is_built_from_template</a></li>
           <li>&raquo; <a href='#apicmd_templates_involving'>templates_involving</a></li>
           <li>&raquo; <a href='#apicmd_lyphs_located_in_term'>lyphs_located_in_term</a></li>
           <li>&raquo; <a href='#apicmd_has_template'>has_template</a></li>
