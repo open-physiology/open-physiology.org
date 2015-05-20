@@ -468,9 +468,13 @@
           <li>Mandatory argument: template: the ID of the template to edit.</li>
           <li>Optional arguments: name, type, ont</li>
           <li>Optional argument: misc_materials: comma-separated list of materials (given by template IDs) which occur somewhere in this template, when it is unclear which layer exactly they occur in.</li>
+          <li>Optional arguments: movelayer and topos: In order to move one of the template's layers to a different position, indicate the layer with 'movelayer' and the desired position with 'topos' (see example below).</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/edit_template?template=TEMPLATE_1&misc_materials=TEMPLATE_2,TEMPLATE_3&name=Renamed!&type=shell
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/edit_template?template=TEMPLATE_1&movelayer=LAYER_3&topos=2
         </blockquote>
       </p>
 
