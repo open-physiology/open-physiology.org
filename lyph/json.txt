@@ -129,7 +129,8 @@ char *lyphplate_to_json_r( lyphplate *L, preferences )
     "ont_term": L->ont_term ? trie_to_json( L->ont_term ) : NULL,
     "layers": JS_ARRAY( layer_to_json, L->layers ),
     "misc_materials": JS_ARRAY( lyphplate_to_json_brief, L->misc_material ),
-    (**) "common_materials": common_mats
+    (**) "common_materials": common_mats,
+    "length": str_to_json( L->length )
   );
 }
 
