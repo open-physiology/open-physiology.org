@@ -588,10 +588,16 @@
       <h3 id='apicmd_delete_templates'>delete_templates</h3>
       <p>
         Delete some templates.  The templates are specified via the 'templates' parameter, in the
-        form of a comma-separated list.  Note: any templates/layers which are built-up from
-        deleted templates will also be deleted.
+        form of a comma-separated list.
+        <ul>
+          <li>Mandatory argument: templates: comma-separated list of template to delete.</li>
+          <li>Optional argument: recursive: if set to recursive=yes, then any templates/lyphs/layers built up from this deleted templates will also be deleted.  Otherwise, if any such lyphs/layers/templates exist, the command returns an error message.</li>
+        </ul>
         <blockquote>
           Example: http://localhost:5052/delete_templates/?templates=TEMPLATE_5,TEMPLATE_6,TEMPLATE_7
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/delete_templates/?templates=TEMPLATE_5,TEMPLATE_6,TEMPLATE_7&recursive=yes
         </blockquote>
       </p>
 
