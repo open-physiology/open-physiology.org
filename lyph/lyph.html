@@ -249,6 +249,17 @@
         </ul>
       </p>
 
+      <h3 id='apicmd_connections'>connections</h3>
+      <p>
+        Get the connections between a set of lyphs.
+        <ul>
+          <li>Mandatory argument: lyphs: comma-separated list of lyphs
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/connections/?lyphs=6039,6040
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_assign_template'>assign_template</h3>
       <p>
         Used to assign a template to a lyph.
@@ -588,10 +599,16 @@
       <h3 id='apicmd_delete_templates'>delete_templates</h3>
       <p>
         Delete some templates.  The templates are specified via the 'templates' parameter, in the
-        form of a comma-separated list.  Note: any templates/layers which are built-up from
-        deleted templates will also be deleted.
+        form of a comma-separated list.
+        <ul>
+          <li>Mandatory argument: templates: comma-separated list of template to delete.</li>
+          <li>Optional argument: recursive: if set to recursive=yes, then any templates/lyphs/layers built up from this deleted templates will also be deleted.  Otherwise, if any such lyphs/layers/templates exist, the command returns an error message.</li>
+        </ul>
         <blockquote>
           Example: http://localhost:5052/delete_templates/?templates=TEMPLATE_5,TEMPLATE_6,TEMPLATE_7
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/delete_templates/?templates=TEMPLATE_5,TEMPLATE_6,TEMPLATE_7&recursive=yes
         </blockquote>
       </p>
 
@@ -962,6 +979,7 @@
           <li>&raquo; <a href='#apicmd_clinical_index'>clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_clone'>clone</a></li>
           <li>&raquo; <a href='#apicmd_lyphpath'>lyphpath</a></li>
+          <li>&raquo; <a href='#apicmd_connections'>connections</a></li>
           <li>&raquo; <a href='#apicmd_assign_template'>assign_template</a></li>
           <li>&raquo; <a href='#apicmd_template_along_path'>template_along_path</a></li>
           <li>&raquo; <a href='#apicmd_constrain_along_path'>constrain_along_path</a></li>
