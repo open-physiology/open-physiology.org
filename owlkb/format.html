@@ -46,6 +46,7 @@
             <li>Determines the treemap structure</li>
             <li>Format: OWL</li>
             <li>Size: relatively small (10s of thousands of terms usually)</li>
+            <li>Supported by RICORDO's <a href='doc.html'>"OWLKB"</a> product</li>
           </ul>
         </li>
         <li>
@@ -55,6 +56,10 @@
             <li>Adds individual facts</li>
             <li>Format: RDF (N-Triples or...)</li>
             <li>Size: possibly large (in principle can include billions of facts)</li>
+            <li>Supported by RICORDO's <a href='http://open-physiology.org/rdfstore/doc.html'>RDFStore</a> product
+                (note that RDFStore is currently just a thin proxy in front of a so-called <i>triplestore</i>
+                such as Virtuoso, which does the real heavy lifting, so if you don't need RDFStore's
+                features, it might be better to work directly with Virtuoso).</li>
           </ul>
         </li>
       </ol>
