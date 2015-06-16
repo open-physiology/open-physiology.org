@@ -334,7 +334,7 @@
       Used to create a new lyphview (or, if the specified view already exists, retrieve it).
       <ul>
         <li>Optional argument: name: the name of the view</li>
-        <li>Optional arguments: node1, node2, node3, ...: The nodes in the lyphview</li>
+        <li>Optional arguments: node1, node2, node3, ...: The nodes in the lyphview.  You can alsu use "null" in place of a lyph ID in order to add a rectangle with no lyph associated to it.</li>
         <li>Optional arguments: x1, x2, x3, ...: The x-coordinates of the nodes</li>
         <li>Optional arguments: y1, y2, y3, ...: The y-coordinates of the nodes</li>
         <li>
@@ -516,10 +516,11 @@
         Used to edit an existing lyphview.
         <ul>
           <li>Mandatory argument: view: the ID of the view to edit.</li>
-          <li>Optional arguments: name</li>
+          <li>Other arguments: same as <a href='#apicmd_makeview'>makeview</a></li>
         </ul>
-        (Note: to add/remove nodes, use the nodes_to_view/nodes_from_view commands
-        instead.  To add/remove lyphs, use the lyphs_to_view/lyphs_from view commands.)
+        This command works the same as <a href='#apicmd_makeview'>makeview</a> except
+        that instead of making a new view with the indicated features, it clears a
+        specified existing view and puts the indicated features in it.
       </p>
 
       <h3 id='apicmd_editlayer'>editlayer</h3>
