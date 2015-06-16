@@ -45,7 +45,7 @@
         var srch = g("lyphsearch").value.trim();
         if ( srch === "" )
           return;
-        var url = "http://open-physiology.org:5055/lyphs_located_in_term/?term=";
+        var url = "http://open-physiology.org:5055/lyphs_by_prefix/?term=";
         url += encodeURIComponent( srch );
 
         $.ajax(
@@ -150,7 +150,12 @@
       function variable_to_html( x )
       {
         if ( x["type"] === "clinical index" )
-          return x["clindex"];
+        {
+          if ( x["clindex"] === x["clindex label"] )
+            return x["clindex"];
+          else
+            return x["clindex label"] + " (" + x["clindex"] + ")";
+        }
         else if ( x["type"] === "located measure" )
         {
           var retval = x["quality"] + " of ";
@@ -171,7 +176,7 @@
 	retval += "<div>";
 	retval += "<h4 style='margin-left:10px'>Correlation " + x["id"];
 	
-	retval += " (PMID: " + x["pubmed"] + ")</h4>";
+	retval += " (PMID: " + x["pubmed"]["id"] + ")</h4>";
 	
         retval += "<ul>";
         var valind;
