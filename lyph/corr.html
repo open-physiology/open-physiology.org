@@ -100,7 +100,7 @@
         }
 
         var url = "http://open-physiology.org:5055/makecorrelation/";
-        url += "&pubmed=" + encodeURIComponent(pubmedbox.value.trim());
+        url += "?pubmed=" + encodeURIComponent(pubmedbox.value.trim());
 
         var lyphsstr = lyphsbox.value.split(",").map(function(currentValue,index,array)
         {
