@@ -754,6 +754,18 @@
         </blockquote>
       </p>
 
+      <h3 id='ontsearch'>ontsearch</h3>
+      <p>Search for ontology terms.  Returns up to 100 results.
+         First searches for ontology labels that begin with indicated key,
+         then for labels that have indicated key as subterm.
+         <ul>
+           <li>Mandatory argument: key: the search term to search for</li>
+         </ul>
+         <blockquote>
+           Example: http://localhost:5052/ontsearch/?key=left
+         </blockquote>
+      </p>
+
       <h3 id='apicmd_subtemplates'>subtemplates</h3>
       <p>Temporarily disabled due to change in layers structure.</p>
       <p>
@@ -1029,6 +1041,7 @@
           <li>&raquo; <a href='#apicmd_layer_to_template'>layer_to_template</a></li>
           <li>&raquo; <a href='#apicmd_material_to_layer'>material_to_layer</a></li>
           <li>&raquo; <a href='#apicmd_material_from_layer'>material_from_layer</a></li>
+          <li>&raquo; <a href='#apicmd_ontsearch'>ontsearch</a></li>
           <li>&raquo; <a href='#apicmd_subtemplates'>subtemplates</a></li>
           <li>&raquo; <a href='#apicmd_instances_of'>instances_of</a></li>
           <li>&raquo; <a href='#apicmd_involves_template'>involves_template</a></li>
