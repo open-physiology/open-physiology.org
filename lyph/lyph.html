@@ -908,6 +908,31 @@
         if no lyph has been 'annotate'd with its index.)
       </p>
 
+      <h3 id='apicmd_all_located_measures'>all_located_measures</h3>
+      <p>
+        Displays all the located measures in the system.
+      </p>
+
+      <h3 id='apicmd_make_located_measure'>make_located_measure</h3>
+      <p>
+        Create a located measure.
+        <ul>
+          <li>Mandatory argument: quality: the quality (e.g. volume, radius, etc)</li>
+          <li>Mandatory argument: lyph: the lyph where the quality is measured</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/make_located_measure/?quality=volume&lyph=6039
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_located_measure'>located_measure</h3>
+      <p>
+        Display one located measure.
+        <blockquote>
+          Example: http://localhost:5052/located_measure/1
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_all_templates'>all_templates</h3>
       <p>(Temporary command during development only) View all templates
         <ul>
@@ -1051,6 +1076,9 @@
           <li>&raquo; <a href='#apicmd_has_template'>has_template</a></li>
           <li>&raquo; <a href='#apicmd_has_clinical_index'>has_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_unused_indices'>unused_indices</a></li>
+          <li>&raquo; <a href='#apicmd_all_located_measures'>all_located_measures</a></li>
+          <li>&raquo; <a href='#apicmd_make_located_measure'>make_located_measure</a></li>
+          <li>&raquo; <a href='#apicmd_located_measure'>located_measure</a></li>
         </ul>
       </li>
       <li>
