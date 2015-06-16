@@ -177,7 +177,8 @@
 	retval += "<h4 style='margin-left:10px'>Correlation " + x["id"];
 	
 	retval += " (PMID: " + x["pubmed"]["id"] + ")</h4>";
-	
+	retval += "(<a target='blank' href='http://open-physiology.org:5055/delete_correlation/?corr="+x["id"]+"'>Delete</a>)";
+
         retval += "<ul>";
         var valind;
         for ( valind = 0; valind < x["variables"].length; valind++ )
