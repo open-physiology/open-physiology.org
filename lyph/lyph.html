@@ -579,6 +579,28 @@
         </blockquote>
       </p>
 
+      <h3 id='apicmd_delete_correlation'>delete_correlation</h3>
+      <p>
+        Delete a correlation.
+        <ul>
+          <li>Mandatory argument: correlation: the correlation to delete.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/delete_correlation/?correlation=1
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_delete_located_measure'>delete_located_measure</h3>
+      <p>
+        Delete a located measure.
+        <ul>
+          <li>Mandatory argument: measure: the located measure to delete.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/delete_located_measure/?measure=1
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_delete_lyphs'>delete_lyphs</h3>
       <p>
         Delete some lyphs.  The lyphs are specified via the 'lyphs' parameter, in the
@@ -983,7 +1005,20 @@
           <li>Optional argument: views: if set to 'yes', the command will delete all lyphviews in the database.</li>
           <li>Optional argument: templates: if set to 'yes', the command will delete all templates in the database.</li>
           <li>Optional argument: graph: if set to 'yes', the command will reset the graph to the original graph provided by Dr. de Bono.</li>
+          <li>Optional argument: correlations: if set to 'yes', the command will delete all correlations.</li>
+          <li>Optional argument: located_measures: if set to 'yes', the command will delete all located measures.</li>
         </ul>
+      </p>
+
+      <h3 id='apicmd_get_csv'>get_csv</h3>
+      <p>
+        Get various resources in CSV format.  Currently the only resource supported is 'correlations'.
+        <ul>
+          <li>Mandatory argument: what: what to get.  Currently the only supported option is what=correlations</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/get_csv/?what=correlations
+        </blockquote>
       </p>
 
       <h3 id='apicmd_parse_csv'>parse_csv</h3>
@@ -1052,6 +1087,8 @@
           <li>&raquo; <a href='#apicmd_edit_pubmed'>edit_pubmed</a></li>
           <li>&raquo; <a href='#apicmd_edit_clinical_index'>edit_clinical_index</a></li>
           <li>&raquo; <a href='#apicmd_lyphconstrain'>lyphconstrain</a></li>
+          <li>&raquo; <a href='#apicmd_delete_correlation'>delete_correlation</a></li>
+          <li>&raquo; <a href='#apicmd_delete_located_measure'>delete_located_measure</a></li>
           <li>&raquo; <a href='#apicmd_delete_lyphs'>delete_lyphs</a></li>
           <li>&raquo; <a href='#apicmd_delete_nodes'>delete_nodes</a></li>
           <li>&raquo; <a href='#apicmd_delete_templates'>delete_templates</a></li>
@@ -1095,6 +1132,7 @@
           <li>&raquo; <a href='#apicmd_all_bulk_annots'>all_bulk_annots</a></li>
           <li>&raquo; <a href='#apicmd_template_hierarchy'>template_hierarchy</a></li>
           <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
+          <li>&raquo; <a href='#apicmd_get_csv'>get_csv</a></li>
           <li>&raquo; <a href='#apicmd_parse_csv'>parse_csv</a></li>
         </ul>
       </li>
