@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/base.css">
     <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/skeleton.css">
     <link rel="stylesheet" href="http://open-physiology.org/index.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -32,7 +33,9 @@
     </script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
+    
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script>
       function reset_inputs()
       {
         g("annot_pubmed").value="";
@@ -188,6 +191,44 @@
 	retval += "</div>";
 	return retval;
       }
+
+
+ $(function() {
+
+        $( "#lyphsearch" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "http://open-physiology.org:5055/lyphs_by_prefix/?prefix=" + request.term,
+                    dataType: "jsonp",
+                    data: {
+                        q: request.term
+                    },
+                    success: function( data ) {
+
+                        var returnedLyphs = [];
+
+                        for (var i =0; i < data.length; i ++) {
+                            returnedLyphs.push({label:data[i].name, id:data[i].id});
+
+                        }
+
+                        response(returnedLyphs);
+                    }
+                });
+            },
+            minLength: 0,
+            select: function( event, ui ) {
+              lyphsearch();
+	    },
+            open: function() {
+                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+
     </script>
     
   </head>
