@@ -45,7 +45,7 @@
         var srch = g("lyphsearch").value.trim();
         if ( srch === "" )
           return;
-        var url = "http://open-physiology.org:5055/lyphs_by_prefix/?term=";
+        var url = "http://open-physiology.org:5055/lyphs_by_prefix/?prefix=";
         url += encodeURIComponent( srch );
 
         $.ajax(
