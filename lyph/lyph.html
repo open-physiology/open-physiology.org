@@ -1010,6 +1010,17 @@
         </ul>
       </p>
 
+      <h3 id='apicmd_get_csv'>get_csv</h3>
+      <p>
+        Get various resources in CSV format.  Currently the only resource supported is 'correlations'.
+        <ul>
+          <li>Mandatory argument: what: what to get.  Currently the only supported option is what=correlations</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/get_csv/?what=correlations
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_parse_csv'>parse_csv</h3>
       <p>
         Read a specified CSV file from /srv/lyph_uploads.
@@ -1121,6 +1132,7 @@
           <li>&raquo; <a href='#apicmd_all_bulk_annots'>all_bulk_annots</a></li>
           <li>&raquo; <a href='#apicmd_template_hierarchy'>template_hierarchy</a></li>
           <li>&raquo; <a href='#apicmd_reset_db'>reset_db</a></li>
+          <li>&raquo; <a href='#apicmd_get_csv'>get_csv</a></li>
           <li>&raquo; <a href='#apicmd_parse_csv'>parse_csv</a></li>
         </ul>
       </li>
