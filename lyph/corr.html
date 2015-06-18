@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/base.css">
     <link rel="stylesheet" href="http://open-physiology.org/Skeleton/stylesheets/skeleton.css">
     <link rel="stylesheet" href="http://open-physiology.org/index.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -163,7 +163,7 @@
         {
           var retval = x["quality"] + " of ";
 
-          if ( x["location name"] !== null )
+          if ( x["location name"] !== null && x["location name"].trim() !== "" )
             retval += x["location name"];
           else
             retval += "lyph " + x["location"];
