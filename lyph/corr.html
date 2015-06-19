@@ -226,6 +226,7 @@
             },
             minLength: 0,
             select: function( event, ui ) {
+                $('#lyphsearch').data(ui.item.value, ui.item.id);
               lyphsearch();
 	    },
             open: function() {
