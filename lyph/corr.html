@@ -226,8 +226,7 @@
             },
             minLength: 0,
             select: function( event, ui ) {
-                $('#lyphsearch').data(ui.item.value, ui.item.id);
-              lyphsearch();
+                append_lyph( ui.item.id );
 	    },
             open: function() {
                 $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
@@ -237,6 +236,36 @@
             }
         });
     });
+
+    function endsWith( string, suffix )
+    {
+      return string.indexOf(suffix, string.length - suffix.length) !== -1;
+    }
+
+    function append_lyph( id )
+    {
+      var variables = g("annot_lyphs").value.trim();
+
+      if ( variables.length === 0 )
+      {
+        g("annot_lyphs").value = "??? of " + id;
+        return;
+      }
+
+      if ( endsWith( variables, "," ) )
+      {
+        g("annot_lyphs").value = variables + " ??? of " + id;
+        return;
+      }
+
+      if ( endsWith( variables, "of" ) )
+      {
+        g("annot_lyphs").value = variables + " " + id;
+        return;
+      }
+
+      g("annot_lyphs").value = variables + " of " + id; 
+    }
 
     </script>
     
