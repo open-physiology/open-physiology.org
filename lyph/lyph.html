@@ -966,7 +966,20 @@
       <p>(Temporary command during development only) View all lyphnodes</p>
 
       <h3 id='apicmd_all_lyphedges'>all_lyphs</h3>
-      <p>(Temporary command during development only) View all lyphs</p>
+      <p>(Temporary command during development only) View all lyphs
+        <ul>
+          <li>Optional argument: species: limit results to lyphs with given species.  Defaults to 'human'.  Note that 'human' will also match lyphs with null species.  You can also use species=any to get a list of all lyphs regardless of species.</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/all_lyphs/?species=any
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/all_lyphs/?species=human
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/all_lyphs/?species=macaque
+        </blockquote>
+      </p>
 
       <h3 id='apicmd_all_lyphviews'>all_lyphviews</h3>
       <p>(Temporary command during development only) View all lyphviews</p>
