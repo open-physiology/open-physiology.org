@@ -699,9 +699,16 @@
         Get all lyphs whose names begin with a given prefix (case-insensitive).
         <ul>
           <li>Mandatory argument: prefix: the prefix to search based on</li>
+          <li>Optional argument: species: limit search to lyphs with given species.  Default value: human (and 'human' includes lyphs with null species).  You can use species=any to search over all lyphs regardless of species.</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/lyphs_by_prefix/?prefix=left temporal
+        <blockquote>
+        <blockquote>
+          Example: http://localhost:5052/lyphs_by_prefix/?prefix=left temporal&species=macaque
+        <blockquote>
+        <blockquote>
+          Example: http://localhost:5052/lyphs_by_prefix/?prefix=left temporal&species=any
         <blockquote>
       </p>
 
