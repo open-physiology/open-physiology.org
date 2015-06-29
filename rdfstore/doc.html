@@ -188,6 +188,42 @@
           <li>http://yoururl.org:20060/get_parts_of/?0=acids</li>
         </ul>
       </p>
+
+      <h3>Advanced Template Commands</h3>
+      At the beginning of a template file, you can issue certain special commands.
+      You can give a name to a variable, as in the following example:
+        <pre>
+          # 0 = whole
+          SELECT DISTINCT ?part
+          WHERE
+          {
+            ?part &lt;http://example.com/ontology#part-of&gt; &lt;[0]&gt;
+          }
+        </pre>
+      In this example, the command is that first line, # 0 = whole.  It says
+      that the name of the variable 0 is 'whole' (so the template is searching
+      for 'parts' of the 'whole').  This is how the Rdfstore demo GUI knows which
+      placeholder text to put in the different form fields.
+      <br>
+      The other type of command you can use here is a preprocessor command,
+      as in the following example:
+        <pre>
+          # 0 = whole
+          # Preprocessor0 = http://open-physiology.org:20080/terms/%s?longURI=yes&json=yes
+          SELECT DISTINCT ?part
+          WHERE
+          {
+            ?part &lt;http://example.com/ontology#part-of&gt; &lt;[0]&gt;
+          }
+        </pre>
+      The command, # Preprocessor0 = http://open-physiology.org:20080/terms/%s?longURI=yes&json=yes,
+      indicates that the contents of variable 0 will be passed through the indicated
+      preprocessor.  For example, if the user enters 'FMA_50801' for variable 0,
+      Rdfstore will replace the '%s' in the Proprocessor0 string with 'FMA_50801' to get
+      the URL: http://open-physiology.org:20080/terms/FMA_50801?longURI=yes&json=yes
+      which points to <a href='http://open-physiology.org/owlkb/doc.html'>OWLKB</a> and
+      gets a list of subclasses of FMA_50801.  Rdfstore will use that list of subclasses,
+      and query the triplestore for all things which are part-of any subclass of FMA_50801.
     </div>
 
     <div id='mailinglist'>
