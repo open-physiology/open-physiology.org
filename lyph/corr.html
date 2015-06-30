@@ -169,7 +169,7 @@
         }
         else if ( x["type"] === "located measure" )
         {
-          var retval = x["quality"] + " of ";
+          var retval = recase(x["quality"]) + " of ";
 
           if ( x["location name"] !== null && x["location name"].trim() !== "" )
             retval += recase(x["location name"]);
