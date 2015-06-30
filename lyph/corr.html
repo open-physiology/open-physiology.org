@@ -108,7 +108,9 @@
         var url = "http://open-physiology.org:5055/makecorrelation/";
         url += "?pubmed=" + encodeURIComponent(pubmedbox.value.trim());
 
-        var lyphsstr = lyphsbox.value.split(",").map(function(currentValue,index,array)
+        var elim_linebreaks = lyphsbox.value.replace(/\n/g, " ");
+
+        var lyphsstr = elim_linebreaks.split(",").map(function(currentValue,index,array)
         {
           return currentValue.trim();
         }).join(",");
@@ -311,7 +313,7 @@
             <!-- &nbsp; Or &raquo; -->
             <a target='_blank' href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a>
 	    <br>
-	    &nbsp; <input id='annot_lyphs' placeholder='Variables (comma-separated)' style='width:95%'/>
+	    &nbsp; <textarea id='annot_lyphs' placeholder='Variables (comma-separated)' style='width:95%'></textarea>
 	    <br>
 	    &nbsp; <button style='width:95%; margin-top:10px' onclick='annotate()'>Annotate</button>
 	  </div>
