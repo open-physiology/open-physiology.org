@@ -269,6 +269,17 @@
     {
       var variables = g("annot_lyphs").value.trim();
 
+      if ( has_open_paren( variables ) )
+      {
+        if ( endsWith( variables, "," ) )
+          variables += " " + id;
+        else
+          variables += ", " + id;
+
+        g("annot_lyphs").value = variables;
+        return;
+      }
+
       if ( variables.length === 0 )
       {
         g("annot_lyphs").value = "??? of " + id;
@@ -293,6 +304,21 @@
     function recase( x )
     {
       return x.toTitleCase();
+    }
+
+    function has_open_paren( x )
+    {
+      var lparens = 0;
+
+      for ( var i = 0; i < x.length; i++ )
+      {
+        if ( x.charAt(i) === '(' )
+          lparens++;
+        else if ( x.charAt(i) === ')' )
+          lparens--;
+      }
+
+      return Boolean( lparens > 0 );
     }
 
     </script>
