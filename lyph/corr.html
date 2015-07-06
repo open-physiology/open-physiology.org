@@ -43,7 +43,7 @@
       {
         g("annot_pubmed").value="";
         g("annot_lyphs").value="";
-        g("annot_obj").value="";
+        g("edit_id").value="";
       }
 
       function lyphsearch()
@@ -92,7 +92,7 @@
       {
         var pubmedbox = g("annot_pubmed");
         var lyphsbox = g("annot_lyphs");
-        var objbox = g("annot_obj");
+        var editidbox = g("edit_id");
 
         if ( pubmedbox.value.trim() === "" )
         {
@@ -117,6 +117,11 @@
 
         url += "&vars=" + encodeURIComponent(lyphsstr);
 
+        var editid = editidbox.value.trim();
+
+        if ( editid !== "" )
+          url += "&id=" + encodeURIComponent(editid);
+
         $.ajax(
         {
           "url": url,
@@ -128,8 +133,15 @@
               alert("Error: " + result["Error"]);
               return;
             }
-            var html = bulk_annot_to_html(result);
-            g("bulk_annot_list").innerHTML = html + "<br>" + g("bulk_annot_list").innerHTML;
+
+            if ( editid !== "" )
+              get_all_correlations();
+            else
+            {
+              var html = bulk_annot_to_html(result);
+              g("bulk_annot_list").innerHTML = html + "<br>" + g("bulk_annot_list").innerHTML;
+            }
+
             reset_inputs();
           }
         });
@@ -159,7 +171,7 @@
       {
         get_all_correlations();
       });
-      
+
       function variable_to_html( x )
       {
         if ( x["type"] === "clinical index" )
@@ -183,6 +195,35 @@
         return "(Unknown?)";
       }
 
+      function edit_correlation( correlation_id, correlation_pubmed, correlation_vars )
+      {
+        g("edit_id").value = correlation_id;
+        g("annot_pubmed").value = correlation_pubmed;
+        g("annot_lyphs").value = correlation_vars;
+      }
+
+      function edit_correlation_link( x )
+      {
+        var retval = "edit_correlation(\"";
+        retval += x["id"] + "\",\"";
+        retval += x["pubmed"]["id"] + "\",\"";
+
+        for ( var i = 0; i < x["variables"].length; i++ )
+        {
+          if ( i > 0 )
+            retval += ",";
+
+          if ( x["variables"][i]["type"] === "clinical index" )
+            retval += x["variables"][i]["clindex"];
+          else
+            retval += x["variables"][i]["quality"] + " of " + x["variables"][i]["location"];
+        }
+
+        retval += "\")";
+
+        return retval;
+      }
+
       function bulk_annot_to_html( x )
       {
         var retval = "";
@@ -190,6 +231,7 @@
 	retval += "<h4 style='margin-left:10px'>Correlation " + x["id"];
 	
 	retval += " (PMID: " + x["pubmed"]["id"] + ")</h4>";
+        retval += "(<a onclick='" + edit_correlation_link(x) + "' href='javascript:void(0)'>Edit</a>) ";
 	retval += "(<a onclick='delete_correlation(" + x["id"] + ")' href='javascript:void(0)'>Delete</a>)";
 
         retval += "<ul>";
@@ -333,7 +375,8 @@
 
         <div class="floating-box" id="imagediv" style="position:relative;">
           <div id="bulk_annot_form" style='margin-top:10px'>
-	    <input id='annot_pubmed' placeholder='Pubmed ID' style='width:45%; display:inline'/>
+            <input id='edit_id' placeholder='ID (blank=new corr.)' style='width:20%; display:inline'>
+	    <input id='annot_pubmed' placeholder='Pubmed ID' style='width:35%; display:inline'/>
             <!-- &nbsp; &raquo; -->
             <!-- <a target='_blank' href='http://open-physiology.org:5055/reset_db/?correlations=yes'>Delete all correlations</a> -->
             <!-- &nbsp; Or &raquo; -->
