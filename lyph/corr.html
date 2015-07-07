@@ -214,7 +214,7 @@
         var retval = "edit_correlation(\"";
         retval += x["id"] + "\",\"";
         retval += x["pubmed"]["id"] + "\",\"";
-        retval += x["comment"] + "\",\"";
+        retval += (x["comment"]!==null ? x["comment"] : "") + "\",\"";
 
         for ( var i = 0; i < x["variables"].length; i++ )
         {
