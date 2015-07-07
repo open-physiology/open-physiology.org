@@ -44,6 +44,7 @@
         g("annot_pubmed").value="";
         g("annot_lyphs").value="";
         g("edit_id").value="";
+        g("commentbox").value="";
       }
 
       function lyphsearch()
@@ -93,12 +94,14 @@
         var pubmedbox = g("annot_pubmed");
         var lyphsbox = g("annot_lyphs");
         var editidbox = g("edit_id");
+        var commentbox = g("commentbox");
 
         if ( pubmedbox.value.trim() === "" )
         {
           alert("Please indicate a Pubmed ID");
           return;
         }
+
         if ( lyphsbox.value.trim() === "" )
         {
           alert("Please indicate a comma-separated list of lyphs");
@@ -107,6 +110,9 @@
 
         var url = "http://open-physiology.org:5055/makecorrelation/";
         url += "?pubmed=" + encodeURIComponent(pubmedbox.value.trim());
+
+        if ( commentbox.value.trim() !== "" )
+          url += "&comment=" + encodeURIComponent(commentbox.value.trim());
 
         var elim_linebreaks = lyphsbox.value.replace(/\n/g, " ");
 
@@ -195,11 +201,12 @@
         return "(Unknown?)";
       }
 
-      function edit_correlation( correlation_id, correlation_pubmed, correlation_vars )
+      function edit_correlation( corr_id, corr_pubmed, corr_comment, corr_vars )
       {
-        g("edit_id").value = correlation_id;
-        g("annot_pubmed").value = correlation_pubmed;
-        g("annot_lyphs").value = correlation_vars;
+        g("edit_id").value = corr_id;
+        g("annot_pubmed").value = corr_pubmed;
+        g("annot_lyphs").value = corr_vars;
+        g("commentbox").value = corr_comment;
       }
 
       function edit_correlation_link( x )
@@ -207,6 +214,7 @@
         var retval = "edit_correlation(\"";
         retval += x["id"] + "\",\"";
         retval += x["pubmed"]["id"] + "\",\"";
+        retval += x["comment"] + "\",\"";
 
         for ( var i = 0; i < x["variables"].length; i++ )
         {
@@ -231,8 +239,17 @@
 	retval += "<h4 style='margin-left:10px'>Correlation " + x["id"];
 	
 	retval += " (PMID: " + x["pubmed"]["id"] + ")</h4>";
+
+        if ( x["comment"] === null )
+          retval += "(No Comment) ";
+        else
+          retval += "(<a href='javascript:void(0)' onclick='show_comment(\"" + x["id"] + "\")'>Show Comment</a>) ";
+
         retval += "(<a onclick='" + edit_correlation_link(x) + "' href='javascript:void(0)'>Edit</a>) ";
 	retval += "(<a onclick='delete_correlation(" + x["id"] + ")' href='javascript:void(0)'>Delete</a>)";
+
+        if ( x["comment"] !== null )
+          retval += "<div id='comment" + x["id"] + "' style='display:none;background:#CCEBFF'>" + escape_html(x["comment"]) + "</div>";
 
         retval += "<ul>";
         var valind;
@@ -242,6 +259,16 @@
 
 	retval += "</div>";
 	return retval;
+      }
+
+      function show_comment( id )
+      {
+        $('#comment' + id).show(250);
+      }
+
+      function escape_html( str )
+      {
+        return $('<div>').text(str).html();
       }
 
       function delete_correlation( id )
@@ -383,7 +410,7 @@
             <a target='_blank' href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a>
 	    <br>
 	    &nbsp; <textarea id='annot_lyphs' placeholder='Variables (comma-separated)' style='width:95%'></textarea>
-	    <br>
+            &nbsp; <textarea id='commentbox' placeholder='Comment' style='width:95%'></textarea>
 	    &nbsp; <button style='width:95%; margin-top:10px' onclick='annotate()'>Annotate</button>
 	  </div>
           <div id="bulk_annot_list" style="height:300px; overflow:auto">
