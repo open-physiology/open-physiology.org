@@ -1,3 +1,5 @@
+  var rightdivstate = "lyphsearch";
+
   function reset_inputs()
   {
     g("annot_pubmed").value="";
@@ -135,6 +137,7 @@
   $(function()
   {
     get_all_correlations();
+    get_clindices();
   });
 
   function variable_to_html( x )
@@ -347,4 +350,102 @@ function has_open_paren( x )
   }
 
   return Boolean( lparens > 0 );
+}
+
+function switch_right_div()
+{
+  if ( rightdivstate === "lyphsearch" )
+  {
+    $('#rightdiv').css('display', 'none');
+    $('#clindexdiv').css('display', 'block');
+    rightdivstate = "clindex";
+  }
+  else
+  {
+    $('#rightdiv').css('display', 'block');
+    $('#clindexdiv').css('display', 'none');
+    rightdivstate = "lyphsearch";
+  }
+}
+
+function clindexbutton()
+{
+  var labelbox = g("clindexlabelbox");
+  var idbox = g("clindexidbox");
+  var pubmedsbox = g("clindexpubmedsbox");
+
+  if ( labelbox.value.trim() === "" )
+    return;
+
+  var url = "http://open-physiology.org:5055/";
+
+  if ( idbox.value.trim() === "" )
+    url += "make_clinical_index/?label=";
+  else
+    url += "edit_clinical_index/?label=";
+
+  url += encodeURIComponent( labelbox.value.trim() );
+
+  if ( pubmedsbox.value.trim() !== "" )
+    url += "&pubmeds=" + encodeURIComponent( pubmedsbox.value.trim() );
+
+  if ( idbox.value.trim() !== "" )
+    url += "&index=" + encodeURIComponent( idbox.value.trim() );
+
+  $.ajax(
+  {
+    "url": url,
+    "dataType": "jsonp",
+    "success": function(result)
+    {
+      if ( result.hasOwnProperty("Error") )
+      {
+        alert( "Error: " + result["Error"] );
+        return;
+      }
+
+      labelbox.value = "";
+      idbox.value = "";
+      pubmedsbox.value = "";
+
+      get_clindices();
+    }
+  });
+}
+
+function get_clindices()
+{
+  $.ajax(
+  {
+    "url": "http://open-physiology.org:5055/all_clinical_indices/",
+    "dataType": "jsonp",
+    "success": function(result)
+    {
+      var html = "";
+      result = result["results"];
+
+      for ( var i = 0; i < result.length; i++ )
+        html += clindex_to_html( result[i] );
+
+      g("clindices_list").innerHTML = html;
+    }
+  });
+}
+
+function clindex_to_html( ci )
+{
+  var html = "<h4>" + ci["index"] + "</h4>";
+  html += "<span>" + escape_html(ci["label"]) + "</span>";
+
+  if ( ci["pubmeds"].length !== 0 )
+  {
+    html += "<div>Pubmeds:<ul>";
+
+    for ( var i = 0; i < ci["pubmeds"].length; i++ )
+      html += "<li>" + escape_html( ci["pubmeds"][i] ) + "</li>";
+
+    html += "</ul></div>";
+  }
+
+  return html;
 }

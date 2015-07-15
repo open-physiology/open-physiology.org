@@ -68,6 +68,7 @@
 
       <div class="five columns floating-box" id="rightdiv" style="height:100%; margin-top: 15px">
        <div class="floating-contents" style="height:507px">
+        <span>&raquo; LyphSearch &nbsp; &nbsp; &raquo; <a href='javascript:void(0)' onclick='switch_right_div();'>Clindices</a></span>
         <h3 id='home'>Lyph Search</h3>
         <div id='homediv' class='tabs'>
           <input id='lyphsearch' style='width:97%'/>
@@ -75,6 +76,20 @@
           <hr>
           <div id='searchresults' style='height:100%; overflow: auto'>
           </div>
+        </div>
+       </div>
+      </div>
+
+      <div class="five columns floating-box" id="clindexdiv" style="display: none; height:100%; margin-top: 15px">
+       <div class="floating-contents" style="height:507px">
+        <span>&raquo; <a href='javascript:void(0)' onclick='switch_right_div()'>LyphSearch</a> &nbsp; &nbsp; &raquo; Clindices</span>
+        <h3>Clindices</h3>
+        <input id='clindexidbox' style='width:95%' placeholder='clindex (blank=new)'/>
+        <input id='clindexlabelbox' style='width:95%' placeholder='label'/>
+        <input id='clindexpubmedsbox' style='width:95%' placeholder='pubmed IDs (optional)'/>
+        <button style='width:100%; margin-top:5%' onclick='clindexbutton();'>Edit/Create</button>
+        <div id="clindices_list" style="height:300px; overflow:auto">
+          Loading...
         </div>
        </div>
       </div>
