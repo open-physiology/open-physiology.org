@@ -976,9 +976,13 @@
       <p>(Temporary command during development only) View all lyphs
         <ul>
           <li>Optional argument: species: limit results to lyphs with given species.  Defaults to 'human'.  Note that 'human' will also match lyphs with null species.  You can also use species=any to get a list of all lyphs regardless of species.</li>
+          <li>Optional argument: brief: if brief=yes, the results will be limited to lyph ID and name.</li>
         </ul>
         <blockquote>
           Example: http://localhost:5052/all_lyphs/?species=any
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/all_lyphs/?species=any&brief=yes
         </blockquote>
         <blockquote>
           Example: http://localhost:5052/all_lyphs/?species=human
