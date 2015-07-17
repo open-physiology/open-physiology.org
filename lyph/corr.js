@@ -176,7 +176,7 @@
     var retval = "edit_correlation(\"";
     retval += x["id"] + "\",\"";
     retval += x["pubmed"]["id"] + "\",\"";
-    retval += (x["comment"]!==null ? x["comment"] : "") + "\",\"";
+    retval += (x["comment"]!==null ? encodeHtmlEntity(x["comment"]) : "") + "\",\"";
 
     for ( var i = 0; i < x["variables"].length; i++ )
     {
@@ -449,3 +449,13 @@ function clindex_to_html( ci )
 
   return html;
 }
+
+function encodeHtmlEntity(str)
+{
+  var buf = [];
+  for (var i=str.length-1;i>=0;i--) {
+    buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+  }
+  return buf.join('');
+};
+
