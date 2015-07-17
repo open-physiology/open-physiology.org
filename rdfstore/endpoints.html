@@ -185,6 +185,14 @@
             GRANT execute ON SPARQL_INSERT_DICT_CONTENT TO SPARQL_UPDATE;
           </pre>
         </li>
+
+        <li>
+          If you also want to enable templates to delete triples, issues the following commands as well:
+          <pre>
+            GRANT execute ON SPARQL_DELETE_DICT_CONTENT TO "SPARQL"
+            GRANT execute ON SPARQL_DELETE_DICT_CONTENT TO SPARQL_UPDATE;
+          </pre>
+        </li>
       </ol>
     </p>
 
