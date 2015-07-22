@@ -373,6 +373,7 @@ function clindexbutton()
   var labelbox = g("clindexlabelbox");
   var idbox = g("clindexidbox");
   var pubmedsbox = g("clindexpubmedsbox");
+  var parentsbox = g("clindexparentsbox");
 
   if ( labelbox.value.trim() === "" )
     return;
@@ -388,6 +389,8 @@ function clindexbutton()
 
   if ( pubmedsbox.value.trim() !== "" )
     url += "&pubmeds=" + encodeURIComponent( pubmedsbox.value.trim() );
+
+  url += "&parents=" + encodeURIComponent( parentsbox.value.trim() );
 
   if ( idbox.value.trim() !== "" )
     url += "&index=" + encodeURIComponent( idbox.value.trim() );
@@ -445,6 +448,12 @@ function clindex_to_html( ci )
       html += "<li>" + escape_html( ci["pubmeds"][i] ) + "</li>";
 
     html += "</ul></div>";
+  }
+
+  if ( ci["parents"].length != 0 )
+  {
+    for ( var i = 0; i < ci["parents"].length; i++ )
+      html += "<div>&raquo Child of " + ci["parents"][i] + "</div>"
   }
 
   return html;
