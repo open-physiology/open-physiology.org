@@ -10,3 +10,16 @@ I added "ulimit -c unlimited" to the following scripts to ensure coredumps when 
 12 May 2015, 08:32 UK time:
 I changed "AllowOverride None" to "AllowOverride All" in /etc/httpd/conf/httpd.conf
 underneath <Directory "/srv/http">.  This causes Apache to respect .htaccess files.
+
+27 July 2015, 12:55 UK time:
+In order to enable python CGI-scripts, I added/uncommented the following to
+/etc/httpd/conf/httpd.conf:
+
+<Directory "/srv/http/lyph/">
+  Options +ExecCGI
+  AddHandler cgi-script .py
+  Order allow,deny
+  Allow from all
+</Directory>
+
+LoadModule cgi_module modules/mod_cgi.so
