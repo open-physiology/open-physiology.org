@@ -7,6 +7,9 @@ import pygraphviz as pgv
 import sys
 
 print "Content-type: image/svg+xml"
+print "Cache-Control: no-cache, no-store, must-revalidate"
+print "Pragma: no-cache"
+print "Expires: 0"
 print
 
 with open ("/home/test_servers/lyph/server/data/clinical_indices.json", "r") as fp:
