@@ -1,0 +1,40 @@
+#!/usr/bin/python2.7
+
+import cgi
+import cgitb; cgitb.enable()
+import json
+import pygraphviz as pgv
+import sys
+
+print "Content-type: image/svg+xml"
+#print "Content-type: text/plain"
+print
+
+with open ("/home/test_servers/lyph/server/data/clinical_indices.json", "r") as fp:
+  clindices = fp.read()
+
+obj = json.loads(clindices)
+
+G = pgv.AGraph(strict=True,directed=True,name='Clinical Indices')
+
+d = {}
+
+for i in obj:
+  d[i["index"]] = i["label"]
+  G.add_node(i["label"], label=i["index"])
+
+for i in obj:
+  for j in i["children"]:
+    G.add_edge(i["label"],d[j])
+
+fields = cgi.FieldStorage()
+prog = "neato"
+
+progs = ["dot", "neato", "fdp", "sfdp", "twopi", "circo"]
+
+if "program" in fields.keys():
+  if fields["program"].value in progs:
+    prog = fields["program"].value
+
+print G.draw(format='svg', prog=prog)
+
