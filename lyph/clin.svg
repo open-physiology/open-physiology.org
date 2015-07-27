@@ -7,7 +7,6 @@ import pygraphviz as pgv
 import sys
 
 print "Content-type: image/svg+xml"
-#print "Content-type: text/plain"
 print
 
 with open ("/home/test_servers/lyph/server/data/clinical_indices.json", "r") as fp:
@@ -37,4 +36,3 @@ if "program" in fields.keys():
     prog = fields["program"].value
 
 print G.draw(format='svg', prog=prog)
-
