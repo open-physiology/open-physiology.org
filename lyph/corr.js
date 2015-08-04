@@ -228,9 +228,9 @@
     $('#comment' + id).show(250);
   }
 
-  function escape_html( str )
+  function escape_html(str)
   {
-    return $('<div>').text(str).html();
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   function delete_correlation( id )
