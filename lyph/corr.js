@@ -168,7 +168,7 @@
     g("edit_id").value = corr_id;
     g("annot_pubmed").value = corr_pubmed;
     g("annot_lyphs").value = corr_vars;
-    g("commentbox").value = corr_comment;
+    g("commentbox").innerHTML = corr_comment;
   }
 
   function edit_correlation_link( x )
@@ -176,7 +176,7 @@
     var retval = "edit_correlation(\"";
     retval += x["id"] + "\",\"";
     retval += x["pubmed"]["id"] + "\",\"";
-    retval += (x["comment"]!==null ? encodeHtmlEntity(x["comment"]) : "") + "\",\"";
+    retval += (x["comment"]!==null ? escape_html(escape_html(x["comment"])) : "") + "\",\"";
 
     for ( var i = 0; i < x["variables"].length; i++ )
     {
