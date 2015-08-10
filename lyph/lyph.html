@@ -942,6 +942,38 @@
         if no lyph has been 'annotate'd with its index.)
       </p>
 
+      <h3 id='apicmd_makebop'>makebop</h3>
+      <p>
+        Create a bop (bag of pathologies).
+        <ul>
+          <li>Optional argument: excluded: comma-separated list of lyphs (specified by ids) which are excluded in the context of this bop.</li>
+          <li>Optional argument: added: comma-separated list of edges which are added in the context of this bop.  Each edge is added using arrow notation X-&gt;Y where X,Y are the ids of lyphnodes.  For example, 1-&gt;2 means an edge from node 1 to node 2.</li>
+          <li>Optional argument: locmeas: comma-separated list of located measures (specified by their ids)</li>
+        </ul>
+        <blockquote>
+          Example: http://localhost:5052/makebop/?excluded=1,2,3&added=5-&gt;,6-&gt;7
+        </blockquote>
+        <blockquote>
+          Example: http://localhost:5052/makebop/?locmeas=1,2,3,4&added=1-&gt;2
+        </blockquote>
+         <blockquote>
+          Example: http://localhost:5052/makebop/?excluded=1,2,3&added=5-&gt;,6-&gt;7&locmeas=1,2,3,4
+        </blockquote>
+      </p>
+
+      <h3 id='apicmd_all_bops'>all_bops</h3>
+      <p>
+        Displays all the bops (bags of pathologies) in the system.
+      </p>
+
+      <h3 id='apicmd_bop'>bop</h3>
+      <p>
+        Displays the indicated bop (bag of pathologies).
+        <blockquote>
+          Example: http://localhost:5052/bop/1
+        </blockquote>
+      </p>
+
       <h3 id='apicmd_all_located_measures'>all_located_measures</h3>
       <p>
         Displays all the located measures in the system.
@@ -1149,7 +1181,10 @@
           <li>&raquo; <a href='#apicmd_lyphs_located_in_term'>lyphs_located_in_term</a></li>
           <li>&raquo; <a href='#apicmd_has_template'>has_template</a></li>
           <li>&raquo; <a href='#apicmd_has_clinical_index'>has_clinical_index</a></li>
-          <li>&raquo; <a href='#apicmd_unused_indices'>unused_indices</a></li>
+          <li>&raquo; <a href='#apicmd_unused_indices'>unused_indices</a></li>          
+          <li>&raquo; <a href='#apicmd_all_bops'>all_bops</a></li>
+          <li>&raquo; <a href='#apicmd_makebop'>makebop</a></li>
+          <li>&raquo; <a href='#apicmd_bop'>bop</a></li>
           <li>&raquo; <a href='#apicmd_all_located_measures'>all_located_measures</a></li>
           <li>&raquo; <a href='#apicmd_make_located_measure'>make_located_measure</a></li>
           <li>&raquo; <a href='#apicmd_located_measure'>located_measure</a></li>
