@@ -362,11 +362,13 @@
       <h3 id='apicmd_makelyphnode'>makelyphnode</h3>
       Used to create a new lyphnode.
       <ul>
-        Optional argument: location: the location of the node (specified by a lyph ID).  If this argument is used, 'loctype' must also be used.
-        Optional argument: loctype: the loctype of the node.  Can be 'interior' or 'border'.
+        <li>Optional argument: location: the location of the node (specified by a lyph ID).  If this argument is used, 'loctype' must also be used.</li>
+        <li>Optional argument: loctype: the loctype of the node.  Can be 'interior' or 'border'.</li>
+        <li>Optional argument: layer: the particular layer (of the location lyph) in which the node is located.  Indicated by ordinal number:  for example, layer=1 means the node is located in the lyph's first layer, layer=2 means the node is located in the lyph's 2nd layer, etc.</li>
       </ul>
       <blockquote>
         Example: http://localhost:5052/makelyphnode/?location=6039&loctype=interior
+        Example: http://localhost:5052/makelyphnode/?location=6039&loctype=interior&layer=1
       </blockquote>
       Note: The lyphnode will not actually be saved to disk unless it is used in a lyph or lyphview.
 
@@ -484,13 +486,15 @@
         Used to edit an existing lyphnode.
         <ul>
           <li>Argument: node: the node you want to edit.</li>
-          <li>Argument: location: the location of the lyphnode (specified with a lyph ID).</li>
-          <li>Argument: loctype: the loctype of the lyphnode ('interior' or 'border').</li>
+          <li>Optional Argument: location: the location of the lyphnode (specified with a lyph ID).</li>
+          <li>Optional Argument: loctype: the loctype of the lyphnode ('interior' or 'border').</li>
+          <li>Optional argument: layer: the particular layer (of the location lyph) in which the node is located.  Indicated by ordinal number:  for example, layer=1 means the node is located in the lyph's first layer, layer=2 means the node is located in the lyph's 2nd layer, etc.</li>
         </ul>
         If the node already has a location, then the location argument is optional.
         If the node already has a loctype, then the loctype argument is optional.
         <blockquote>
           Example: http://localhost:5052/editlyphnode/?node=5&location=10&loctype=interior
+          Example: http://localhost:5052/editlyphnode/?node=5&location=10&loctype=interior&layer=1
         </blockquote>
       </p>
 
