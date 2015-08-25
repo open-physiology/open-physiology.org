@@ -1,14 +1,20 @@
-var Grid = ReactBootstrap.Grid;
-var Row = ReactBootstrap.Row;
-var Col = ReactBootstrap.Col;
-var Button = ReactBootstrap.Button;
-var Well = ReactBootstrap.Well;
-var TabbedArea = ReactBootstrap.TabbedArea;
-var TabPane = ReactBootstrap.TabPane;
-var PageHeader = ReactBootstrap.PageHeader;
-var Panel = ReactBootstrap.Panel;
-var Input = ReactBootstrap.Input;
-var ButtonInput = ReactBootstrap.ButtonInput;
+var rbs = ReactBootstrap;
+var Grid = rbs.Grid;
+var Row = rbs.Row;
+var Col = rbs.Col;
+var Button = rbs.Button;
+var Well = rbs.Well;
+var TabbedArea = rbs.TabbedArea;
+var TabPane = rbs.TabPane;
+var PageHeader = rbs.PageHeader;
+var Panel = rbs.Panel;
+var Input = rbs.Input;
+var ButtonInput = rbs.ButtonInput;
+var Table = rbs.Table;
+var ListGroup = rbs.ListGroup;
+var ListGroupItem = rbs.ListGroupItem;
+var Label = rbs.Label;
+var Badge = rbs.Badge;
 
 var CorrelationEditForm = React.createClass({
   render: function(){
@@ -28,7 +34,7 @@ var CorrelationEditForm = React.createClass({
 var CorrelationList = React.createClass({
   render:function() {
     return(
-      <p>Correlation list goes here</p>
+      <div id='corrlist' />
     );
   }
 });
@@ -91,5 +97,7 @@ React.render(<MainContent/>, document.getElementById("main"));
 //React.render(<mainPage/>, document.getElementById("main"));
 
 $(function(){
-  $('.panel').css({height: '100vh', "margin-bottom": 0});
+  $('.panel').css({height: '100vh', "margin-bottom": 0, "overflow": "auto"});
+
+  getAllCorrelations();
 });
