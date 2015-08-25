@@ -1,15 +1,3 @@
-const TextWithTooltip = React.createClass({
-  render() {
-    var tooltip = <Tooltip placement='top'>{this.props.tooltip}</Tooltip>;
-
-    return (
-      <OverlayTrigger overlay={tooltip} delayShow={30} delayHide={60}>
-        <span>{this.props.children}</span>
-      </OverlayTrigger>
-    );
-  }
-});
-
 var Correlation = React.createClass({
   propTypes: {
     "id": React.PropTypes.string.isRequired,
@@ -17,8 +5,36 @@ var Correlation = React.createClass({
     "pubmed": React.PropTypes.string.isRequired,
     "comment": React.PropTypes.string
   },
+  getInitialState: function() {
+    return {
+      "commentOpen": false
+    };
+  },
+  openCommentBox: function(e) {
+    this.setState({'commentOpen': true});
+  },
+  closeCommentBox: function(e) {
+    this.setState({'commentOpen': false});
+  },
   render: function() {
     var header = <span>Correlation {this.props.id} <small>(Pubmed ID: {this.props.pubmed})</small></span>;
+    var commentbox;
+
+    if ( this.props.hasOwnProperty("comment") && this.props.comment !== null )
+    {
+      if ( this.state.commentOpen )
+        commentbox = (
+          <Jumbotron>
+            <h3>Comment:</h3>
+            <p>{this.props.comment}</p>
+            <span>&raquo; <a href='javascript:void(0)' onClick={this.closeCommentBox}>Hide comment</a></span>
+          </Jumbotron>
+        );
+      else
+        commentbox = <span>&raquo; <a href='javascript:void(0)' onClick={this.openCommentBox}>Show Comment</a></span>
+    }
+    else
+      commentbox = <span>No comment on this correlation.</span>
 
     return (
       <Panel header={header}>
@@ -37,7 +53,8 @@ var Correlation = React.createClass({
             );
           })
         }
-        </ul>  
+        </ul>
+        <div>{commentbox}</div>
       </Panel>
     );
   }
@@ -64,7 +81,7 @@ var LocatedMeasure = React.createClass({
     "locname": React.PropTypes.string.isRequired
   },
   render: function() {
-    return (<TextWithTooltip tooltip={'Lyph '+this.props.location}>{this.props.locname}</TextWithTooltip>);
+    return (<span>{this.props.quality} of {this.props.locname} <small>(Lyph {this.props.location})</small></span>);
   }
 });
 
@@ -89,3 +106,30 @@ var Variable = React.createClass({
     return <li>{lgi}</li>;
   }
 });
+
+var Lyph = React.createClass({
+  render: function()
+  {
+    return (
+      <Panel bsStyle='success' header={this.props.data.name}>
+        <Table condensed striped>
+          <tbody>
+            <tr>
+              <td>Lyph ID</td>
+              <td>{this.props.data.id}</td>
+            </tr>
+            <tr>
+              <td>FMA ID</td>
+              <td>{this.props.data.fma !== null ? this.props.data.fma : 'None'}</td>
+            </tr>
+            <tr>
+              <td>Species</td>
+              <td>{this.props.data.species}</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Panel>
+    );
+  }
+});
+

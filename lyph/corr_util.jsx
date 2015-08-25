@@ -4,29 +4,19 @@ function getAllCorrelations( ) {
     "dataType": "jsonp",
     "success": function(result) {
       var correlations = (
-        <Table bordered condensed hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Variables</th>
-              <th>Pubmed</th>
-              <th>Comment?</th>
-            </tr>
-          </thead>
-          <ListGroup>
-            { result.map( function(object, i) {
-              return (
-                <Correlation
-                  id={object["id"]}
-                  key={object["id"]}
-                  pubmed={object["pubmed"]["id"]}
-                  comment={object["comment"]}
-                  variables={object["variables"]}
-                />
-              );
-            })}
-          </ListGroup>
-        </Table>
+        <ListGroup>
+          { result.map( function(object, i) {
+            return (
+              <Correlation
+                id={object["id"]}
+                key={object["id"]}
+                pubmed={object["pubmed"]["id"]}
+                comment={object["comment"]}
+                variables={object["variables"]}
+              />
+            );
+          })}
+        </ListGroup>
       );
 
       React.render( correlations, document.getElementById("corrlist") );

@@ -8,6 +8,7 @@ var TabbedArea = rbs.TabbedArea;
 var TabPane = rbs.TabPane;
 var PageHeader = rbs.PageHeader;
 var Panel = rbs.Panel;
+var Popover = rbs.Popover;
 var Input = rbs.Input;
 var ButtonInput = rbs.ButtonInput;
 var Tooltip = rbs.Tooltip;
@@ -17,6 +18,7 @@ var ListGroupItem = rbs.ListGroupItem;
 var Label = rbs.Label;
 var Badge = rbs.Badge;
 var OverlayTrigger = rbs.OverlayTrigger;
+var Jumbotron = rbs.Jumbotron;
 
 var CorrelationEditForm = React.createClass({
   render: function(){
@@ -24,7 +26,7 @@ var CorrelationEditForm = React.createClass({
       <div>
         <Input type='text' label='Correlation ID (blank ID = new correlation)' bsSize='large'/>
         <Input type='text' label='Pubmed ID' />
-        <Input type='textarea' label='Variables (comma-separated)' />
+        <Input type='textarea' label='Variables (comma-separated)' className='annot_lyphs'/>
         <Input type='textarea' label='Comment' />
         <ButtonInput value='Annotate' block />
         &raquo; <a href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a>
@@ -52,11 +54,30 @@ var LeftSide = React.createClass({
 });
 
 var RightSide = React.createClass({
-  render:function(){
+  searchClicked: function(e){
+    var srch=this.refs.theInput.getValue().trim();
+
+    if ( srch === '' )
+      return;
+
+    var url = "http://open-physiology.org:5055/lyphs_by_prefix/?prefix=";
+    url += encodeURIComponent( srch );
+
+    $.ajax({
+      "url": url,
+      "dataType": "jsonp",
+      "success": this.refs.results.gotResults        
+    });
+  },
+  render: function(){
     return(
       <Panel header={<h2>Tools</h2>} bsStyle='info'>
         <TabbedArea defaultActiveKey={1}>
-          <TabPane eventKey={1} tab='LyphSearch'>Contents of Tab1</TabPane>
+          <TabPane eventKey={1} tab='LyphSearch'>
+            <Input className='lyphsearchinput' ref='theInput' type='text' bsSize='large' label='Search lyphs' />
+            <Button block onClick={this.searchClicked}>Search</Button>
+            <LyphSearchResults ref='results'/>
+          </TabPane>
           <TabPane eventKey={2} tab='Clindices'>Contents of Tab2</TabPane>
         </TabbedArea>
       </Panel>
@@ -79,10 +100,10 @@ var MainContent = React.createClass({
     return(
       <Grid fluid={true}>
         <Row>
-          <Col lg={4}>
+          <Col lg={3}>
             <LeftSide />
           </Col>
-          <Col lg={5}>
+          <Col lg={6}>
             <MiddleSide />
           </Col>
           <Col lg={3}>
@@ -90,6 +111,41 @@ var MainContent = React.createClass({
           </Col>
         </Row>
       </Grid>
+    );
+  }
+});
+
+
+var LyphSearchResults = React.createClass({
+  gotResults: function(results) {
+    this.setState({'results': results});
+  },
+  getInitialState: function() {
+    return {'results': null};
+  },
+  render: function() {
+    if ( this.state.results === null || this.state.results.length === 0 )
+      return (<div />);
+
+    if ( this.state.results.length === 0 ) {
+      return (
+        <Panel bsStyle='danger' header='No results'>
+          No lyphs matched your search.
+        </Panel>
+      );
+    }
+
+    return (
+      <div>
+      {
+        this.state.results.map( function( object, i )
+        {
+          return (
+            <Lyph data={object} />
+          );
+        })
+      }
+      </div>
     );
   }
 });
