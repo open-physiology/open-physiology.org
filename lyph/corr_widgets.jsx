@@ -10,46 +10,6 @@ const TextWithTooltip = React.createClass({
   }
 });
 
-/*const TextWithTooltip = React.createClass({
-  render() {
-    var tooltip = <Tooltip placement='top'>{this.props.tooltip}</Tooltip>;
-
-    return (
-      <OverlayTrigger overlay={tooltip} delayShow={30} delayHide={60}>
-        <a href='#' onclick='return false;'>{this.props.children}</a>
-      </OverlayTrigger>
-    );
-  }
-});*/
-
-/*
-const TextWithTooltip = React.createClass({
-  render() {
-    var tooltip = <Tooltip placement='top'>{this.props.tooltip}</Tooltip>;
-
-    return (
-      <OverlayTrigger overlay={tooltip} delayShow={30} delayHide={60}>
-        <a href={this.props.href}>{this.props.children}</a>
-      </OverlayTrigger>
-    );
-  }
-});
-*/
-
-/*
-const TextWithTooltip = React.createClass({
-  render() {
-    var tooltip = <Tooltip placement='top'>{this.props.tooltip}</Tooltip>;
-
-    return (
-      <OverlayTrigger overlay={tooltip} delayShow={300} delayHide={150}>
-        <a href={this.props.href}>{this.props.children}</a>
-      </OverlayTrigger>
-    );
-  }
-});
-*/
-
 var Correlation = React.createClass({
   propTypes: {
     "id": React.PropTypes.string.isRequired,
@@ -106,19 +66,6 @@ var LocatedMeasure = React.createClass({
   render: function() {
     return (<TextWithTooltip tooltip={'Lyph '+this.props.location}>{this.props.locname}</TextWithTooltip>);
   }
-//return (<div>{this.props.quality} of <OverlayTrigger placement='top' overlay={<Tooltip><strong>Lyph 20</strong></Tooltip>}>
-//      <Button bsStyle='default'>{this.props.locname}</Button>
-//        <Well bsSize='small'>{this.props.locname}</Well>
-// </OverlayTrigger></div>);
-    //return (
-      //<span>
-        //{this.props.quality} of
-        //<OverlayTrigger placement='top' overlay={<Tooltip><strong>Holy guacamole!</strong> Check this info.</Tooltip>}>
-          //{this.props.locname}
-        //</OverlayTrigger>
-      //</span>
-    //);
-//  }
 });
 
 var Variable = React.createClass({
