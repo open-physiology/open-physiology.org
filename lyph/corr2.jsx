@@ -10,11 +10,13 @@ var PageHeader = rbs.PageHeader;
 var Panel = rbs.Panel;
 var Input = rbs.Input;
 var ButtonInput = rbs.ButtonInput;
+var Tooltip = rbs.Tooltip;
 var Table = rbs.Table;
 var ListGroup = rbs.ListGroup;
 var ListGroupItem = rbs.ListGroupItem;
 var Label = rbs.Label;
 var Badge = rbs.Badge;
+var OverlayTrigger = rbs.OverlayTrigger;
 
 var CorrelationEditForm = React.createClass({
   render: function(){

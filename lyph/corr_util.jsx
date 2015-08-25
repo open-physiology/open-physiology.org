@@ -13,7 +13,7 @@ function getAllCorrelations( ) {
               <th>Comment?</th>
             </tr>
           </thead>
-          <tbody>
+          <ListGroup>
             { result.map( function(object, i) {
               return (
                 <Correlation
@@ -25,7 +25,7 @@ function getAllCorrelations( ) {
                 />
               );
             })}
-          </tbody>
+          </ListGroup>
         </Table>
       );
 
