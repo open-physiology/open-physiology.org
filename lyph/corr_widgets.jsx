@@ -133,3 +133,19 @@ var Lyph = React.createClass({
   }
 });
 
+var ClindexInList = React.createClass({
+  render: function() {
+    return (
+      <Panel bsStyle='info' header={this.props.data.index}>
+        <div>
+          {this.props.data.label}
+        </div>
+        <ul>
+          <li>Pubmeds: {this.props.data.pubmeds.length === 0 ? 'None' : this.props.data.pubmeds.join(', ')}</li>
+          <li>Parents: {this.props.data.parents.length === 0 ? 'None' : JSON.stringify(this.props.data.parents,null,2)}</li>
+          <li>Corr. Count: {this.props.data['correlation count']}</li>
+        </ul>
+      </Panel>
+    );
+  }
+});

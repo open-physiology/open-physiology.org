@@ -77,3 +77,23 @@ function append_lyph( id )
 
   annot_lyphs.value = variables + " of " + id; 
 }
+
+function has_open_paren( x )
+{
+  var lparens = 0;
+
+  for ( var i = 0; i < x.length; i++ )
+  {
+    if ( x.charAt(i) === '(' )
+      lparens++;
+    else if ( x.charAt(i) === ')' )
+      lparens--;
+  }
+
+  return Boolean( lparens > 0 );
+}
+
+function endsWith( string, suffix )
+{
+  return string.indexOf(suffix, string.length - suffix.length) !== -1;
+}

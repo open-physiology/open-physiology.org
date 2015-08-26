@@ -43,6 +43,14 @@ var CorrelationList = React.createClass({
   }
 });
 
+var ClindexList = React.createClass({
+  render:function() {
+    return(
+      <div id='clindexlist' />
+    );
+  }
+});
+
 var LeftSide = React.createClass({
   render: function(){
     return(
@@ -78,7 +86,14 @@ var RightSide = React.createClass({
             <Button block onClick={this.searchClicked}>Search</Button>
             <LyphSearchResults ref='results'/>
           </TabPane>
-          <TabPane eventKey={2} tab='Clindices'>Contents of Tab2</TabPane>
+          <TabPane eventKey={2} tab='Clindices'>
+            <Input type='text' label='Clindex ID (blank = new)' bsSize='large' />
+            <Input type='text' label='Label'/>
+            <Input type='text' label='Pubmed IDs (optional)'/>
+            <Input type='text' label='Parent IDs (blank = no parents)'/>
+            <Button block onClick={this.clindexClicked}>Edit/Create</Button>
+            <ClindexList/>
+          </TabPane>
         </TabbedArea>
       </Panel>
     );
@@ -158,4 +173,5 @@ $(function(){
   $('.panel').css({height: '100vh', "margin-bottom": 0, "overflow": "auto"});
 
   getAllCorrelations();
+  getAllClindices();
 });
