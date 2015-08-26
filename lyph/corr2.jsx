@@ -51,7 +51,7 @@ var CorrelationEditForm = React.createClass({
 
     url += '&vars=' + encodeURIComponent(varsstr);
 
-    if ( id.getValue().trim() !== '' )
+    if ( this.props.embedded )
       url += '&id=' + encodeURIComponent(id.getValue().trim());
 
     var that=this;
