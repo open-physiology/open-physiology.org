@@ -21,14 +21,56 @@ var OverlayTrigger = rbs.OverlayTrigger;
 var Jumbotron = rbs.Jumbotron;
 
 var CorrelationEditForm = React.createClass({
+  clicked: function(e){
+    var id = this.refs.idbox;
+    var pbmd = this.refs.pbmd;
+    var vars = this.refs.vars;
+    var cmnt = this.refs.cmnt;
+
+    if ( pbmd.getValue().trim() === '' ) {
+      alert('Please enter a pubmed ID');
+      return;
+    }
+
+    if ( vars.getValue().trim() === '' ) {
+      alert('Please list at least one variable for the correlation')
+      return;
+    }
+
+    var url = 'http://open-physiology.org:5055/makecorrelation/';
+    url += '?pubmed='+encodeURIComponent(pbmd.getValue().trim());
+
+    if ( cmnt.getValue().trim() !== '' ) {
+      url += '&comment='+encodeURIComponent(cmnt.getValue().trim());
+    }
+
+    var elim_linebreaks = vars.getValue().trim().replace(/\n/g, " ");
+    var varsstr = elim_linebreaks.split(",").map(function(currentValue,index,array){
+      return currentValue.trim();
+    }).join(",");
+
+    url += '&vars=' + encodeURIComponent(varsstr);
+
+    if ( id.getValue().trim() !== '' )
+      url += '&id=' + encodeURIComponent(id.getValue().trim());
+
+    $.ajax({
+      "url": url,
+      "dataType": "jsonp",
+      "success": function(){
+        getAllCorrelations();
+        $('.corrEditField').val('');
+      }
+    });
+  },
   render: function(){
     return(
       <div>
-        <Input type='text' label='Correlation ID (blank ID = new correlation)' bsSize='large'/>
-        <Input type='text' label='Pubmed ID' />
-        <Input type='textarea' label='Variables (comma-separated)' className='annot_lyphs'/>
-        <Input type='textarea' label='Comment' />
-        <ButtonInput value='Annotate' block />
+        <Input ref='idbox' type='text' label='Correlation ID (blank ID = new correlation)' bsSize='large' className='corrEditField' />
+        <Input ref='pbmd' type='text' label='Pubmed ID' className='corrEditField'/>
+        <Input ref='vars' type='textarea' label='Variables (comma-separated)' className='annot_lyphs corrEditField'/>
+        <Input ref='cmnt' label='Comment' type='textarea' className='corrEditField'/>
+        <ButtonInput value='Annotate' block onClick={this.clicked}/>
         &raquo; <a href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a>
       </div>
     );
