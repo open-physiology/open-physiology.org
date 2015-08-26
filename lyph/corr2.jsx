@@ -54,24 +54,72 @@ var CorrelationEditForm = React.createClass({
     if ( id.getValue().trim() !== '' )
       url += '&id=' + encodeURIComponent(id.getValue().trim());
 
+    var that=this;
+
     $.ajax({
       "url": url,
       "dataType": "jsonp",
       "success": function(){
         getAllCorrelations();
-        $('.corrEditField').val('');
+
+        if ( !that.props.embedded )
+          $('.corrEditField').val('');
+        else
+          that.props.inside.setState({'editing': false});
       }
     });
   },
   render: function(){
+    var initId, initVars, initPbmd, initCmnt, classnm, varclassnm, footer, btnTxt;
+
+    if ( this.props.embedded )
+    {
+      initId = this.props.id;
+      initVars = this.props.variables;
+      initPbmd = this.props.pubmed;
+      initCmnt = this.props.comment !== null ? this.props.comment : '';
+      btnTxt = 'Edit';
+      classnm = 'EmbeddedField';
+      varclassnm = 'EmbeddedField';
+      footer = <div></div>;
+
+      initVars = '';
+      var fFirst = false;
+      for ( var key in this.props.variables )
+      {
+        var val = this.props.variables[key];
+
+        if ( fFirst )
+          initVars += ',';
+        else
+          fFirst = true;
+
+        if ( val.type === 'located measure' )
+          initVars += val['quality'] + ' of ' + val['location'];
+        else
+          initVars += val['clindex'];
+      }
+    }
+    else
+    {
+      initId = 'New';
+      initVars = '';
+      initPbmd = '';
+      initCmnt = '';
+      btnTxt = 'Create';
+      classnm = 'corrEditField';
+      varclassnm = 'annot_lyphs corrEditField';
+      footer = <div>&raquo; <a href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a></div>
+    }
+
     return(
       <div>
-        <Input ref='idbox' type='text' label='Correlation ID (blank ID = new correlation)' bsSize='large' className='corrEditField' />
-        <Input ref='pbmd' type='text' label='Pubmed ID' className='corrEditField'/>
-        <Input ref='vars' type='textarea' label='Variables (comma-separated)' className='annot_lyphs corrEditField'/>
-        <Input ref='cmnt' label='Comment' type='textarea' className='corrEditField'/>
-        <ButtonInput value='Annotate' block onClick={this.clicked}/>
-        &raquo; <a href='http://open-physiology.org:5055/get_csv/?what=correlations'>Get correlations.csv</a>
+        <Input disabled ref='idbox' type='text' label='Correlation ID' bsSize='large' className={classnm} defaultValue={initId}/>
+        <Input ref='pbmd' type='text' label='Pubmed ID' className={classnm} defaultValue={initPbmd}/>
+        <Input ref='vars' type='textarea' label='Variables (comma-separated)' className={varclassnm} defaultValue={initVars}/>
+        <Input ref='cmnt' label='Comment' type='textarea' className={classnm} defaultValue={initCmnt}/>
+        <ButtonInput value={btnTxt} block onClick={this.clicked}/>
+        {footer}
       </div>
     );
   }
@@ -96,8 +144,8 @@ var ClindexList = React.createClass({
 var LeftSide = React.createClass({
   render: function(){
     return(
-      <Panel header={<h1>Correlation Editor</h1>} bsStyle='primary'>
-        <CorrelationEditForm />
+      <Panel header={<h1>Correlation Maker</h1>} bsStyle='primary'>
+        <CorrelationEditForm embedded={false}/>
       </Panel>
     );
   }

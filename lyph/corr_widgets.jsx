@@ -7,7 +7,8 @@ var Correlation = React.createClass({
   },
   getInitialState: function() {
     return {
-      "commentOpen": false
+      "commentOpen": false,
+      "editing": false
     };
   },
   openCommentBox: function(e) {
@@ -15,6 +16,9 @@ var Correlation = React.createClass({
   },
   closeCommentBox: function(e) {
     this.setState({'commentOpen': false});
+  },
+  startEditing: function(e) {
+    this.setState({'editing': true, 'commentOpen': false});
   },
   render: function() {
     var header = <span>Correlation {this.props.id} <small>(Pubmed ID: {this.props.pubmed})</small></span>;
@@ -34,7 +38,23 @@ var Correlation = React.createClass({
         commentbox = <span>&raquo; <a href='javascript:void(0)' onClick={this.openCommentBox}>Show Comment</a></span>
     }
     else
-      commentbox = <span>No comment on this correlation.</span>
+      commentbox = <span>&raquo; No comment</span>
+
+    var editlink = (
+      <span>
+        &raquo;
+        <a
+          href='javascript:void(0)'
+          onClick={this.startEditing}
+        >Edit</a>
+      </span>
+    );
+
+    var editbox;
+    if ( this.state.editing )
+      editbox = <CorrelationEditForm embedded={true} inside={this} id={this.props.id} variables={this.props.variables} pubmed={this.props.pubmed} comment={this.props.comment} />
+    else
+      editbox = <div></div>
 
     return (
       <Panel header={header}>
@@ -54,7 +74,8 @@ var Correlation = React.createClass({
           })
         }
         </ul>
-        <div>{commentbox}</div>
+        <div>{commentbox} {editlink}</div>
+        {editbox}
       </Panel>
     );
   }
