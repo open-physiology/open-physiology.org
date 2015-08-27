@@ -167,6 +167,36 @@ var RightSide = React.createClass({
       "success": this.refs.results.gotResults        
     });
   },
+  clindexClicked: function(e){
+    if ( this.refs.label.getValue().trim() === '' )
+    {
+      alert( 'Clinical indices can\'t have blank label' );
+      return;
+    }
+
+    var url = 'http://open-physiology.org:5055/';
+
+    if ( this.refs.id.getValue().trim() === '' )
+      url += 'make_clinical_index/?label=';
+    else
+      url += 'edit_clinical_index/?label=';
+
+    url += encodeURIComponent( this.refs.label.getValue().trim() );
+    url += '&pubmeds=' + encodeURIComponent( this.refs.pbmd.getValue().trim() );
+    url += '&parents=' + encodeURIComponent( this.refs.parents.getValue().trim() );
+
+    if ( this.refs.id.getValue().trim() !== '' )
+      url += '&index=' + encodeURIComponent( this.refs.id.getValue().trim() );
+
+    $.ajax({
+      'url': url,
+      'dataType': 'jsonp',
+      'success': function(result){
+        getAllClindices();
+        $('.clindexfield').val('');
+      }
+    });
+  },
   render: function(){
     return(
       <Panel header={<h2>Tools</h2>} bsStyle='info'>
@@ -177,12 +207,12 @@ var RightSide = React.createClass({
             <LyphSearchResults ref='results'/>
           </TabPane>
           <TabPane eventKey={2} tab='Clindices'>
-            <Input type='text' label='Clindex ID (blank = new)' bsSize='large' />
-            <Input type='text' label='Label'/>
-            <Input type='text' label='Pubmed IDs (optional)'/>
-            <Input type='text' label='Parent IDs (blank = no parents)'/>
+            <Input className='clindexfield' ref='id' type='text' label='Clindex ID (blank = new)' bsSize='large' />
+            <Input className='clindexfield' ref='label' type='text' label='Label'/>
+            <Input className='clindexfield' ref='pbmd' type='text' label='Pubmed IDs (optional)'/>
+            <Input className='clindexfield' ref='parents' type='text' label='Parent IDs (blank = no parents)'/>
             <Button block onClick={this.clindexClicked}>Edit/Create</Button>
-            <ClindexList/>
+            <ClindexList ref='clindexlist'/>
           </TabPane>
         </TabbedArea>
       </Panel>
