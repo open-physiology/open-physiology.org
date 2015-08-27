@@ -1,0 +1,6 @@
+This is a directory where .js files will be created (compiled from .jsx files).
+To compile the .js files into this directory, go to the parent directory and run:
+
+   make
+
+(Requires react-tools' "jsx" command:  npm install react-tools -g
