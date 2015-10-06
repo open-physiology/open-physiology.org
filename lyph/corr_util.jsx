@@ -38,7 +38,6 @@ function getAllClindices( ) {
         }
         </ListGroup>
       );
-      //var clindices = <pre>{JSON.stringify(result,null,2)}</pre>;
 
       React.render( clindices, document.getElementById('clindexlist') );
     }

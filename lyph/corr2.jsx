@@ -207,10 +207,10 @@ var RightSide = React.createClass({
             <LyphSearchResults ref='results'/>
           </TabPane>
           <TabPane eventKey={2} tab='Clindices'>
-            <Input className='clindexfield' ref='id' type='text' label='Clindex ID (blank = new)' bsSize='large' />
-            <Input className='clindexfield' ref='label' type='text' label='Label'/>
-            <Input className='clindexfield' ref='pbmd' type='text' label='Pubmed IDs (optional)'/>
-            <Input className='clindexfield' ref='parents' type='text' label='Parent IDs (blank = no parents)'/>
+            <Input className='clindexfield clindexfieldid' ref='id' type='text' label='Clindex ID (blank = new)' bsSize='large' />
+            <Input className='clindexfield clindexfieldlabel' ref='label' type='text' label='Label'/>
+            <Input className='clindexfield clindexfieldpbmd' ref='pbmd' type='text' label='Pubmed IDs (optional)'/>
+            <Input className='clindexfield clindexfieldtxt' ref='parents' type='text' label='Parent IDs (blank = no parents)'/>
             <Button block onClick={this.clindexClicked}>Edit/Create</Button>
             <ClindexList ref='clindexlist'/>
           </TabPane>

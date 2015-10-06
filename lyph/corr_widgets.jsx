@@ -155,6 +155,17 @@ var Lyph = React.createClass({
 });
 
 var ClindexInList = React.createClass({
+  populate: function() {
+    $('.clindexfieldid').val(this.props.data.index);
+    $('.clindexfieldlabel').val(this.props.data.label);
+
+    if ( this.props.data.pubmeds.length === 0 )
+      $('.clindexfieldpbmd').val('');
+    else
+      $('.clindexfieldpbmd').val(this.props.data.pubmeds.join(',');
+
+    return false;
+  },
   render: function() {
     return (
       <Panel bsStyle='info' header={this.props.data.index}>
@@ -166,6 +177,9 @@ var ClindexInList = React.createClass({
           <li>Parents: {this.props.data.parents.length === 0 ? 'None' : JSON.stringify(this.props.data.parents,null,2)}</li>
           <li>Corr. Count: {this.props.data['correlation count']}</li>
         </ul>
+        <span>
+          &raquo <a href='javascript:void(0)' onclick={this.populate}>Populate Editor</a>
+        </span>
       </Panel>
     );
   }
