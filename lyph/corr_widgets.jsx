@@ -20,8 +20,13 @@ var Correlation = React.createClass({
   startEditing: function(e) {
     this.setState({'editing': true, 'commentOpen': false});
   },
+  pubmedlink: function() {
+    return (
+      <a href={'http://www.ncbi.nlm.nih.gov/pubmed/'+this.props.pubmed}>{this.props.pubmed}</a>
+    );
+  },
   render: function() {
-    var header = <span>Correlation {this.props.id} <small>(Pubmed ID: {this.props.pubmed})</small></span>;
+    var header = <span>Correlation {this.props.id} <small>(Pubmed ID: {this.pubmedlink()})</small></span>;
     var commentbox;
 
     if ( this.props.hasOwnProperty("comment") && this.props.comment !== null )
