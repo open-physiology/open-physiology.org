@@ -31,7 +31,7 @@ var Correlation = React.createClass({
           <Jumbotron>
             <h3>Comment:</h3>
             <p>{this.props.comment}</p>
-            <span>&raquo; <a href='javascript:void(0)' onClick={this.closeCommentBox}>Hide comment</a></span>
+            <span><a href='javascript:void(0)' onClick={this.closeCommentBox}>Hide comment</a></span>
           </Jumbotron>
         );
       else
@@ -178,7 +178,7 @@ var ClindexInList = React.createClass({
           <li>Corr. Count: {this.props.data['correlation count']}</li>
         </ul>
         <span>
-          &raquo <a href='javascript:void(0)' onclick={this.populate}>Populate Editor</a>
+          <a href='javascript:void(0)' onClick={this.populate}>Populate Editor</a>
         </span>
       </Panel>
     );
