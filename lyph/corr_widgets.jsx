@@ -162,7 +162,7 @@ var ClindexInList = React.createClass({
     if ( this.props.data.pubmeds.length === 0 )
       $('.clindexfieldpbmd').val('');
     else
-      $('.clindexfieldpbmd').val(this.props.data.pubmeds.join(',');
+      $('.clindexfieldpbmd').val(this.props.data.pubmeds.join(','));
 
     return false;
   },
