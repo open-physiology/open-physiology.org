@@ -164,6 +164,11 @@ var ClindexInList = React.createClass({
     else
       $('.clindexfieldpbmd').val(this.props.data.pubmeds.join(','));
 
+    if ( this.props.data.parents.length === 0 )
+      $('.clindexfieldparents').val('');
+    else
+      $('.clindexfieldparents').val(this.props.data.parents.join(','));
+
     return false;
   },
   render: function() {
