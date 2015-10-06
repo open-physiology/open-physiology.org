@@ -22,7 +22,7 @@ var Correlation = React.createClass({
   },
   pubmedlink: function() {
     return (
-      <a href={'http://www.ncbi.nlm.nih.gov/pubmed/'+this.props.pubmed}>{this.props.pubmed}</a>
+      <a href={'http://www.ncbi.nlm.nih.gov/pubmed/'+this.props.pubmed} target='_blank'>{this.props.pubmed}</a>
     );
   },
   render: function() {
